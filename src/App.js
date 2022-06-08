@@ -2,38 +2,60 @@ import React from 'react';
 import {
   ChakraProvider,
   Box,
-  Text,
-  Link,
   VStack,
-  Code,
-  Grid,
   theme,
+  Center,
+  HStack,
 } from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
+import { Cores } from './assets/Cores';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
-        </Grid>
+      <Box textAlign="center" fontSize="xl" bgColor={Cores.rich_black_fogra_39}>
+        <Center minH="100vh">
+          <HStack spacing={0} bgColor={Cores.dark_purple} borderRadius={40} h="90vh" w="90vw" shadow={"2xl"}>
+            <Box
+              h="100%"
+              w="10vw"
+              bgColor={Cores.amethyst_2}
+              borderRadius={40}
+            />
+            <Box
+              h="100%"
+              w="55vw"
+            />
+            <Box
+                h="100%"
+                w="25vw"
+                bgColor={Cores.dark_purple_2}
+                borderTopEndRadius={40}
+                borderBottomEndRadius={40}
+              />
+            {/* 
+            <VStack h="100%" w="20vw" bgColor={"red"}>
+              <Box
+                h="auto"
+                w="100%"
+                bgColor={Cores.dark_purple_2}
+                borderRadius={40}
+              />
+              <Box
+                h="auto"
+                w="100%"
+                bgColor={Cores.dark_purple_2}
+                borderRadius={40}
+              />
+              <Box
+                h="auto"
+                w="100%"
+                bgColor={Cores.dark_purple_2}
+                borderRadius={40}
+              />
+            </VStack>
+            */}
+          </HStack>
+        </Center>
       </Box>
     </ChakraProvider>
   );
