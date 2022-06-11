@@ -2,6 +2,7 @@ import React from 'react';
 import { ChakraProvider, Box, theme, Center, HStack } from '@chakra-ui/react';
 import { Cores } from './assets/Cores';
 import GraphTabs from './components/GraphTabs';
+import GraphResults from './components/GraphResults';
 
 function App() {
   return (
@@ -35,7 +36,26 @@ function App() {
               bgColor={Cores.dark_purple_2}
               borderTopEndRadius={40}
               borderBottomEndRadius={40}
+              padding={2}
+              alignItems='flex-start'
+              overflowY="auto"
+              css={{
+                '&::-webkit-scrollbar': {
+                  width: '4px',
+                  
+                },
+                '&::-webkit-scrollbar-track': {
+                  width: '6px',
+                  marginTop: '30px',
+                  marginBottom: '30px'
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  background: Cores.textoCardResultados,
+                  borderRadius: '24px',
+                },
+              }}
             >
+              <GraphResults />
               {/* Componente da direita */}
 
             </Box>
