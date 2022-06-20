@@ -2,7 +2,7 @@ import React from 'react';
 import { ChakraProvider, Box, theme, Center, HStack } from '@chakra-ui/react';
 import { Cores } from './assets/Cores';
 import GraphTabs from './components/GraphTabs';
-
+import Menu from './components/Menu';
 function App() {
   return (
     <ChakraProvider theme={theme}>
@@ -23,7 +23,7 @@ function App() {
               borderRadius={40}
             >
               {/* Componente da esquerda */}
-
+              <Menu />
             </Box>
             <Box h="100%" w="55vw">
               {/* Componente do meio */}
