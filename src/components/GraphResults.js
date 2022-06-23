@@ -16,10 +16,6 @@ const resultadoEuleriano = "Não";
 const resultadoMenorCaminho = ['a', 'b', 'e', 'd'];
 const resultadoMenorCusto = '80';
 
-
-
-
-
 function GraphResults() {
   return (
     <>
@@ -34,6 +30,7 @@ function GraphResults() {
     {viewCard('Grafo Euleriano?', resultadoEuleriano)}
     {viewCard('Menor Caminho:', resultadoMenorCaminho)}
     {viewCard('Menor Custo:', resultadoMenorCusto)}
+    {viewCard('Grafo Ciclico:', resultadoCiclico)}
     </>
   );
 }

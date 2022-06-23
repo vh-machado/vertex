@@ -1,6 +1,7 @@
 export const Cores = {
     amethyst: "#A167BBff",
     amethyst_2: "#895ECFff",
+    middle_Yellow: "#FCE92B",
     textoCardResultados: '#B2BDC2',
     dark_purple: "#181328ff",
     russian_violet: "#382C54ff",
