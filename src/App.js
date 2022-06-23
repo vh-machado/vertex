@@ -23,7 +23,7 @@ function App() {
               borderRadius={40}
             >
               {/* Componente da esquerda */}
-
+              
             </Box>
             <Box h="100%" w="55vw">
               {/* Componente do meio */}
