@@ -1,20 +1,21 @@
 import React from 'react';
-import { ChakraProvider, Box, theme, Center, HStack } from '@chakra-ui/react';
+import { ChakraProvider, Box, theme, Center, HStack, Flex } from '@chakra-ui/react';
 import { Cores } from '../assets/Cores';
 
 export function viewCard(title, info) {
     return (
       <Box
-          hmin = "10%"
           h="auto"
-          w="95%"
-          flexWrap={'wrap'}
-          marginTop={5}
-          marginLeft={1.5}
+          w="auto"
+          margin={2}
           borderRadius={10}
-          borderWidth='1px'
+          borderWidth='0px'
           borderColor={Cores.amethyst_2}
           textColor={Cores.middle_Yellow}
+          background={Cores.russian_violet}
+          boxShadow='lg' 
+          p='6' 
+          rounded='md' 
           textAlign="start"
           paddingLeft={3}
           paddingRight={3}
