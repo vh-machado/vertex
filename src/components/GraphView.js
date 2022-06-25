@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { network, Network } from 'vis-network';
 import {
+  Flex,
   Box,
   Button,
   Popover,
@@ -111,7 +112,7 @@ const GraphView = props => {
         highlight: Cores.lavender_floral,
         hover: Cores.lavender_floral,
         inherit: 'from',
-        opacity:1.0
+        opacity: 1.0,
       },
       width: 2,
       smooth: {
@@ -236,58 +237,31 @@ const GraphView = props => {
 
   return (
     <>
-      <EditPopOver
-        operation={'add'}
-        buttonText={'Adicionar Vértice'}
-        headerText={'Novo Vértice'}
-        inputText={'Rótulo'}
-        eventClick={buttonAddNode}
-      />
+      <Flex direction={"row"} justifyItems={"flex-start"}>
+        <EditPopOver
+          operation={'add'}
+          buttonText={'Adicionar Vértice'}
+          headerText={'Novo Vértice'}
+          inputText={'Rótulo'}
+          eventClick={buttonAddNode}
+        />
 
-      <EditPopOver
-        operation={'add'}
-        buttonText={'Adicionar Aresta'}
-        headerText={'Nova Aresta'}
-        inputText={'Peso'}
-        eventClick={buttonAddEdge}
-      />
+        <EditPopOver
+          operation={'add'}
+          buttonText={'Adicionar Aresta'}
+          headerText={'Nova Aresta'}
+          inputText={'Peso'}
+          eventClick={buttonAddEdge}
+        />
 
-      <EditPopOver
-        operation={'del'}
-        buttonText={'Remover'}
-        headerText={'Remover Elemento?'}
-        eventClick={buttonDelete}
-      />
-      {/*
-      <Popover>
-        <PopoverTrigger>
-          <Button>Adicionar Vértice</Button>
-        </PopoverTrigger>
-        <PopoverContent>
-          <PopoverArrow />
-          <PopoverCloseButton />
-          <PopoverHeader>Novo vértice</PopoverHeader>
-          <PopoverBody>
-            <Button onClick={() => buttonAddNode()}>Confirmar</Button>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
-      */}
-      {/*
-      <Popover>
-        <PopoverTrigger>
-          <Button>Adicionar Aresta</Button>
-        </PopoverTrigger>
-        <EditPopOver header={"Nova aresta"} eventoClick={() => buttonAddEdge()}/>
-      </Popover>
-
-      <Popover>
-        <PopoverTrigger>
-          <Button>Remover</Button>
-        </PopoverTrigger>
-        <EditPopOver header={"Deseja remover o elemento selecionado?"} eventoClick={() => buttonDelete()}/>
-      </Popover>
-      */}
+        <EditPopOver
+          operation={'del'}
+          buttonText={'Remover'}
+          headerText={'Remover Elemento?'}
+          eventClick={buttonDelete}
+        />
+      </Flex>
+      
       <div ref={container} style={{ height: '100%', width: '100%' }} />
     </>
   );
