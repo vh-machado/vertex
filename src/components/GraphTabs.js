@@ -104,7 +104,7 @@ function GraphTabs(props) {
   */
 
   return (
-    <Tabs isLazy size="sm" variant="line" h="100%" p="8">
+    <Tabs isLazy size="sm" h="100%" p="8">
       <TabPanels h="92%">
         <TabPanel h="100%" w="100%">
           <GraphView
