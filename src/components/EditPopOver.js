@@ -13,6 +13,7 @@ import {
   Button,
   Input,
   useDisclosure,
+  theme,
 } from '@chakra-ui/react';
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import { Fontes } from '../assets/Fontes';
@@ -22,14 +23,14 @@ const EditPopOver = props => {
   const handleChange = event => setValue(event.target.value);
 
   return (
-    <Popover>
+    <Popover theme={theme}>
       {({ onClose }) => (
         <>
           <PopoverTrigger>
             <Button
               marginEnd={4}
               size="sm"
-              colorScheme={'gray'}
+              colorScheme={'whiteAlpha'}
               color={'white'}
               leftIcon={
                 props.operation === 'add' ? <AddIcon /> : <DeleteIcon />

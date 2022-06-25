@@ -7,6 +7,7 @@ import {
   TabPanel,
   Button,
   ColorModeProvider,
+  theme,
 } from '@chakra-ui/react';
 import { Cores } from '../assets/Cores';
 import GraphView from './GraphView';
@@ -124,7 +125,7 @@ function GraphTabs(props) {
           ></GraphView>
         </TabPanel>
       </TabPanels>
-      <TabList h="8%" fontFamily={Fontes.principal}>
+      <TabList h="8%" fontFamily={Fontes.principal} theme={theme}>
         <Tab
           flex={[1, 0, "auto"]}
           color={Cores.mauve}
