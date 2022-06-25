@@ -129,7 +129,7 @@ function GraphTabs(props) {
         <Tab
           flex={[1, 0, "auto"]}
           color={Cores.mauve}
-          borderColor='rgba(255,255,255,0.005)'
+          borderColor='rgba(255,255,255,0.05)'
           _selected={{
             color: Cores.amethyst,
             borderColor: Cores.amethyst,
@@ -142,7 +142,7 @@ function GraphTabs(props) {
         <Tab
           flex={[1, 0, "auto"]}
           color={Cores.mauve}
-          borderColor='rgba(255,255,255,0.005)'
+          borderColor='rgba(255,255,255,0.05)'
           _selected={{
             color: Cores.amethyst,
             borderColor: Cores.amethyst,
@@ -155,7 +155,7 @@ function GraphTabs(props) {
         <Tab
           flex={[1, 0, "auto"]}
           color={Cores.mauve}
-          borderColor='rgba(255,255,255,0.005)'
+          borderColor='rgba(255,255,255,0.05)'
           _selected={{
             color: Cores.amethyst,
             borderColor: Cores.amethyst,
@@ -168,7 +168,7 @@ function GraphTabs(props) {
         <Tab
           flex={[1, 0, "auto"]}
           color={Cores.mauve}
-          borderColor='rgba(255,255,255,0.005)'
+          borderColor='rgba(255,255,255,0.05)'
           _selected={{
             color: Cores.amethyst,
             borderColor: Cores.amethyst,
@@ -181,7 +181,7 @@ function GraphTabs(props) {
         <Tab
           flex={[1, 0, "auto"]}
           color={Cores.mauve}
-          borderColor='rgba(255,255,255,0.005)' 
+          borderColor='rgba(255,255,255,0.05)' 
           _selected={{
             color: Cores.amethyst,
             borderColor: Cores.amethyst,
