@@ -104,7 +104,7 @@ function GraphTabs(props) {
   */
 
   return (
-    <Tabs isLazy size="sm" h="100%" p="8">
+    <Tabs isLazy variant='unstyled' size="sm" h="100%" p="8">
       <TabPanels h="92%">
         <TabPanel h="100%" w="100%">
           <GraphView
@@ -128,6 +128,7 @@ function GraphTabs(props) {
       <TabList h="8%" fontFamily={Fontes.principal} theme={theme}>
         <Tab
           flex={[1, 0, "auto"]}
+          borderBottomWidth={2}
           color={Cores.mauve}
           borderColor={'rgba(158, 150, 150, 0.05)'}
           _selected={{
@@ -141,6 +142,7 @@ function GraphTabs(props) {
         </Tab>
         <Tab
           flex={[1, 0, "auto"]}
+          borderBottomWidth={2}
           color={Cores.mauve}
           borderColor={'rgba(158, 150, 150, 0.05)'}
           _selected={{
@@ -154,6 +156,7 @@ function GraphTabs(props) {
         </Tab>
         <Tab
           flex={[1, 0, "auto"]}
+          borderBottomWidth={2}
           color={Cores.mauve}
           borderColor={'rgba(158, 150, 150, 0.05)'}
           _selected={{
@@ -167,6 +170,7 @@ function GraphTabs(props) {
         </Tab>
         <Tab
           flex={[1, 0, "auto"]}
+          borderBottomWidth={2}
           color={Cores.mauve}
           borderColor={'rgba(158, 150, 150, 0.05)'}
           _selected={{
@@ -180,6 +184,7 @@ function GraphTabs(props) {
         </Tab>
         <Tab
           flex={[1, 0, "auto"]}
+          borderBottomWidth={2}
           color={Cores.mauve}
           borderColor={'rgba(158, 150, 150, 0.05)'}
           _selected={{
