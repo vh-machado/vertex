@@ -129,10 +129,10 @@ function GraphTabs(props) {
         <Tab
           flex={[1, 0, "auto"]}
           color={Cores.mauve}
-          borderBottomColor={'blackAlpha.100'}
+          borderColor={'blackAlpha.100'}
           _selected={{
             color: Cores.amethyst,
-            borderBottomColor: Cores.amethyst,
+            borderColor: Cores.amethyst,
           }}
           fontWeight={400}
           fontSize={14}
@@ -142,10 +142,10 @@ function GraphTabs(props) {
         <Tab
           flex={[1, 0, "auto"]}
           color={Cores.mauve}
-          borderBottomColor={'blackAlpha.100'}
+          borderColor={'blackAlpha.100'}
           _selected={{
             color: Cores.amethyst,
-            borderBottomColor: Cores.amethyst,
+            borderColor: Cores.amethyst,
           }}
           fontWeight={400}
           fontSize={14}
@@ -155,10 +155,10 @@ function GraphTabs(props) {
         <Tab
           flex={[1, 0, "auto"]}
           color={Cores.mauve}
-          borderBottomColor={'blackAlpha.100'}
+          borderColor={'blackAlpha.100'}
           _selected={{
             color: Cores.amethyst,
-            borderBottomColor: Cores.amethyst,
+            borderColor: Cores.amethyst,
           }}
           fontWeight={400}
           fontSize={14}
@@ -168,10 +168,10 @@ function GraphTabs(props) {
         <Tab
           flex={[1, 0, "auto"]}
           color={Cores.mauve}
-          borderBottomColor={'blackAlpha.100'}
+          borderColor={'blackAlpha.100'}
           _selected={{
             color: Cores.amethyst,
-            borderBottomColor: Cores.amethyst,
+            borderColor: Cores.amethyst,
           }}
           fontWeight={400}
           fontSize={14}
@@ -181,10 +181,10 @@ function GraphTabs(props) {
         <Tab
           flex={[1, 0, "auto"]}
           color={Cores.mauve}
-          borderBottomColor={'blackAlpha.100'}
+          borderColor={'blackAlpha.100'}
           _selected={{
             color: Cores.amethyst,
-            borderBottomColor: Cores.amethyst,
+            borderColor: Cores.amethyst,
           }}
           fontWeight={400}
           fontSize={14}

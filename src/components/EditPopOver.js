@@ -30,7 +30,7 @@ const EditPopOver = props => {
             <Button
               marginEnd={4}
               size="sm"
-              colorScheme={'whiteAlpha'}
+              backgroundColor={'whiteAlpha.100'}
               color={'white'}
               leftIcon={
                 props.operation === 'add' ? <AddIcon /> : <DeleteIcon />
