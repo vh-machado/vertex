@@ -29,7 +29,7 @@ const EditPopOver = props => {
         <>
           <PopoverTrigger>
             <Button
-              variant='ghost'
+              variant='solid'
               marginEnd={4}
               size="sm"
               colorScheme='gray'
