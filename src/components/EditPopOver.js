@@ -14,6 +14,7 @@ import {
   Input,
   useDisclosure,
   theme,
+  ColorModeScript,
 } from '@chakra-ui/react';
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import { Fontes } from '../assets/Fontes';
@@ -28,10 +29,11 @@ const EditPopOver = props => {
         <>
           <PopoverTrigger>
             <Button
+              variant='ghost'
               marginEnd={4}
               size="sm"
-              colorScheme={'blackAlpha'}
-              color={'white'}
+              colorScheme='gray'
+              color='white'
               leftIcon={
                 props.operation === 'add' ? <AddIcon /> : <DeleteIcon />
               }
