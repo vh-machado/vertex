@@ -29,16 +29,24 @@ const EditPopOver = props => {
         <>
           <PopoverTrigger>
             <Button
-              variant='ghost'
               marginEnd={4}
               size="sm"
-              colorScheme='whiteAlpha'
-              color='white'
+              color="white"
               leftIcon={
                 props.operation === 'add' ? <AddIcon /> : <DeleteIcon />
               }
               fontFamily={Fontes.principal}
               fontWeight={400}
+              bgColor='rgba(255,255,255,0.05)'
+              _hover={{ bg: Cores.dark_purple_2}}
+              _active={{
+                bg: Cores.purple_mountain_majesty,
+                transform: 'scale(0.98)',
+              }}
+              _focus={{
+                boxShadow:
+                  '0 0 1px 2px rgba(88, 144, 255, .75), 0 1px 1px rgba(0, 0, 0, .15)',
+              }}
             >
               {props.buttonText}
             </Button>
@@ -53,6 +61,7 @@ const EditPopOver = props => {
               fontFamily={Fontes.principal}
               fontWeight={400}
               fontSize={14}
+              color={Cores.mauve}
               borderColor={Cores.russian_violet}
             >
               {props.headerText}
@@ -66,6 +75,7 @@ const EditPopOver = props => {
                   onChange={handleChange}
                   variant="filled"
                   placeholder={props.inputText}
+                  bgColor='rgba(255,255,255,0.05)'
                   size="sm"
                   borderRadius="8"
                   marginBottom="3"
@@ -76,6 +86,17 @@ const EditPopOver = props => {
               <Button
                 fontFamily={Fontes.principal}
                 fontWeight={600}
+                color='white'
+                bgColor={Cores.lavender_floral}
+                _hover={{ bg: Cores.amethyst}}
+                _active={{
+                  bg: Cores.dark_purple,
+                  transform: 'scale(0.98)',
+                }}
+                _focus={{
+                  boxShadow:
+                    '0 0 1px 2px rgba(88, 144, 255, .75), 0 1px 1px rgba(0, 0, 0, .15)',
+                }}
                 onClick={() => {
                   if (props.operation === 'del') {
                     props.eventClick(true);
