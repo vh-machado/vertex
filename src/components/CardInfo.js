@@ -1,6 +1,7 @@
 import React from 'react';
 import { ChakraProvider, Box, theme, Center, HStack, Flex } from '@chakra-ui/react';
 import { Cores } from '../assets/Cores';
+import {Fontes} from '../assets/Fontes';
 
 export function viewCard(title, info) {
     return (
@@ -24,6 +25,7 @@ export function viewCard(title, info) {
       paddingRight={3}
       paddingTop={3}
       paddingBottom={3}
+      fontFamily={Fontes.principal}
     >
       <Box
         display={"flex"}
@@ -31,6 +33,7 @@ export function viewCard(title, info) {
         fontSize={15}
         fontWeight="bold"
         textColor={Cores.textoCardResultados}
+        fontFamily={Fontes.principal}
       >
         {title}
       </Box>
