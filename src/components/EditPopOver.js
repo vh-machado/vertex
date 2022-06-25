@@ -29,10 +29,10 @@ const EditPopOver = props => {
         <>
           <PopoverTrigger>
             <Button
-              variant='solid'
+              variant='ghost'
               marginEnd={4}
               size="sm"
-              colorScheme='whiteAlpha'
+              colorScheme='gray'
               color='white'
               leftIcon={
                 props.operation === 'add' ? <AddIcon /> : <DeleteIcon />
