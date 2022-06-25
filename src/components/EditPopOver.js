@@ -14,6 +14,7 @@ import {
   Input,
   useDisclosure,
 } from '@chakra-ui/react';
+import { Fontes } from '../assets/Fontes';
 
 const EditPopOver = props => {
   const [value, setValue] = React.useState('');
@@ -24,7 +25,9 @@ const EditPopOver = props => {
       {({ onClose }) => (
         <>
           <PopoverTrigger>
-            <Button>{props.buttonText}</Button>
+            <Button fontFamily={Fontes.principal} fontWeight={600}>
+              {props.buttonText}
+            </Button>
           </PopoverTrigger>
           <PopoverContent
             bgColor={Cores.dark_purple_2}
@@ -32,12 +35,19 @@ const EditPopOver = props => {
           >
             <PopoverArrow bgColor={Cores.dark_purple_2} />
             <PopoverCloseButton />
-            <PopoverHeader fontSize={14} borderColor={Cores.russian_violet}>
+            <PopoverHeader
+              fontFamily={Fontes.principal}
+              fontWeight={400}
+              fontSize={14}
+              borderColor={Cores.russian_violet}
+            >
               {props.headerText}
             </PopoverHeader>
             <PopoverBody>
               {props.operation === 'add' ? (
                 <Input
+                  fontFamily={Fontes.principal}
+                  fontWeight={200}
                   value={value}
                   onChange={handleChange}
                   variant="filled"
@@ -50,8 +60,10 @@ const EditPopOver = props => {
                 <></>
               )}
               <Button
+                fontFamily={Fontes.principal}
+                fontWeight={600}
                 onClick={() => {
-                  if(props.operation === 'del'){
+                  if (props.operation === 'del') {
                     props.eventClick(true);
                   } else {
                     props.eventClick(value);

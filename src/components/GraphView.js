@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { Cores } from '../assets/Cores';
 import EditPopOver from './EditPopOver';
+import { Fontes } from '../assets/Fontes';
 
 const GraphView = props => {
   var grafo;
@@ -33,7 +34,7 @@ const GraphView = props => {
     grafo.addEdgeMode();
   }
   function buttonDelete(confirmation) {
-    if(confirmation){
+    if (confirmation) {
       grafo.deleteSelected();
     }
   }
@@ -98,22 +99,51 @@ const GraphView = props => {
           enabled: props.orientado,
         },
       },
-      color: 'white',
-      width: 1,
+      font: {
+        face: Fontes.principal,
+        size: 16,
+        color: Cores.mauve,
+        strokeWidth: 0,
+        align: 'top',
+      },
+      color: {
+        color: Cores.mauve,
+        highlight: Cores.lavender_floral,
+        hover: Cores.lavender_floral,
+        inherit: 'from',
+        opacity:1.0
+      },
+      width: 2,
       smooth: {
         enabled: props.curva,
         type: 'curvedCW',
       },
     },
     nodes: {
+      borderWidth: 1,
       shape: 'circle',
-      margin: 5,
+      margin: 8,
       widthConstraint: {
         minimum: 20,
       },
       font: {
-        size: 14,
-      }
+        face: Fontes.principal,
+        weigth: 200,
+        size: 16,
+        color: Cores.dark_purple,
+      },
+      color: {
+        border: Cores.amethyst_2,
+        background: Cores.lavender_floral,
+        highlight: {
+          border: Cores.lavender_floral,
+          background: Cores.amethyst_2,
+        },
+        hover: {
+          border: Cores.lavender_floral,
+          background: Cores.amethyst_2,
+        },
+      },
     },
     interaction: {
       dragNodes: true,
@@ -131,13 +161,11 @@ const GraphView = props => {
         state.counter += 1;
         nodeData.id = state.counter;
         nodeData.label = editData;
-        nodeData.color = Cores.lavender_floral;
         state.graph.nodes = [
           ...state.graph.nodes,
           {
             id: state.counter,
             label: nodeData.label,
-            color: nodeData.color,
             x: nodeData.x,
             y: nodeData.y,
           },
@@ -147,14 +175,12 @@ const GraphView = props => {
       },
       addEdge: function (edgeData, callback) {
         edgeData.label = editData;
-        edgeData.font = { strokeWidth: 0, color: 'white', align: 'top' };
         state.graph.edges = [
           ...state.graph.edges,
           {
             from: edgeData.from,
             to: edgeData.to,
             label: edgeData.label,
-            font: edgeData.font,
           },
         ];
         props.childToParent(state);

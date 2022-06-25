@@ -7,5 +7,6 @@ export const Cores = {
     purple_mountain_majesty: "#A47EC1ff",
     dark_purple_2: "#2C2344ff",
     rich_black_fogra_39: "#08070E",
+    mauve: "#D8B6EA"
   };
   

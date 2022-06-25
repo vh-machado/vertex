@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { Cores } from '../assets/Cores';
 import GraphView from './GraphView';
+import { Fontes } from '../assets/Fontes';
 
 const orientacao = false;
 const colorNode = Cores.lavender_floral;
@@ -125,12 +126,12 @@ function GraphTabs(props) {
           ></GraphView>
         </TabPanel>
       </TabPanels>
-      <TabList h="8%">
-        <Tab>Grafo</Tab>
-        <Tab>Ordenação Topológica</Tab>
-        <Tab>Ciclo Euleriano</Tab>
-        <Tab>Menor Caminho</Tab>
-        <Tab>Árvore Geradora Mínima</Tab>
+      <TabList h="8%" fontFamily={Fontes.principal}>
+        <Tab fontWeight={400} fontSize={14}>Grafo</Tab>
+        <Tab fontWeight={400} fontSize={14}>Ordenação Topológica</Tab>
+        <Tab fontWeight={400} fontSize={14}>Ciclo Euleriano</Tab>
+        <Tab fontWeight={400} fontSize={14}>Menor Caminho</Tab>
+        <Tab fontWeight={400} fontSize={14}>Árvore Geradora Mínima</Tab>
       </TabList>
     </Tabs>
   );
