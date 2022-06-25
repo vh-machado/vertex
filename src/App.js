@@ -35,13 +35,14 @@ function App() {
               h="100%"
               w="25vw"
               flex={1}
+              flexDirection={"row"}
               flexWrap='wrap'
               bgColor={Cores.dark_purple_2}
               borderTopEndRadius={40}
               borderBottomEndRadius={40}
               padding={2}
-              alignItems='flex-start'
-              alignContent={'stretch'}
+              alignItems='stretch'
+              alignContent={'flex-start'}
               justifyItems='stretch'
               overflowY="auto"
               css={{
