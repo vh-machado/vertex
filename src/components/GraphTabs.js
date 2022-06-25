@@ -6,6 +6,7 @@ import {
   TabPanels,
   TabPanel,
   Button,
+  ColorModeProvider,
 } from '@chakra-ui/react';
 import { Cores } from '../assets/Cores';
 import GraphView from './GraphView';
@@ -15,7 +16,6 @@ const orientacao = false;
 const colorNode = Cores.lavender_floral;
 
 function GraphTabs(props) {
-  
   var initialGraphData = {
     counter: 0,
     graph: {
@@ -40,11 +40,9 @@ function GraphTabs(props) {
 
   const [graphData, setGraphData] = useState(initialGraphData);
 
-  
-  const childToParent = (childData) => {
+  const childToParent = childData => {
     setGraphData(childData);
   };
-
 
   /*
   const nodes = [
@@ -105,7 +103,7 @@ function GraphTabs(props) {
   */
 
   return (
-    <Tabs isLazy size="sm" variant="line" h="100%" p="8" colorScheme={'purple'}>
+    <Tabs isLazy size="sm" variant="line" h="100%" p="8">
       <TabPanels h="92%">
         <TabPanel h="100%" w="100%">
           <GraphView
@@ -127,11 +125,71 @@ function GraphTabs(props) {
         </TabPanel>
       </TabPanels>
       <TabList h="8%" fontFamily={Fontes.principal}>
-        <Tab fontWeight={400} fontSize={14}>Grafo</Tab>
-        <Tab fontWeight={400} fontSize={14}>Ordenação Topológica</Tab>
-        <Tab fontWeight={400} fontSize={14}>Ciclo Euleriano</Tab>
-        <Tab fontWeight={400} fontSize={14}>Menor Caminho</Tab>
-        <Tab fontWeight={400} fontSize={14}>Árvore Geradora Mínima</Tab>
+        <Tab
+          flex={[1, 0, "auto"]}
+          color={Cores.mauve}
+          borderBottomColor={'blackAlpha.100'}
+          _selected={{
+            color: Cores.amethyst,
+            borderBottomColor: Cores.amethyst,
+          }}
+          fontWeight={400}
+          fontSize={14}
+        >
+          Grafo
+        </Tab>
+        <Tab
+          flex={[1, 0, "auto"]}
+          color={Cores.mauve}
+          borderBottomColor={'blackAlpha.100'}
+          _selected={{
+            color: Cores.amethyst,
+            borderBottomColor: Cores.amethyst,
+          }}
+          fontWeight={400}
+          fontSize={14}
+        >
+          Ordenação Topológica
+        </Tab>
+        <Tab
+          flex={[1, 0, "auto"]}
+          color={Cores.mauve}
+          borderBottomColor={'blackAlpha.100'}
+          _selected={{
+            color: Cores.amethyst,
+            borderBottomColor: Cores.amethyst,
+          }}
+          fontWeight={400}
+          fontSize={14}
+        >
+          Ciclo Euleriano
+        </Tab>
+        <Tab
+          flex={[1, 0, "auto"]}
+          color={Cores.mauve}
+          borderBottomColor={'blackAlpha.100'}
+          _selected={{
+            color: Cores.amethyst,
+            borderBottomColor: Cores.amethyst,
+          }}
+          fontWeight={400}
+          fontSize={14}
+        >
+          Menor Caminho
+        </Tab>
+        <Tab
+          flex={[1, 0, "auto"]}
+          color={Cores.mauve}
+          borderBottomColor={'blackAlpha.100'}
+          _selected={{
+            color: Cores.amethyst,
+            borderBottomColor: Cores.amethyst,
+          }}
+          fontWeight={400}
+          fontSize={14}
+        >
+          Árvore Geradora Mínima
+        </Tab>
       </TabList>
     </Tabs>
   );

@@ -14,6 +14,7 @@ import {
   Input,
   useDisclosure,
 } from '@chakra-ui/react';
+import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import { Fontes } from '../assets/Fontes';
 
 const EditPopOver = props => {
@@ -25,7 +26,17 @@ const EditPopOver = props => {
       {({ onClose }) => (
         <>
           <PopoverTrigger>
-            <Button fontFamily={Fontes.principal} fontWeight={600}>
+            <Button
+              marginEnd={4}
+              size="sm"
+              colorScheme={'gray'}
+              color={'white'}
+              leftIcon={
+                props.operation === 'add' ? <AddIcon /> : <DeleteIcon />
+              }
+              fontFamily={Fontes.principal}
+              fontWeight={400}
+            >
               {props.buttonText}
             </Button>
           </PopoverTrigger>
