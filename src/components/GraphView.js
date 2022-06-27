@@ -1,22 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { network, Network } from 'vis-network';
-import {
-  Flex,
-  Box,
-  Button,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverFooter,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverAnchor,
-} from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { Cores } from '../assets/Cores';
 import EditPopOver from './EditPopOver';
 import { Fontes } from '../assets/Fontes';
+import ordenacaoTopologica from '../Algoritmos/ordenacaoTopologica';
 
 const GraphView = props => {
   var grafo;
@@ -129,7 +117,6 @@ const GraphView = props => {
       },
       font: {
         face: Fontes.principal,
-        weigth: 200,
         size: 16,
         color: Cores.dark_purple,
       },
@@ -234,6 +221,27 @@ const GraphView = props => {
 
     grafo = network;
   }, [container, graph.nodes, graph.edges]);
+
+  /*
+  var teste = {
+    counter: 3,
+    graph: {
+      nodes: [
+        { id: 0, label: 'Node 1', color: Cores.lavender_floral, x: 200, y: 0 },
+        { id: 1, label: 'Node 2', color: Cores.lavender_floral, x: 50, y: 250 },
+        { id: 2, label: 'Node 3', color: Cores.lavender_floral, x: 300, y: 0 },
+      ],
+      edges: [
+        { from: 2, to: 1, label: "a" },
+        { from: 1, to: 0, label: "b" },
+      ],
+    },
+  };
+  var teste2 = {
+    counter: 0,
+    graph: {nodes: [], edges: [],},
+  };
+  ordenacaoTopologica(teste, teste2);*/
 
   return (
     <>
