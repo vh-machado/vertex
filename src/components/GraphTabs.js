@@ -5,13 +5,12 @@ import {
   Tab,
   TabPanels,
   TabPanel,
-  Button,
-  ColorModeProvider,
   theme,
 } from '@chakra-ui/react';
 import { Cores } from '../assets/Cores';
 import GraphView from './GraphView';
 import { Fontes } from '../assets/Fontes';
+import ordenacaoTopologica from '../Algoritmos/ordenacaoTopologica';
 
 const orientacao = false;
 const colorNode = Cores.lavender_floral;
@@ -38,11 +37,19 @@ function GraphTabs(props) {
       ],
     },
   };
+  
+  /*
+  var ordenado = {
+    counter: 0,
+    graph: {nodes: [], edges: []},
+  };*/
 
   const [graphData, setGraphData] = useState(initialGraphData);
+  //const [sortGraph, setSortGraph] = useState(ordenado);
 
   const childToParent = childData => {
     setGraphData(childData);
+    //setSortGraph(ordenacaoTopologica(childData));
   };
 
   /*
