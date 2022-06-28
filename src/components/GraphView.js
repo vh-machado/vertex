@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { network, Network } from 'vis-network';
-import { Flex } from '@chakra-ui/react';
+import { Button, Flex } from '@chakra-ui/react';
 import { Cores } from '../assets/Cores';
 import EditPopOver from './EditPopOver';
 import { Fontes } from '../assets/Fontes';
+import { ViewIcon } from '@chakra-ui/icons';
 import ordenacaoTopologica from '../Algoritmos/ordenacaoTopologica';
 
 const GraphView = props => {
@@ -80,6 +81,9 @@ const GraphView = props => {
     layout: {
       hierarchical: {
         enabled: props.hierarquico,
+        direction: 'LR',
+        sortMethod: 'directed',
+        shakeTowards: 'leaves',
       },
     },
     edges: {
@@ -134,7 +138,7 @@ const GraphView = props => {
       },
     },
     interaction: {
-      dragNodes: true,
+      dragNodes: (props.aba === 'grafo') ? true : false,
       hover: true,
       dragView: false,
       zoomView: false,
@@ -245,31 +249,66 @@ const GraphView = props => {
 
   return (
     <>
-      <Flex direction={"row"} justifyItems={"flex-start"}>
-        <EditPopOver
-          operation={'add'}
-          buttonText={'Adicionar Vértice'}
-          headerText={'Novo Vértice'}
-          inputText={'Rótulo'}
-          eventClick={buttonAddNode}
-        />
+      <Flex direction={'row'} justifyItems={'flex-start'}>
+        {props.aba === 'grafo' ? (
+          <>
+            <EditPopOver
+              operation={'add'}
+              buttonText={'Adicionar Vértice'}
+              headerText={'Novo Vértice'}
+              inputText={'Rótulo'}
+              eventClick={buttonAddNode}
+            />
 
-        <EditPopOver
-          operation={'add'}
-          buttonText={'Adicionar Aresta'}
-          headerText={'Nova Aresta'}
-          inputText={'Peso'}
-          eventClick={buttonAddEdge}
-        />
+            <EditPopOver
+              operation={'add'}
+              buttonText={'Adicionar Aresta'}
+              headerText={'Nova Aresta'}
+              inputText={'Peso'}
+              eventClick={buttonAddEdge}
+            />
 
-        <EditPopOver
-          operation={'del'}
-          buttonText={'Remover'}
-          headerText={'Remover Elemento?'}
-          eventClick={buttonDelete}
-        />
+            <EditPopOver
+              operation={'del'}
+              buttonText={'Remover'}
+              headerText={'Remover Elemento?'}
+              eventClick={buttonDelete}
+            />
+          </>
+        ) : (
+          <></>
+        )}
+
+        {/*
+        {props.aba === 'ordenacao' ? (
+          
+          <Button
+            onClick= {ordenacaoTopologica(state)}
+            marginEnd={4}
+            size="sm"
+            color="white"
+            leftIcon={<ViewIcon/>}
+            fontFamily={Fontes.principal}
+            fontWeight={400}
+            bgColor="rgba(255,255,255,0.05)"
+            _hover={{ bg: Cores.dark_purple_2 }}
+            _active={{
+              bg: Cores.purple_mountain_majesty,
+              transform: 'scale(0.98)',
+            }}
+            _focus={{
+              boxShadow:
+                '0 0 1px 2px rgba(88, 144, 255, .75), 0 1px 1px rgba(0, 0, 0, .15)',
+            }}
+          >
+            Visualizar
+          </Button>
+        ) : (
+          <></>
+        )}*/}
+        
       </Flex>
-      
+
       <div ref={container} style={{ height: '100%', width: '100%' }} />
     </>
   );
