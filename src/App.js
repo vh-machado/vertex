@@ -6,8 +6,9 @@ import GraphResults from './components/GraphResults';
 import Menu from './components/Menu';
 function App() {
 
-  const [painelVisivel, setPainelVisivel] = useState(false);
-  
+  const [orientacao, setOrientacao] = useState(true);
+  console.log(orientacao)
+
   return (
     <ChakraProvider theme={theme}>
       <Box textAlign="center" fontSize="xl" bgColor={Cores.rich_black_fogra_39}>
@@ -27,11 +28,11 @@ function App() {
               borderRadius={40}
             >
               {/* Componente da esquerda */}
-              <Menu/>
+              <Menu orientacao={orientacao} setOrientacao={setOrientacao}/>
             </Box>
             <Box h="100%" w="55vw">
               {/* Componente do meio */}
-              <GraphTabs/>
+              <GraphTabs orientacao={orientacao}/>
             </Box>
 
             <Flex

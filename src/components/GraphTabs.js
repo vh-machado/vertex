@@ -11,7 +11,6 @@ import { Cores } from '../assets/Cores';
 import GraphView from './GraphView';
 import { Fontes } from '../assets/Fontes';
 import ordenacaoTopologica from '../Algoritmos/ordenacaoTopologica';
-import criaListaAdjacencia from '../Algoritmos/criaListaAdjacencia';
 
 const orientacao = true;
 const colorNode = Cores.lavender_floral;
@@ -122,7 +121,7 @@ function GraphTabs(props) {
             aba={'grafo'}
             state={graphData}
             childToParent={childToParent}
-            orientado={orientacao}
+            orientado={props.orientacao}
             hierarquico={false}
             curva={false}
           ></GraphView>

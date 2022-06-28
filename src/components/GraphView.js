@@ -4,8 +4,6 @@ import { Button, Flex } from '@chakra-ui/react';
 import { Cores } from '../assets/Cores';
 import EditPopOver from './EditPopOver';
 import { Fontes } from '../assets/Fontes';
-import { ViewIcon } from '@chakra-ui/icons';
-import ordenacaoTopologica from '../Algoritmos/ordenacaoTopologica';
 
 const GraphView = props => {
   var grafo;
@@ -224,7 +222,7 @@ const GraphView = props => {
     });*/
 
     grafo = network;
-  }, [container, graph.nodes, graph.edges]);
+  }, [container, graph.nodes, graph.edges, props.orientado]);
 
   /*
   var teste = {
