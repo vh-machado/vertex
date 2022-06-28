@@ -3,7 +3,7 @@ import { ChakraProvider, Box, theme, Center, HStack, Flex } from '@chakra-ui/rea
 import { Cores } from './assets/Cores';
 import GraphTabs from './components/GraphTabs';
 import GraphResults from './components/GraphResults';
-
+import Menu from './components/Menu';
 function App() {
   return (
     <ChakraProvider theme={theme}>
@@ -24,7 +24,7 @@ function App() {
               borderRadius={40}
             >
               {/* Componente da esquerda */}
-              
+              <Menu />
             </Box>
             <Box h="100%" w="55vw">
               {/* Componente do meio */}
