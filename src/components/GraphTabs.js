@@ -5,17 +5,17 @@ import {
   Tab,
   TabPanels,
   TabPanel,
-  Button,
+  theme,
 } from '@chakra-ui/react';
 import { Cores } from '../assets/Cores';
 import GraphView from './GraphView';
 import { Fontes } from '../assets/Fontes';
+import ordenacaoTopologica from '../Algoritmos/ordenacaoTopologica';
 
-const orientacao = false;
+const orientacao = true;
 const colorNode = Cores.lavender_floral;
 
 function GraphTabs(props) {
-  
   var initialGraphData = {
     counter: 0,
     graph: {
@@ -38,13 +38,21 @@ function GraphTabs(props) {
     },
   };
 
+  /*
+  var ordenado = {
+    counter: 0,
+    graph: {nodes: [], edges: []},
+  };*/
+
   const [graphData, setGraphData] = useState(initialGraphData);
+  var grafoOrdenado = initialGraphData;
+  //const [sortGraph, setSortGraph] = useState(ordenado);
 
-  
-  const childToParent = (childData) => {
+  const childToParent = childData => {
     setGraphData(childData);
+    grafoOrdenado = ordenacaoTopologica(graphData)
+    //setSortGraph(ordenacaoTopologica(childData));
   };
-
 
   /*
   const nodes = [
@@ -105,10 +113,11 @@ function GraphTabs(props) {
   */
 
   return (
-    <Tabs isLazy size="sm" variant="line" h="100%" p="8" colorScheme={'purple'}>
+    <Tabs isLazy variant="unstyled" size="sm" h="100%" p="8">
       <TabPanels h="92%">
         <TabPanel h="100%" w="100%">
           <GraphView
+            aba={'grafo'}
             state={graphData}
             childToParent={childToParent}
             orientado={orientacao}
@@ -118,7 +127,8 @@ function GraphTabs(props) {
         </TabPanel>
         <TabPanel h="100%" w="100%">
           <GraphView
-            state={graphData}
+            aba={'ordenacao'}
+            state={grafoOrdenado}
             childToParent={childToParent}
             orientado={true}
             hierarquico={true}
@@ -126,12 +136,77 @@ function GraphTabs(props) {
           ></GraphView>
         </TabPanel>
       </TabPanels>
-      <TabList h="8%" fontFamily={Fontes.principal}>
-        <Tab fontWeight={400} fontSize={14}>Grafo</Tab>
-        <Tab fontWeight={400} fontSize={14}>Ordenação Topológica</Tab>
-        <Tab fontWeight={400} fontSize={14}>Ciclo Euleriano</Tab>
-        <Tab fontWeight={400} fontSize={14}>Menor Caminho</Tab>
-        <Tab fontWeight={400} fontSize={14}>Árvore Geradora Mínima</Tab>
+      <TabList h="8%" fontFamily={Fontes.principal} theme={theme}>
+        <Tab
+          flex={[1, 0, 'auto']}
+          borderBottomWidth={2}
+          color={Cores.mauve}
+          borderColor={'rgba(158, 150, 150, 0.05)'}
+          _selected={{
+            color: Cores.amethyst,
+            borderColor: Cores.amethyst,
+          }}
+          fontWeight={400}
+          fontSize={14}
+        >
+          Grafo
+        </Tab>
+        <Tab
+          flex={[1, 0, 'auto']}
+          borderBottomWidth={2}
+          color={Cores.mauve}
+          borderColor={'rgba(158, 150, 150, 0.05)'}
+          _selected={{
+            color: Cores.amethyst,
+            borderColor: Cores.amethyst,
+          }}
+          fontWeight={400}
+          fontSize={14}
+        >
+          Ordenação Topológica
+        </Tab>
+        <Tab
+          flex={[1, 0, 'auto']}
+          borderBottomWidth={2}
+          color={Cores.mauve}
+          borderColor={'rgba(158, 150, 150, 0.05)'}
+          _selected={{
+            color: Cores.amethyst,
+            borderColor: Cores.amethyst,
+          }}
+          fontWeight={400}
+          fontSize={14}
+        >
+          Ciclo Euleriano
+        </Tab>
+        <Tab
+          flex={[1, 0, 'auto']}
+          borderBottomWidth={2}
+          color={Cores.mauve}
+          borderColor={'rgba(158, 150, 150, 0.05)'}
+          _selected={{
+            color: Cores.amethyst,
+            borderColor: Cores.amethyst,
+          }}
+          fontWeight={400}
+          fontSize={14}
+        >
+          Menor Caminho
+        </Tab>
+        <Tab
+          flex={[1, 0, 'auto']}
+          borderBottomWidth={2}
+          color={Cores.mauve}
+          borderColor={'rgba(158, 150, 150, 0.05)'}
+          _selected={{
+            color: Cores.amethyst,
+            borderColor: Cores.amethyst,
+          }}
+          fontWeight={400}
+          fontSize={14}
+        >
+          Árvore Geradora Mínima
+        </Tab>
       </TabList>
     </Tabs>
   );

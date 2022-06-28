@@ -1,21 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { network, Network } from 'vis-network';
-import {
-  Box,
-  Button,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverFooter,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverAnchor,
-} from '@chakra-ui/react';
+import { Button, Flex } from '@chakra-ui/react';
 import { Cores } from '../assets/Cores';
 import EditPopOver from './EditPopOver';
 import { Fontes } from '../assets/Fontes';
+import { ViewIcon } from '@chakra-ui/icons';
+import ordenacaoTopologica from '../Algoritmos/ordenacaoTopologica';
 
 const GraphView = props => {
   var grafo;
@@ -91,6 +81,9 @@ const GraphView = props => {
     layout: {
       hierarchical: {
         enabled: props.hierarquico,
+        direction: 'LR',
+        sortMethod: 'directed',
+        shakeTowards: 'leaves',
       },
     },
     edges: {
@@ -111,7 +104,7 @@ const GraphView = props => {
         highlight: Cores.lavender_floral,
         hover: Cores.lavender_floral,
         inherit: 'from',
-        opacity:1.0
+        opacity: 1.0,
       },
       width: 2,
       smooth: {
@@ -128,7 +121,6 @@ const GraphView = props => {
       },
       font: {
         face: Fontes.principal,
-        weigth: 200,
         size: 16,
         color: Cores.dark_purple,
       },
@@ -146,7 +138,7 @@ const GraphView = props => {
       },
     },
     interaction: {
-      dragNodes: true,
+      dragNodes: (props.aba === 'grafo') ? true : false,
       hover: true,
       dragView: false,
       zoomView: false,
@@ -234,60 +226,89 @@ const GraphView = props => {
     grafo = network;
   }, [container, graph.nodes, graph.edges]);
 
+  /*
+  var teste = {
+    counter: 3,
+    graph: {
+      nodes: [
+        { id: 0, label: 'Node 1', color: Cores.lavender_floral, x: 200, y: 0 },
+        { id: 1, label: 'Node 2', color: Cores.lavender_floral, x: 50, y: 250 },
+        { id: 2, label: 'Node 3', color: Cores.lavender_floral, x: 300, y: 0 },
+      ],
+      edges: [
+        { from: 2, to: 1, label: "a" },
+        { from: 1, to: 0, label: "b" },
+      ],
+    },
+  };
+  var teste2 = {
+    counter: 0,
+    graph: {nodes: [], edges: [],},
+  };
+  ordenacaoTopologica(teste, teste2);*/
+
   return (
     <>
-      <EditPopOver
-        operation={'add'}
-        buttonText={'Adicionar Vértice'}
-        headerText={'Novo Vértice'}
-        inputText={'Rótulo'}
-        eventClick={buttonAddNode}
-      />
+      <Flex direction={'row'} justifyItems={'flex-start'}>
+        {props.aba === 'grafo' ? (
+          <>
+            <EditPopOver
+              operation={'add'}
+              buttonText={'Adicionar Vértice'}
+              headerText={'Novo Vértice'}
+              inputText={'Rótulo'}
+              eventClick={buttonAddNode}
+            />
 
-      <EditPopOver
-        operation={'add'}
-        buttonText={'Adicionar Aresta'}
-        headerText={'Nova Aresta'}
-        inputText={'Peso'}
-        eventClick={buttonAddEdge}
-      />
+            <EditPopOver
+              operation={'add'}
+              buttonText={'Adicionar Aresta'}
+              headerText={'Nova Aresta'}
+              inputText={'Peso'}
+              eventClick={buttonAddEdge}
+            />
 
-      <EditPopOver
-        operation={'del'}
-        buttonText={'Remover'}
-        headerText={'Remover Elemento?'}
-        eventClick={buttonDelete}
-      />
-      {/*
-      <Popover>
-        <PopoverTrigger>
-          <Button>Adicionar Vértice</Button>
-        </PopoverTrigger>
-        <PopoverContent>
-          <PopoverArrow />
-          <PopoverCloseButton />
-          <PopoverHeader>Novo vértice</PopoverHeader>
-          <PopoverBody>
-            <Button onClick={() => buttonAddNode()}>Confirmar</Button>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
-      */}
-      {/*
-      <Popover>
-        <PopoverTrigger>
-          <Button>Adicionar Aresta</Button>
-        </PopoverTrigger>
-        <EditPopOver header={"Nova aresta"} eventoClick={() => buttonAddEdge()}/>
-      </Popover>
+            <EditPopOver
+              operation={'del'}
+              buttonText={'Remover'}
+              headerText={'Remover Elemento?'}
+              eventClick={buttonDelete}
+            />
+          </>
+        ) : (
+          <></>
+        )}
 
-      <Popover>
-        <PopoverTrigger>
-          <Button>Remover</Button>
-        </PopoverTrigger>
-        <EditPopOver header={"Deseja remover o elemento selecionado?"} eventoClick={() => buttonDelete()}/>
-      </Popover>
-      */}
+        {/*
+        {props.aba === 'ordenacao' ? (
+          
+          <Button
+            onClick= {ordenacaoTopologica(state)}
+            marginEnd={4}
+            size="sm"
+            color="white"
+            leftIcon={<ViewIcon/>}
+            fontFamily={Fontes.principal}
+            fontWeight={400}
+            bgColor="rgba(255,255,255,0.05)"
+            _hover={{ bg: Cores.dark_purple_2 }}
+            _active={{
+              bg: Cores.purple_mountain_majesty,
+              transform: 'scale(0.98)',
+            }}
+            _focus={{
+              boxShadow:
+                '0 0 1px 2px rgba(88, 144, 255, .75), 0 1px 1px rgba(0, 0, 0, .15)',
+            }}
+          >
+            Visualizar
+          </Button>
+        ) : (
+          <></>
+        )}*/}
+        
+      </Flex>
+
       <div ref={container} style={{ height: '100%', width: '100%' }} />
     </>
   );

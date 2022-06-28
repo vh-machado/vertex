@@ -39,7 +39,7 @@ export function viewCard(title, info) {
       borderRadius={10}
       borderWidth="0px"
       borderColor={Cores.amethyst_2}
-      textColor={Cores.middle_Yellow}
+      textColor={'white'}
       background={Cores.russian_violet}
       boxShadow="lg"
       p="6"
@@ -55,13 +55,13 @@ export function viewCard(title, info) {
         display={"flex"}
         width="100%"
         fontSize={15}
-        fontWeight="bold"
-        textColor={Cores.textoCardResultados}
+        fontWeight="semibold"
+        textColor={Cores.lavender_floral}
         fontFamily={Fontes.principal}
       >
         {title}
       </Box>
-      <Box display={"flex"} fontSize={12} fontWeight="bold">
+      <Box display={"flex"} fontSize={14} fontWeight="regular">
         {info}
       </Box>
     </Flex>
