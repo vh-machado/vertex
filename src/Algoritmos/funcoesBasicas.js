@@ -1,61 +1,86 @@
-import { FilaPilha } from "./lixo/estruturas_auxiliares/filaPilha"
+import { FilaPilha } from "./filaPilha"
 
 export class algoritmosGrafos {
-    arrayRemove(arr, value) { 
-    
-        return arr.filter(function(ele){ 
-            return ele != value; 
+    arrayRemove(arr, value) {
+
+        return arr.filter(function (ele) {
+            return ele !== value;
         });
     }
 
     procuraAresta(origem, destino, grafo) {
-        var resposta
-        function teste(item, index) {
-            if (item.from == origem && item.to == destino) {
-                resposta = 'ID:' + index + ":" + item.from + '-' + item.to
-                return resposta
-            } else {
-                resposta = null
-                return resposta
+        var resposta = "Não existe a aresta"
+        /*console.log("teste aresta origem", origem)
+        console.log("teste aresta destino", destino)*/
+        grafo.edges.forEach(teste)
+        function teste(item) {
+            if (item.from === origem && item.to === destino) {
+                //console.log(item.from, item.to)
+                resposta = "Existe a aresta"
             }
         }
-        grafo.edges.forEach(teste)
+        return resposta
     }
 
     calcularGrau(grafo, vertice, tipoGrafo) {
         var contador = 0;
-        if (tipoGrafo == 'digrafo') {
+        if (tipoGrafo === 'orientado') {
             for (var i = 0; i < grafo.edges.length; i++) {
-                if (grafo.edges[i].from === vertice || grafo.edges[i].to === vertice) {
+                if (grafo.edges[i].from === vertice) {
                     contador++;
                 }
-            }
-            return contador
-        } else {
-            for (var i = 0; i < grafo.edges.length; i++) {
                 if (grafo.edges[i].to === vertice) {
                     contador++;
                 }
             }
             return contador
+        } else if (tipoGrafo === 'nao_orientado') {
+            for (var j = 0; j < grafo.edges.length; j++) {
+                if (grafo.edges[j].from === vertice || grafo.edges[j].to === vertice) {
+                    contador++;
+                }
+            }
+
+            return contador
         }
     }
 
-    recuperarAdjacencias(grafo, verticeEscolhido) {
-        var resposta = []
-        function teste(item) {
-            if (item.from == verticeEscolhido) {
-                resposta.push(item.to)
-            }
+
+    recuperarAdjacencias(grafo, verticeEscolhido, tipoGrafo){
+        const verticesAdjacentes = []
+        const arestas = grafo.edges
+        const vertices = grafo.nodes 
+        if(tipoGrafo === 'nao_orientado'){
+            arestas.forEach(aresta =>{
+                vertices.forEach(vertice =>{
+                    if(aresta.from === verticeEscolhido && aresta.to === vertice.id){
+                        verticesAdjacentes.push(vertice.label)
+                    }
+                    if(aresta.to === verticeEscolhido && aresta.from === vertice.id && !verticesAdjacentes.includes(vertice.label)){
+                        verticesAdjacentes.push(vertice.label)
+                    }
+                })
+            })
+            return verticesAdjacentes
         }
-        grafo.edges.forEach(teste)
-        return resposta
+        if(tipoGrafo === 'orientado'){
+            arestas.forEach(aresta =>{
+                vertices.forEach(vertice =>{
+                    if(aresta.from === verticeEscolhido && aresta.to === vertice.id){
+                        verticesAdjacentes.push(vertice.label)
+                    }
+                })
+            })
+            return verticesAdjacentes
+        }
     }
+
+
 
     recuperarArestas(grafo, verticeEscolhido) {
         var resposta = []
         function teste(item) {
-            if (item.from == verticeEscolhido) {
+            if (item.from === verticeEscolhido) {
                 resposta.push(item)
             }
         }
@@ -64,7 +89,7 @@ export class algoritmosGrafos {
     }
 
 
-    buscaEmLargura(grafo, origem) {
+    /*buscaEmLargura(grafo, origem) {
         const fila = new FilaPilha()
         const enfileirados = []
         const visitados = []
@@ -104,17 +129,12 @@ export class algoritmosGrafos {
         return false
     }
 
-    possuiCiclo(grafo, origem){
-        const empilhados = []
-        return this.possuiCiclo(grafo, origem, empilhados)
-    }
-
-    possuiCiclo(grafo, origem, empilhados){
+    TesteCiclo(grafo, origem, empilhados){
         empilhados.push(origem)
         const arestas = this.recuperarArestas(grafo, origem)
         for (var i = 0; i < arestas.length; i++) {
             if(arestas[i].to in empilhados && 
-                this.possuiCiclo(grafo, arestas[i].to, empilhados)){
+                this.TesteCiclo(grafo, arestas[i].to, empilhados)){
                     return true
             }else if (arestas[i].to in empilhados){
                 return true
@@ -123,4 +143,11 @@ export class algoritmosGrafos {
         this.arrayRemove(empilhados, origem)
         return false
     }
+
+    possuiCiclo(grafo, origem){
+        const empilhados = []
+        return this.TesteCiclo(grafo, origem, empilhados)
+    }*/
+
+
 }
