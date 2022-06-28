@@ -138,7 +138,7 @@ const GraphView = props => {
       },
     },
     interaction: {
-      dragNodes: (props.aba === 'grafo') ? true : false,
+      dragNodes: props.aba === 'grafo' ? true : false,
       hover: true,
       dragView: false,
       zoomView: false,
@@ -306,9 +306,7 @@ const GraphView = props => {
         ) : (
           <></>
         )}*/}
-        
       </Flex>
-
       <div ref={container} style={{ height: '100%', width: '100%' }} />
     </>
   );
