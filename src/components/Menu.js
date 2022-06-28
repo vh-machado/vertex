@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Cores } from '../assets/Cores';
-import { Button } from '@chakra-ui/react'
-import { VStack } from '@chakra-ui/react'
-import { EditIcon } from '@chakra-ui/icons'
-import { useDisclosure } from '@chakra-ui/react'
-import { Box } from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react';
+import { VStack } from '@chakra-ui/react';
+import { EditIcon } from '@chakra-ui/icons';
+import { useDisclosure } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useRadio } from '@chakra-ui/react';
 import { useRadioGroup } from '@chakra-ui/react';
@@ -13,46 +13,26 @@ import { render } from '@testing-library/react';
 
 
 function Menu(props) {
-  const { isOpenEdit, onOpenEdit, onCloseEdit } = useDisclosure();
+
   const { isOpenGerar, onOpenGerar, onCloseGerar } = useDisclosure();
-  const [campoVisibleVertice, setCampoVisibleVertice] = useState(false);
-  const [campoVisibleAresta, setCampoVisibleAresta] = useState(false);
-
-
-  const clickAddVertice = () => {
-    setCampoVisibleVertice(!campoVisibleVertice);
-  }
-  const clickAddConexao = () => {
-    setCampoVisibleAresta(!campoVisibleAresta);
-  };
 
   return (
     <VStack
       spacing={4}
-      align='stretch'
-      justify='center'
-      w='100%'
-      h='100%'
+      align="stretch"
+      justify="center"
+      w="100%"
+      h="100%"
       padding={2}
     >
-      <Button
-        onClick={onOpenEdit}
-        leftIcon={<EditIcon />}
-        bgColor={Cores.amethyst_2}
-        colorScheme={Cores.dark_purple_2}
-        size='xs'
-        fontSize={16}
-      >
-        Editar
-      </Button>
       <TipoGrafo />
 
       <Button
         onClick={onOpenGerar}
         bgColor={Cores.russian_violet}
         textColor="white"
-        size='xs'
-        fontSize='15'
+        size="xs"
+        fontSize="15"
       >
         Gerar
       </Button>
@@ -64,21 +44,20 @@ export default Menu;
 
 // 1. Create a component that consumes the `useRadio` hook
 function RadioCard(props) {
-  const { getInputProps, getCheckboxProps } = useRadio(props)
+  const { getInputProps, getCheckboxProps } = useRadio(props);
 
-  const input = getInputProps()
-  const checkbox = getCheckboxProps()
+  const input = getInputProps();
+  const checkbox = getCheckboxProps();
 
   return (
-    <Box as='label'>
+    <Box as="label">
       <input {...input} />
       <Box
         {...checkbox}
-        cursor='pointer'
-        borderWidth='sm'
-        borderRadius='md'
-        boxShadow='sm'
-        
+        cursor="pointer"
+        borderWidth="sm"
+        borderRadius="md"
+        boxShadow="sm"
         _checked={{
           variant: 'outline',
           color: 'white',
@@ -89,32 +68,29 @@ function RadioCard(props) {
         {props.children}
       </Box>
     </Box>
-  )
+  );
 }
 
 // Step 2: Use the `useRadioGroup` hook to control a group of custom radios.
 function TipoGrafo() {
-  const options = ['Com Orientação', 'Sem Orientação']
+  const options = ['Com Orientação', 'Sem Orientação'];
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: 'framework',
     defaultValue: 'Com Orientação',
     onChange: console.log,
-  })
-  const group = getRootProps()
+  });
+  const group = getRootProps();
   return (
-    <VStack {...group}
-      fontSize='14'
-    >
-      {options.map((value) => {
-        const radio = getRadioProps({ value })
+    <VStack {...group} fontSize="14">
+      {options.map(value => {
+        const radio = getRadioProps({ value });
         return (
           <RadioCard key={value} {...radio}>
             {value}
           </RadioCard>
-        )
+        );
       })}
     </VStack>
-  )
+  );
 }
-render(<TipoGrafo />)

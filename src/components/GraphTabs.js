@@ -45,6 +45,7 @@ function GraphTabs(props) {
     graph: {nodes: [], edges: []},
   };*/
 
+  //const [editMode, setEditMode] = useState(false);
   const [graphData, setGraphData] = useState(initialGraphData);
   var grafoOrdenado = initialGraphData;
   //const [sortGraph, setSortGraph] = useState(ordenado);
