@@ -15,34 +15,37 @@ var state = {
       { id: 3, label: 'C', x: 300, y: 0 },
       { id: 4, label: 'D', x: 90, y: 100 },
       { id: 5, label: 'E', x: 0, y: 10 },
+      { id: 6, label: 'F', x: 0, y: 10 },
     ],
     edges: [
       { from: 1, to: 2 },
-      { from: 1, to: 5 },
-      { from: 1, to: 4 },
+      { from: 1, to: 3 },
       { from: 2, to: 3 },
+      { from: 3, to: 2 },
       { from: 3, to: 4 },
-      { from: 4, to: 5 },
-      { from: 4, to: 1}
+      { from: 4, to: 2 },
+      { from: 4, to: 6},
     ],
   },
 };
 
 const origem = state.graph.edges[0].from
 const destino = state.graph.edges[1].to
-const vertice = state.graph.nodes[1]
+const vertice = state.graph.nodes[0]
 const grafo = state.graph
+
 const resultadoAresta = teste.procuraAresta(origem, destino, grafo);
 const grauVertice = teste.calcularGrau(grafo, vertice.id, 'nao_orientado');
-const adjacenciasVertice = teste.recuperarAdjacencias(grafo, vertice.id,'orientado');
-console.log(adjacenciasVertice)
+const adjacenciasVertice = teste.recuperarAdjacencias(grafo, vertice.id,'nao_orientado');
+const resultadoConexo = teste.eConexo(grafo);
+const resultadoCiclico = teste.possuiCiclo(grafo, vertice.id, grafo.nodes[5].id)
+console.log(resultadoCiclico)
 
 
-const resultadoConexo = "Sim";
 const resultadoFrConexo = "Sim";
 const resultadoUnConexo = "Não";
 const resultadoFoConexo = "Não";
-const resultadoCiclico = "Sim";
+
 const resultadoPlanar = "Sim";
 const resultadoEuleriano = "Não";
 const resultadoMenorCaminho = ['a', 'b', 'e', 'd'];
@@ -71,7 +74,7 @@ function GraphResults() {
     {viewCard('Grafo Euleriano?', resultadoEuleriano)}
     {viewCard('Menor Caminho:', resultadoMenorCaminho)}
     {viewCard('Menor Custo:', resultadoMenorCusto)}
-    {viewCard('Grafo Ciclico:', resultadoCiclico)}
+    {viewCard('Grafo Ciclico:', resultadoCiclico.toString())}
     
     </>
   );

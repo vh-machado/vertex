@@ -117,4 +117,3 @@ function TipoGrafo() {
     </VStack>
   )
 }
-render(<TipoGrafo />)

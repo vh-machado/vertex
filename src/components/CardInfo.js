@@ -4,30 +4,8 @@ import { Cores } from '../assets/Cores';
 import { Fontes } from '../assets/Fontes';
 import { algoritmosGrafos } from '../Algoritmos/funcoesBasicas';
 
-const options = []
-const idOptions = []
-const contador = 0
-
-
-function criaListaOpcoes(grafo) {
-  grafo.nodes.forEach(vertice => {
-    if (options.length != grafo.nodes.length) {
-      idOptions.push(vertice.id)
-      options.push(vertice.label)
-    }
-  });
-}
-
-function criaListaVertices(grafo) {
-  grafo.nodes.map(function (item, indice) {
-      return (<option value={indice}>{item.label}</option>)
-    })
-  }
-
-
-
-
 export function viewCard(title, info) {
+  
   return (
     <Flex
       h="auto"
@@ -69,7 +47,7 @@ export function viewCard(title, info) {
 }
 
 export function viewCardSelection(title, info, grafo) {
-  {/*console.log(criaListaVertices(grafo))*/}
+
   return (
     <Flex
       h="auto"
@@ -81,7 +59,7 @@ export function viewCardSelection(title, info, grafo) {
       borderRadius={10}
       borderWidth="0px"
       borderColor={Cores.amethyst_2}
-      textColor={Cores.middle_Yellow}
+      textColor={'white'}
       background={Cores.russian_violet}
       boxShadow="lg"
       p="6"
@@ -98,22 +76,36 @@ export function viewCardSelection(title, info, grafo) {
         width="100%"
         fontSize={15}
         fontWeight="bold"
-        textColor={Cores.textoCardResultados}
+        textColor={Cores.lavender_floral}
         fontFamily={Fontes.principal}
       >
         {title}
-       {/* <Select
+        
+        <Select
+          id='origem'
           placeholder='Origem'
           w='auto'
           h='auto'>
-          {criaListaVertices(grafo)}
-       </Select>
+          {grafo.nodes.map((value) => {
+            const idVertice = value.id
+            const nomeVertice = value.label
+          
+            return (<option value={idVertice}>{nomeVertice}</option>)
+            
+          })}
+        </Select>
         {'-'}
-        <Select placeholder='Destino'
+        <Select
+          id='destino'
+          placeholder='Destino'
           w='auto'
           h='auto'>
-          {criaListaVertices(grafo)}
-  </Select>*/}
+          {grafo.nodes.map((value) => {
+            const idVertice = value.id
+            const nomeVertice = value.label
+            return (<option value={idVertice}>{nomeVertice}</option>)
+          })}
+        </Select>
       </Box>
       <Box display={"flex"} fontSize={12} fontWeight="bold">
         {info}
