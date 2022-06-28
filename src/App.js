@@ -7,7 +7,6 @@ import Menu from './components/Menu';
 function App() {
 
   const [orientacao, setOrientacao] = useState(true);
-  console.log(orientacao)
 
   return (
     <ChakraProvider theme={theme}>

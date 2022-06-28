@@ -12,8 +12,10 @@ export default function criaListaAdjacencia(listaVertices, listaArestas) {
   // Adiciona as arestas
   listaArestas.forEach(aresta => {
     listaAdjacencia[aresta.from].push(aresta.to);
+    console.log(aresta.from +'=>'+ aresta.to )
   });
 
+  console.log('listaAdj=')
   console.log(listaAdjacencia);
   return listaAdjacencia;
 }

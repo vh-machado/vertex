@@ -4,6 +4,8 @@ import { Button, Flex } from '@chakra-ui/react';
 import { Cores } from '../assets/Cores';
 import EditPopOver from './EditPopOver';
 import { Fontes } from '../assets/Fontes';
+import componentesFortes from '../Algoritmos/componentesFortes';
+import isStrong from '../Algoritmos/isStrong';
 
 const GraphView = props => {
   var grafo;
@@ -244,6 +246,8 @@ const GraphView = props => {
     graph: {nodes: [], edges: [],},
   };
   ordenacaoTopologica(teste, teste2);*/
+  componentesFortes(state.graph.nodes, state.graph.edges);
+  isStrong(state.graph.nodes, state.graph.edges);
 
   return (
     <>

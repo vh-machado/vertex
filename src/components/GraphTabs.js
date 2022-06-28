@@ -11,6 +11,11 @@ import { Cores } from '../assets/Cores';
 import GraphView from './GraphView';
 import { Fontes } from '../assets/Fontes';
 import ordenacaoTopologica from '../Algoritmos/ordenacaoTopologica';
+import criaMatrizAdjacencia from '../Algoritmos/criaMatrizAdjacencia';
+import criaListaAdjacencia from '../Algoritmos/criaListaAdjacencia';
+import componentesFortes from '../Algoritmos/componentesFortes';
+import profundidade from '../Algoritmos/profundidade';
+import isStrong from '../Algoritmos/isStrong';
 
 const orientacao = true;
 const colorNode = Cores.lavender_floral;
@@ -38,16 +43,11 @@ function GraphTabs(props) {
     },
   };
 
-  /*
-  var ordenado = {
-    counter: 0,
-    graph: {nodes: [], edges: []},
-  };*/
+  
+  
 
-  //const [editMode, setEditMode] = useState(false);
   const [graphData, setGraphData] = useState(initialGraphData);
   var grafoOrdenado = initialGraphData;
-  //const [sortGraph, setSortGraph] = useState(ordenado);
 
   const childToParent = childData => {
     setGraphData(childData);
@@ -112,6 +112,23 @@ function GraphTabs(props) {
     { from: 1, to: 3 },
   ];
   */
+
+  var teste = {
+    counter: 3,
+    graph: {
+      nodes: [
+        { id: 1, label: 'Node 1', x: 200, y: 0 },
+        { id: 2, label: 'Node 2', x: 50, y: 250 },
+        { id: 3, label: 'Node 3', x: 300, y: 0 },
+      ],
+      edges: [
+        { from: 1, to: 2, label: "" },
+        { from: 2, to: 3, label: "" },
+        { from: 3, to: 1, label: "" },
+      ],
+    },
+  }
+
 
   return (
     <Tabs isLazy variant="unstyled" size="sm" h="100%" p="8">

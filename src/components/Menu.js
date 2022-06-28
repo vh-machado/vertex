@@ -46,22 +46,10 @@ function Menu(props) {
   function TipoGrafo() {
     const options = ['Com Orientação', 'Sem Orientação'];
 
-    /*
-    const handleChange = value => {
-      if(value === 'Sem Orientação'){
-        console.log('a')
-        //props.setOrientacao(false);
-      }
-      if(value === 'Com Orientação'){
-        console.log('b')
-        //props.setOrientacao(true);
-      }
-      
-    };*/
-
     const { value, getRootProps, getRadioProps } = useRadioGroup({
       name: 'framework',
-      defaultValue: (props.orientacao == true)? 'Com Orientação' : 'Sem Orientação',
+      defaultValue:
+        props.orientacao == true ? 'Com Orientação' : 'Sem Orientação',
       onChange: () => props.setOrientacao(!props.orientacao),
     });
     const group = getRootProps();
