@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ChakraProvider, Box, theme, Center, HStack, Flex } from '@chakra-ui/react';
 import { Cores } from './assets/Cores';
 import GraphTabs from './components/GraphTabs';
 import GraphResults from './components/GraphResults';
 import Menu from './components/Menu';
 function App() {
+
+  const [painelVisivel, setPainelVisivel] = useState(false);
+  
   return (
     <ChakraProvider theme={theme}>
       <Box textAlign="center" fontSize="xl" bgColor={Cores.rich_black_fogra_39}>
@@ -24,11 +27,11 @@ function App() {
               borderRadius={40}
             >
               {/* Componente da esquerda */}
-              <Menu />
+              <Menu/>
             </Box>
             <Box h="100%" w="55vw">
               {/* Componente do meio */}
-              <GraphTabs />
+              <GraphTabs/>
             </Box>
 
             <Flex
