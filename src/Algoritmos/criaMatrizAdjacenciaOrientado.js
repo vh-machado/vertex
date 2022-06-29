@@ -12,15 +12,13 @@ export default function criaMatrizAdjacenciaOrientado(
     }
   }
 
-  if (possuiPeso) {
-    listaArestas.forEach(aresta => {
-      matrizAdjacencia[aresta.from - 1][aresta.to - 1] = parseInt(aresta.label);
-    });
-  } else {
-    listaArestas.forEach(aresta => {
+  listaArestas.forEach(aresta => {
+    if (aresta.label === '') {
       matrizAdjacencia[aresta.from - 1][aresta.to - 1] = 1;
-    });
-  }
+    } else {
+      matrizAdjacencia[aresta.from - 1][aresta.to - 1] = parseInt(aresta.label);
+    }
+  });
 
   console.log('matrizAdjOrientado=');
   console.log(matrizAdjacencia);

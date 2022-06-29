@@ -11,10 +11,11 @@ export default function componentesFortes(listaVertices, listaArestas) {
       this.V = v;
       this.adj = new Array(v);
 
-      for (let i = 0; i < v; ++i) this.adj[i] = [];
+      for (let i = 0; i < v; ++i) {
+        this.adj[i] = [];
+      }
 
       this.Time = 0;
-
     }
 
     // Function to add an edge into the graph
@@ -73,11 +74,11 @@ export default function componentesFortes(listaVertices, listaArestas) {
         while (w != u) {
           w = st.pop();
           //document.write(w+1 + ' ');
-          console.log(w+1 + ' ');
-          
+          console.log(w + 1 + ' ');
+
           stackMember[w] = false;
         }
-        console.log('-------')
+        console.log('-------');
         //document.write('<br>');
       }
     }
@@ -110,8 +111,7 @@ export default function componentesFortes(listaVertices, listaArestas) {
   // Driver code
 
   // Create a graph given in the above diagram
-  
-  
+
   var teste = {
     counter: 5,
     graph: {
@@ -123,22 +123,22 @@ export default function componentesFortes(listaVertices, listaArestas) {
         { id: 4, label: 'Node 4', x: 300, y: 0 },
       ],
       edges: [
-        { from: 0, to: 4, label: "" },
-        { from: 1, to: 0, label: "" },
-        { from: 1, to: 2, label: "" },
-        { from: 3, to: 4, label: "" },
-        { from: 3, to: 2, label: "" },
-        { from: 4, to: 2, label: "" },
+        { from: 0, to: 4, label: '' },
+        { from: 1, to: 0, label: '' },
+        { from: 1, to: 2, label: '' },
+        { from: 3, to: 4, label: '' },
+        { from: 3, to: 2, label: '' },
+        { from: 4, to: 2, label: '' },
       ],
     },
-  }
-  
+  };
+
   let g1 = new Graph(listaVertices.length);
   listaArestas.forEach(aresta => {
     g1.addEdge(aresta.from - 1, aresta.to - 1);
-  })
+  });
   g1.SCC();
-  
+
   /*
   g1.addEdge(1, 0);
   g1.addEdge(0, 2);

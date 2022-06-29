@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Tabs,
   TabList,
@@ -10,19 +10,10 @@ import {
 import { Cores } from '../assets/Cores';
 import GraphView from './GraphView';
 import { Fontes } from '../assets/Fontes';
-import ordenacaoTopologica from '../Algoritmos/ordenacaoTopologica';
-import criaListaAdjacencia from '../Algoritmos/criaListaAdjacencia';
-import componentesFortes from '../Algoritmos/componentesFortes';
-import profundidade from '../Algoritmos/profundidade';
-import isStrong from '../Algoritmos/isStrong';
-import arvoreGeradoraMinima from '../Algoritmos/arvoreGeradoraMinima';
-import criaMatrizAdjacenciaNaoOrientado from '../Algoritmos/criaMatrizAdjacenciaNaoOrientado';
-import criaMatrizAdjacenciaOrientado from '../Algoritmos/criaMatrizAdjacenciaOrientado';
-import criaMatrizCaminho from '../Algoritmos/criaMatrizCaminho';
-import verificaConexidade from '../Algoritmos/verificaConexidade';
+import verificaEuleriano from '../Algoritmos/verificaEuleriano';
+
 
 const orientacao = true;
-const colorNode = Cores.lavender_floral;
 
 function GraphTabs(props) {
   var initialGraphData = {
@@ -128,9 +119,10 @@ function GraphTabs(props) {
     //grafoOrdenado = ordenacaoTopologica(graphData);
     
     //var resultadoAGM = {};
-    //resultadoAGM = arvoreGeradoraMinima(teste, true);
+    //resultadoAGM = arvoreGeradoraMinima(teste);
 
-    verificaConexidade(teste3, false);
+    //verificaConexidade(teste3);
+    //verificaEuleriano(graphData.graph.nodes, graphData.graph.edges);
   };
 
 

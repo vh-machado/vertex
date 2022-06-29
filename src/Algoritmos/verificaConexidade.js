@@ -1,6 +1,6 @@
 import criaMatrizCaminho from "./criaMatrizCaminho";
 
-export default function verificaConexidade(graphData, possuiPeso) {
+export default function verificaConexidade(graphData) {
   let V = graphData.counter;
 
   // Function to find the characteristic
@@ -116,7 +116,7 @@ export default function verificaConexidade(graphData, possuiPeso) {
     [0, 0, 1],
     [0, 0, 0],
   ];*/
-  var graph = criaMatrizCaminho(graphData, possuiPeso)
+  var graph = criaMatrizCaminho(graphData)
 
   // Function call
   checkConnected(graph, n);
