@@ -1,9 +1,9 @@
 import { criaListaAdjacencia } from './criaListaAdjacencia'
-
+import { dijkstra } from '../Algoritmos/dijkstra';
 var ciclo = false
 
+
 export class algoritmosGrafos {
-    
 
     arrayRemove(arr, value) {
 
@@ -91,7 +91,7 @@ export class algoritmosGrafos {
 
 
     
-    eCiclo(grafo, origem, empilhados) {
+    /*eCiclo(grafo, origem, empilhados) {
         empilhados.push(origem)
         const arestas = this.recuperarArestas(grafo, origem)
         for (var i = 0; i < arestas.length; i++) {
@@ -104,21 +104,21 @@ export class algoritmosGrafos {
         }
         this.arrayRemove(empilhados, origem)
         return false
-    }
+    }*/
 
 
 
-    /*eCicloNaoOrientado(listaAdjacencia, origem, destino, visitados = new Set()) {
+    eCiclo(listaAdjacencia, origem, destino, visitados = new Set()) {
         visitados.add(origem)
         const atual = listaAdjacencia[origem]
         atual.find(vertice => {
             if (visitados.has(vertice)) {
                 ciclo = true
             }
-            !visitados.has(vertice) && !visitados.has(destino) && this.eCicloNaoOrientado(listaAdjacencia, vertice, destino, visitados)
+            !visitados.has(vertice) && !visitados.has(destino) && this.eCiclo(listaAdjacencia, vertice, destino, visitados)
         })
         return ciclo
-    }*/
+    }
 
     buscaEmProfundidade(listaAdjacencia, origem, destino, visitados = new Set()) {
         visitados.add(origem)
@@ -191,5 +191,15 @@ export class algoritmosGrafos {
         const resultado = this.eCiclo(listaAdjacencias, origem, destino)
         return resultado
     }
+
+    executaDijkstra(grafo){
+        var algDijkstra = new dijkstra()
+        console.log(grafo)
+        var resultado = algDijkstra.dijkstra(grafo)
+        console.log(resultado)
+        return resultado
+    }
+
+ 
 
 }

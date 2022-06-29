@@ -14,6 +14,6 @@ export function criaListaAdjacencia(listaVertices, listaArestas) {
     listaAdjacencia[aresta.from].push(aresta.to);
   });
 
-  console.log(listaAdjacencia);
+
   return listaAdjacencia;
 }

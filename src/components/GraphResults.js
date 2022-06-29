@@ -3,8 +3,14 @@ import React from 'react';
 import {viewCard, viewCardSelection} from '../components/CardInfo';
 import {algoritmosGrafos} from '../Algoritmos/funcoesBasicas'
 import { Select } from '@chakra-ui/react'
+import { dijkstra } from '../Algoritmos/dijkstra';
+import { criaMatrizAdjacencia } from '../Algoritmos/criaMatrizAdjacencia'
+
 
 const teste = new algoritmosGrafos()
+var algDijkstra = new dijkstra()
+
+
 
 var state = {
   counter: 5,
@@ -18,13 +24,13 @@ var state = {
       { id: 6, label: 'F', x: 0, y: 10 },
     ],
     edges: [
-      { from: 1, to: 2 },
-      { from: 1, to: 3 },
-      { from: 2, to: 3 },
-      { from: 3, to: 2 },
-      { from: 3, to: 4 },
-      { from: 4, to: 2 },
-      { from: 4, to: 6},
+      { from: 1, to: 2, label: 3 },
+      { from: 1, to: 3, label: 5 },
+      { from: 2, to: 3, label: 1 },
+      { from: 3, to: 2, label: 3 },
+      { from: 3, to: 4, label: 9 },
+      { from: 4, to: 2, label: 4 },
+      { from: 4, to: 6, label: 6},
     ],
   },
 };
@@ -39,7 +45,11 @@ const grauVertice = teste.calcularGrau(grafo, vertice.id, 'nao_orientado');
 const adjacenciasVertice = teste.recuperarAdjacencias(grafo, vertice.id,'nao_orientado');
 const resultadoConexo = teste.eConexo(grafo);
 const resultadoCiclico = teste.possuiCiclo(grafo, vertice.id, grafo.nodes[5].id)
-console.log(resultadoCiclico)
+
+
+const resulatdoDijkstra = algDijkstra.dijkstra(criaMatrizAdjacencia(grafo.nodes, grafo.edges))
+const resultadoMenorCaminho = resulatdoDijkstra.path.toString();
+const resultadoMenorCusto = resulatdoDijkstra.distance;
 
 
 const resultadoFrConexo = "Sim";
@@ -48,18 +58,13 @@ const resultadoFoConexo = "Não";
 
 const resultadoPlanar = "Sim";
 const resultadoEuleriano = "Não";
-const resultadoMenorCaminho = ['a', 'b', 'e', 'd'];
-const resultadoMenorCusto = '80';
+
 
 const c = console.log()
 
 
 
 function GraphResults() {
-  /*console.log("teste aresta origem", origem)
-  console.log("teste aresta destino", destino)
-  console.log("teste aresta grafo", grafo)*/
-  //console.log("teste aresta", resultadoAresta)
   return (
   
     <>
@@ -67,7 +72,9 @@ function GraphResults() {
     {viewCard('Grau do Vértice '+ vertice.label, grauVertice)}
     {viewCard('Adjacentes do Vértice '+ vertice.label, adjacenciasVertice.toString())}
     {viewCard('Grafo não-orientado Conexo?', resultadoConexo)}
+    {viewCard('Ordenação Topológica:', 'teste')}
     {viewCard('Dígrafo Fracamente Conexo?', resultadoFrConexo)}
+    {viewCard('Componentes Fortes:', 'A-B-C')}
     {viewCard('Dígrafo Unilateralmente Conexo?', resultadoUnConexo)}
     {viewCard('Dígrafo Fortemente Conexo?', resultadoFoConexo)}
     {viewCard('Grafo Planar?', resultadoPlanar)}
