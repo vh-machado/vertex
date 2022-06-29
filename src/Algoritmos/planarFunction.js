@@ -1,10 +1,5 @@
 import { PlanarityChecker } from '../Algoritmos/planarity';
 
-
-
-
-
-
 export function planarity_test(nodes, edges) {
   console.log(nodes)
   console.log(edges)
@@ -72,4 +67,4 @@ export function planarity_test(nodes, edges) {
       return true
     else
       return false
-  }
+  } 

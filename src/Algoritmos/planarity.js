@@ -1,4 +1,3 @@
-
 class DefaultDict {
   constructor(defaultInit) {
     return new Proxy({}, {

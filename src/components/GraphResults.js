@@ -56,11 +56,12 @@ const teste = new algoritmosGrafos()//Cria objeto da classe algoritmosGrafos par
 const algDijkstra = new dijkstra()//Cria objeto da classe dijkstra para aplicar o algoritmo
 
 const origem = state.graph.edges[0].from // Usado no resultado de existe aresta
-const destino = state.graph.edges[1].to // Usado no resultado de existe aresta
+const destino = state.graph.edges[3].to // Usado no resultado de existe aresta
 const vertice = state.graph.nodes[0]// Usado nos resultados que se escolhe um vértice
 const grafo = state.graph //variável com o grafo para se pegar mais facilmente os nodes e as edges
 const tamanhoListavertices = state.graph.nodes.length//tamanho da lista de vértices
-
+const origemBFS = state.graph.nodes[0].label
+const destinoBFS = state.graph.nodes[3].label
 
 const copia = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
 
@@ -70,12 +71,14 @@ const grauVertice = teste.calcularGrau(grafo, vertice.id, 'nao_orientado');
 const adjacenciasVertice = teste.recuperarAdjacencias(grafo, vertice.id,'nao_orientado');
 const resultadoConexo = teste.eConexo(grafo);
 const resultadoCiclico = teste.possuiCiclo(grafo, vertice.id, grafo.nodes[5].id)
+const resultadoPlanar = planarity_test(state.graph.nodes, state.graph.edges);
 const resulatdoDijkstra = algDijkstra.dijkstra(criaMatrizAdjacencia(copia.nodes, copia.edges))
 resulatdoDijkstra.path[0] = state.graph.nodes[0].label
 resulatdoDijkstra.path[resulatdoDijkstra.path.length-1] = state.graph.nodes[tamanhoListavertices-1].label
 const resultadoMenorCaminho = resulatdoDijkstra.path.toString();
+const MenorCaminhoNorientado = teste.bfs(grafo, origemBFS, destinoBFS)
 const resultadoMenorCusto = resulatdoDijkstra.distance;
-const resultadoPlanar = planarity_test(state.graph.nodes, state.graph.edges);
+
 
 //Falta Implementar
 const resultadoFrConexo = "Sim";
@@ -99,6 +102,7 @@ function GraphResults() {
     {viewCard('Dígrafo Fortemente Conexo?', resultadoFoConexo)}
     {viewCard('Grafo Planar?', resultadoPlanar.toString())}
     {viewCard('Grafo Euleriano?', resultadoEuleriano)}
+    {viewCard('Menor Caminho não orientado:', MenorCaminhoNorientado.expandedNodes)}
     {viewCard('Menor Caminho:', resultadoMenorCaminho)}
     {viewCard('Menor Custo:', resultadoMenorCusto)}
     {viewCard('Grafo Ciclico:', resultadoCiclico.toString())}
