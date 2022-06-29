@@ -1,4 +1,5 @@
 export default function cicloEuleriano(listaVertices, listaArestas) {
+  var ciclo = [];
   // An Undirected graph using
   // adjacency list representation
   class Graph {
@@ -56,6 +57,7 @@ export default function cicloEuleriano(listaVertices, listaArestas) {
           var vertice1 = listaVertices.find(vert => vert.id == u + 1);
           var vertice2 = listaVertices.find(vert => vert.id == v + 1);
           console.log(vertice1.label + ' - ' + vertice2.label + ' ');
+          ciclo.push(vertice1.label + ' - ' + vertice2.label + ' ');
 
           // This edge is used so remove it now
           this.removeEdge(u, v);
@@ -117,29 +119,7 @@ export default function cicloEuleriano(listaVertices, listaArestas) {
   });
   g.printEulerTour();
 
-  /*
-  let g1 = new Graph(4);
-  g1.addEdge(0, 1);
-  g1.addEdge(0, 2);
-  g1.addEdge(1, 2);
-  g1.addEdge(2, 3);
-  g1.printEulerTour();
-  
-  let g2 = new Graph(3);
-  g2.addEdge(0, 1);
-  g2.addEdge(1, 2);
-  g2.addEdge(2, 0);
-  g2.printEulerTour();
+  console.log(ciclo);
+  return ciclo;
 
-  let g3 = new Graph(5);
-  g3.addEdge(1, 0);
-  g3.addEdge(0, 2);
-  g3.addEdge(2, 1);
-  g3.addEdge(0, 3);
-  g3.addEdge(3, 4);
-  g3.addEdge(3, 2);
-  g3.addEdge(3, 1);
-  g3.addEdge(2, 4);
-  g3.printEulerTour();
-  */
 }

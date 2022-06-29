@@ -11,6 +11,8 @@ import { Cores } from '../assets/Cores';
 import GraphView from './GraphView';
 import { Fontes } from '../assets/Fontes';
 import verificaEuleriano from '../Algoritmos/verificaEuleriano';
+import verificaBiconexo from '../Algoritmos/verificaBiconexo';
+import ordenacaoTopologica from '../Algoritmos/ordenacaoTopologica';
 
 
 const orientacao = true;
@@ -116,13 +118,14 @@ function GraphTabs(props) {
 
   const childToParent = childData => {
     setGraphData(childData);
-    //grafoOrdenado = ordenacaoTopologica(graphData);
+    grafoOrdenado = ordenacaoTopologica(graphData);
     
     //var resultadoAGM = {};
     //resultadoAGM = arvoreGeradoraMinima(teste);
 
     //verificaConexidade(teste3);
     //verificaEuleriano(graphData.graph.nodes, graphData.graph.edges);
+    //verificaBiconexo(graphData.graph.nodes, graphData.graph.edges);
   };
 
 

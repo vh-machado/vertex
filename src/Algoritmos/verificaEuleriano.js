@@ -102,11 +102,13 @@ export default function verificaEuleriano(listaVertices, listaArestas) {
       let res = this.isEulerian();
       if (res == 0) {
         console.log('O grafo não é euleriano');
+        return false;
       } else if (res == 1) {
         console.log('O grafo tem um caminho euleriano');
       } else {
         console.log('O grafo tem um ciclo euleriano');
-        cicloEuleriano(listaVertices, listaArestas);
+        return true;
+        //cicloEuleriano(listaVertices, listaArestas);
       }
     }
   }
@@ -117,47 +119,6 @@ export default function verificaEuleriano(listaVertices, listaArestas) {
   listaArestas.forEach(aresta => {
     g.addEdge(aresta.from - 1, aresta.to - 1);
   });
-  g.test();
+  return g.test();
 
-  /*
-  // Let us create and test graphs shown in above figures
-  let g1 = new Graph(5);
-  g1.addEdge(1, 0);
-  g1.addEdge(0, 2);
-  g1.addEdge(2, 1);
-  g1.addEdge(0, 3);
-  g1.addEdge(3, 4);
-  g1.test();
-
-  let g2 = new Graph(5);
-  g2.addEdge(1, 0);
-  g2.addEdge(0, 2);
-  g2.addEdge(2, 1);
-  g2.addEdge(0, 3);
-  g2.addEdge(3, 4);
-  g2.addEdge(4, 0);
-  g2.test();
-
-  let g3 = new Graph(5);
-  g3.addEdge(1, 0);
-  g3.addEdge(0, 2);
-  g3.addEdge(2, 1);
-  g3.addEdge(0, 3);
-  g3.addEdge(3, 4);
-  g3.addEdge(1, 3);
-  g3.test();
-
-  // Let us create a graph with 3 vertices
-  // connected in the form of cycle
-  let g4 = new Graph(3);
-  g4.addEdge(0, 1);
-  g4.addEdge(1, 2);
-  g4.addEdge(2, 0);
-  g4.test();
-
-  // Let us create a graph with all vertices
-  // with zero degree
-  let g5 = new Graph(3);
-  g5.test();
-  */
 }

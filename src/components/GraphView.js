@@ -5,11 +5,6 @@ import { Cores } from '../assets/Cores';
 import EditPopOver from './EditPopOver';
 import { Fontes } from '../assets/Fontes';
 import { ViewIcon } from '@chakra-ui/icons';
-import componentesFortes from '../Algoritmos/componentesFortes';
-import isStrong from '../Algoritmos/isStrong';
-import arvoreGeradoraMinima from '../Algoritmos/arvoreGeradoraMinima';
-import criaMatrizAdjacenciaNaoOrientado from '../Algoritmos/criaMatrizAdjacenciaNaoOrientado';
-import ordenacaoTopologica from '../Algoritmos/ordenacaoTopologica';
 
 const GraphView = props => {
   var grafo;
@@ -55,25 +50,6 @@ const GraphView = props => {
   };
 
   var state = props.state;
-
-  const createNode = label => {
-    /*
-    setState(({ graph: { nodes, edges }, counter, ...rest }) => {
-      const id = counter + 1;
-      //const from = Math.floor(Math.random() * (counter - 1)) + 1;
-      return {
-        graph: {
-          nodes: [
-            ...nodes,
-            { id, label: label, color: Cores.lavender_floral },
-          ],
-          edges: [...edges],
-        },
-        counter: id,
-        ...rest,
-      };
-    });*/
-  };
 
   const { graph } = state;
 
@@ -214,37 +190,9 @@ const GraphView = props => {
       state.graph.nodes[index].y = position.y;
       props.childToParent(state);
     });
-    /*network.on('click', function (params) {
-      params.event = '[original event]';
-      clicado = this.getNodeAt(params.pointer.DOM)
-      
-      //createNode();
-    });*/
-    /*
-    network.on('doubleClick', function (params) {
-      params.event = '[original event]';
-      createNode();
-    });*/
 
     grafo = network;
   }, [container, graph.nodes, graph.edges, props.orientado]);
-
-  /*
-  var teste = {
-    counter: 3,
-    graph: {
-      nodes: [
-        { id: 1, label: 'Node 1', x: 200, y: 0 },
-        { id: 2, label: 'Node 2', x: 50, y: 250 },
-        { id: 3, label: 'Node 3', x: 300, y: 0 },
-      ],
-      edges: [
-        { from: 3, to: 2, label: "5" },
-        { from: 2, to: 1, label: "8" },
-      ],
-    },
-  };
-  */
 
   var teste = {
     counter: 7,
