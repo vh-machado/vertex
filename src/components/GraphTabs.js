@@ -118,7 +118,7 @@ function GraphTabs(props) {
 
   const childToParent = childData => {
     setGraphData(childData);
-    grafoOrdenado = ordenacaoTopologica(graphData);
+    //grafoOrdenado = ordenacaoTopologica(graphData);
     
     //var resultadoAGM = {};
     //resultadoAGM = arvoreGeradoraMinima(teste);
