@@ -1,6 +1,6 @@
 import criaMatrizAdjacenciaNaoOrientado from './criaMatrizAdjacenciaNaoOrientado';
 
-export default function arvoreGeradoraMinima(graphData) {
+export function arvoreGeradoraMinima(graphData) {
   const listaVertices = graphData.graph.nodes;
   const listaArestas = graphData.graph.edges;
   // Number of vertices in the graph

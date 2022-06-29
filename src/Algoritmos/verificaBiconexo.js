@@ -1,4 +1,4 @@
-export default function verificaBiconexo(listaVertices, listaArestas) {
+export function verificaBiconexo(listaVertices, listaArestas) {
   // This class represents a directed graph using adjacency
   // list representation
   class Graph {

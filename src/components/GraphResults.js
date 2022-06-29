@@ -4,6 +4,13 @@ import {algoritmosGrafos} from '../Algoritmos/funcoesBasicas'
 import { dijkstra } from '../Algoritmos/dijkstra';
 import { criaMatrizAdjacencia } from '../Algoritmos/criaMatrizAdjacencia';
 import {planarity_test} from '../Algoritmos/planarFunction';
+import {arvoreGeradoraMinima} from '../Algoritmos/arvoreGeradoraMinima'
+import {cicloEuleriano} from '../Algoritmos/cicloEuleriano'
+import {componentesFortes} from '../Algoritmos/componentesFortes'
+import {ordenacaoTopologica} from '../Algoritmos/ordenacaoTopologica'
+import {verificaBiconexo} from '../Algoritmos/verificaBiconexo'
+import {verificaConexidade} from '../Algoritmos/verificaConexidade'
+import {verificaEuleriano} from '../Algoritmos/verificaEuleriano'
 
 //Grafo de teste
 let state = {
@@ -66,25 +73,35 @@ const destinoBFS = state.graph.nodes[3].label
 const copia = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
 
 //Implementados
+const resultadoPlanar = planarity_test(state.graph.nodes, state.graph.edges);
 const resultadoAresta = teste.procuraAresta(origem, destino, grafo);
 const grauVertice = teste.calcularGrau(grafo, vertice.id, 'nao_orientado');
 const adjacenciasVertice = teste.recuperarAdjacencias(grafo, vertice.id,'nao_orientado');
 const resultadoConexo = teste.eConexo(grafo);
-const resultadoCiclico = teste.possuiCiclo(grafo, vertice.id, grafo.nodes[5].id)
-const resultadoPlanar = planarity_test(state.graph.nodes, state.graph.edges);
+const resultadoCiclico = teste.possuiCiclo(copia, origem, destino)
 const resulatdoDijkstra = algDijkstra.dijkstra(criaMatrizAdjacencia(copia.nodes, copia.edges))
 resulatdoDijkstra.path[0] = state.graph.nodes[0].label
 resulatdoDijkstra.path[resulatdoDijkstra.path.length-1] = state.graph.nodes[tamanhoListavertices-1].label
 const resultadoMenorCaminho = resulatdoDijkstra.path.toString();
 const MenorCaminhoNorientado = teste.bfs(grafo, origemBFS, destinoBFS)
 const resultadoMenorCusto = resulatdoDijkstra.distance;
-
-
+const tipoGrafo = 'orientado';
+const visibility = false;
+const resultadoConexidade = ''
 //Falta Implementar
-const resultadoFrConexo = "Sim";
-const resultadoUnConexo = "Não";
-const resultadoFoConexo = "Não";
-const resultadoEuleriano = "Não";
+/*if(tipoGrafo === 'orientado'){
+   resultadoConexidade = verificaConexidade(grafo)
+}else{
+   resultadoConexidade = 'Não cabe'
+}
+console.log(resultadoConexidade)*/
+
+/*const resultadoEuleriano = verificaEuleriano(grafo.nodes, grafo.edges);
+const resultadoCicloEuleriano = cicloEuleriano(grafo.nodes, grafo.edges);
+const resultadoCustoAGM = arvoreGeradoraMinima(grafo).custo;
+const resultadoArestasAGM = arvoreGeradoraMinima(grafo).arestas;*/
+
+//const resultadoOrdenacaoTopologica = ordenacaoTopologica(grafo)
 
 
 //Retorna os cards com os resultados
@@ -92,21 +109,21 @@ function GraphResults() {
   return (
     <>
     {viewCardSelection('Existe a Aresta ', resultadoAresta, grafo)}
-    {viewCard('Grau do Vértice '+ vertice.label, grauVertice)}
-    {viewCard('Adjacentes do Vértice '+ vertice.label, adjacenciasVertice.toString())}
-    {viewCard('Grafo não-orientado Conexo?', resultadoConexo)}
-    {viewCard('Ordenação Topológica:', 'teste')}
-    {viewCard('Dígrafo Fracamente Conexo?', resultadoFrConexo)}
-    {viewCard('Componentes Fortes:', 'A-B-C')}
-    {viewCard('Dígrafo Unilateralmente Conexo?', resultadoUnConexo)}
-    {viewCard('Dígrafo Fortemente Conexo?', resultadoFoConexo)}
-    {viewCard('Grafo Planar?', resultadoPlanar.toString())}
-    {viewCard('Grafo Euleriano?', resultadoEuleriano)}
-    {viewCard('Menor Caminho não orientado:', MenorCaminhoNorientado.expandedNodes)}
-    {viewCard('Menor Caminho:', resultadoMenorCaminho)}
-    {viewCard('Menor Custo:', resultadoMenorCusto)}
-    {viewCard('Grafo Ciclico:', resultadoCiclico.toString())}
-    
+    {viewCard('Grau do Vértice '+ vertice.label, grauVertice, visibility)}
+    {viewCard('Adjacentes do Vértice '+ vertice.label, adjacenciasVertice.toString(), visibility)}
+    {viewCard('Grafo não-orientado Conexo?', resultadoConexo, visibility)}
+    {/*viewCard('Ordenação Topológica:', resultadoOrdenacaoTopologica, visibility)*/}
+    {viewCard('Conexidade do Dígrafo?', resultadoConexidade, visibility)}
+    {viewCard('Componentes Fortes:', 'A-B-C', visibility)}
+    {viewCard('Grafo Planar?', resultadoPlanar.toString(), visibility)}
+    {/*viewCard('Grafo Euleriano?', resultadoEuleriano.toString(), visibility)}
+    {viewCard('Ciclo Euleriano?', resultadoCicloEuleriano.toString(), visibility)*/}
+    {viewCard('Menor Caminho não orientado:', MenorCaminhoNorientado.expandedNodes, visibility)}
+    {viewCard('Menor Caminho:', resultadoMenorCaminho, visibility)}
+    {viewCard('Menor Custo:', resultadoMenorCusto, visibility)}
+    {viewCard('Grafo Ciclico:', resultadoCiclico.toString(), visibility)}
+    {/*viewCard('Custo Árvore Geradora Mínima:', resultadoCustoAGM, visibility)}
+    {viewCard('Arestas Árvore Geradora Mínima:', resultadoArestasAGM, visibility)*/}
     </>
   );
 }

@@ -254,7 +254,13 @@ export class algoritmosGrafos {
     }
 
     possuiCiclo(grafo, origem, destino) {
+        console.log(grafo)
+        console.log(origem)
+        console.log(destino)
+        console.log(grafo.nodes)
+        console.log(grafo.edges)
         const listaAdjacencias = criaListaAdjacencia(grafo.nodes, grafo.edges)
+        console.log(listaAdjacencias)
         const resultado = this.eCiclo(listaAdjacencias, origem, destino)
         return resultado
     }

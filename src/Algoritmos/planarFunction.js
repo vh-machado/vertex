@@ -1,8 +1,8 @@
 import { PlanarityChecker } from '../Algoritmos/planarity';
 
 export function planarity_test(nodes, edges) {
-  console.log(nodes)
-  console.log(edges)
+  //console.log(nodes)
+  //console.log(edges)
     if (nodes == null) {
       nodes = [
         { 'id': '0' },
@@ -38,8 +38,8 @@ export function planarity_test(nodes, edges) {
     for (let e of edges)
       checker.add_edge(id_idx[e.from], id_idx[e.to]);
     let planarity = checker.is_planar();
-    console.log(checker);
-    console.log('Graph planarity:' + planarity);
+    //console.log(checker);
+    //console.log('Graph planarity:' + planarity);
     if (3 * n - 6 >= m && planarity && n > 4) {
       checker.get_embedding();
       for (let e of edges) {

@@ -1,6 +1,6 @@
 import converteGrafo from './converteGrafo';
 
-const ordenacaoTopologica = graphData => {
+export const ordenacaoTopologica = graphData => {
   var ordem = [];
 
   class Graph {
@@ -64,4 +64,4 @@ const ordenacaoTopologica = graphData => {
   //return converteGrafo(dfsTopSort(graph), graphData);
 };
 
-export default ordenacaoTopologica;
+

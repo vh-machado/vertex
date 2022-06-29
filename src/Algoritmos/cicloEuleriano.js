@@ -1,4 +1,4 @@
-export default function cicloEuleriano(listaVertices, listaArestas) {
+export function cicloEuleriano(listaVertices, listaArestas) {
   var ciclo = [];
   // An Undirected graph using
   // adjacency list representation

@@ -1,7 +1,7 @@
 import componentesFortes from './componentesFortes';
 import criaMatrizCaminho from './criaMatrizCaminho';
 
-export default function verificaConexidade(graphData) {
+export function verificaConexidade(graphData) {
 
   // Function to find the characteristic
   // of the given graph
