@@ -10,11 +10,62 @@ import { useRadio } from '@chakra-ui/react';
 import { useRadioGroup } from '@chakra-ui/react';
 import { render } from '@testing-library/react';
 
-
-
 function Menu(props) {
-
   const { isOpenGerar, onOpenGerar, onCloseGerar } = useDisclosure();
+
+  // 1. Create a component that consumes the `useRadio` hook
+  function RadioCard(propsradio) {
+    const { getInputProps, getCheckboxProps } = useRadio(propsradio);
+
+    const input = getInputProps();
+    const checkbox = getCheckboxProps();
+
+    return (
+      <Box as="label">
+        <input {...input} />
+        <Box
+          {...checkbox}
+          cursor="pointer"
+          borderWidth="sm"
+          borderRadius="md"
+          boxShadow="sm"
+          _checked={{
+            variant: 'outline',
+            color: 'white',
+          }}
+          px={2}
+          py={2}
+        >
+          {propsradio.children}
+        </Box>
+      </Box>
+    );
+  }
+
+  // Step 2: Use the `useRadioGroup` hook to control a group of custom radios.
+  function TipoGrafo() {
+    const options = ['Com Orientação', 'Sem Orientação'];
+
+    const { value, getRootProps, getRadioProps } = useRadioGroup({
+      name: 'framework',
+      defaultValue:
+        props.orientacao == true ? 'Com Orientação' : 'Sem Orientação',
+      onChange: () => props.setOrientacao(!props.orientacao),
+    });
+    const group = getRootProps();
+    return (
+      <VStack {...group} fontSize="14">
+        {options.map(value => {
+          const radio = getRadioProps({ value });
+          return (
+            <RadioCard key={value} {...radio}>
+              {value}
+            </RadioCard>
+          );
+        })}
+      </VStack>
+    );
+  }
 
   return (
     <VStack
@@ -41,56 +92,3 @@ function Menu(props) {
 }
 
 export default Menu;
-
-// 1. Create a component that consumes the `useRadio` hook
-function RadioCard(props) {
-  const { getInputProps, getCheckboxProps } = useRadio(props);
-
-  const input = getInputProps();
-  const checkbox = getCheckboxProps();
-
-  return (
-    <Box as="label">
-      <input {...input} />
-      <Box
-        {...checkbox}
-        cursor="pointer"
-        borderWidth="sm"
-        borderRadius="md"
-        boxShadow="sm"
-        _checked={{
-          variant: 'outline',
-          color: 'white',
-        }}
-        px={2}
-        py={2}
-      >
-        {props.children}
-      </Box>
-    </Box>
-  );
-}
-
-// Step 2: Use the `useRadioGroup` hook to control a group of custom radios.
-function TipoGrafo() {
-  const options = ['Com Orientação', 'Sem Orientação'];
-
-  const { getRootProps, getRadioProps } = useRadioGroup({
-    name: 'framework',
-    defaultValue: 'Com Orientação',
-    onChange: console.log,
-  });
-  const group = getRootProps();
-  return (
-    <VStack {...group} fontSize="14">
-      {options.map(value => {
-        const radio = getRadioProps({ value });
-        return (
-          <RadioCard key={value} {...radio}>
-            {value}
-          </RadioCard>
-        );
-      })}
-    </VStack>
-  );
-}

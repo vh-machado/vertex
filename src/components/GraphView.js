@@ -5,7 +5,6 @@ import { Cores } from '../assets/Cores';
 import EditPopOver from './EditPopOver';
 import { Fontes } from '../assets/Fontes';
 import { ViewIcon } from '@chakra-ui/icons';
-import ordenacaoTopologica from '../Algoritmos/ordenacaoTopologica';
 
 const GraphView = props => {
   var grafo;
@@ -31,7 +30,6 @@ const GraphView = props => {
 
   const container = useRef(null);
 
-  /*
   var state = {
     counter: 5,
     graph: {
@@ -49,28 +47,9 @@ const GraphView = props => {
         { from: 2, to: 5 },
       ],
     },
-  };*/
+  };
 
   var state = props.state;
-
-  const createNode = label => {
-    /*
-    setState(({ graph: { nodes, edges }, counter, ...rest }) => {
-      const id = counter + 1;
-      //const from = Math.floor(Math.random() * (counter - 1)) + 1;
-      return {
-        graph: {
-          nodes: [
-            ...nodes,
-            { id, label: label, color: Cores.lavender_floral },
-          ],
-          edges: [...edges],
-        },
-        counter: id,
-        ...rest,
-      };
-    });*/
-  };
 
   const { graph } = state;
 
@@ -211,41 +190,56 @@ const GraphView = props => {
       state.graph.nodes[index].y = position.y;
       props.childToParent(state);
     });
-    /*network.on('click', function (params) {
-      params.event = '[original event]';
-      clicado = this.getNodeAt(params.pointer.DOM)
-      
-      //createNode();
-    });*/
-    /*
-    network.on('doubleClick', function (params) {
-      params.event = '[original event]';
-      createNode();
-    });*/
 
     grafo = network;
-  }, [container, graph.nodes, graph.edges]);
+  }, [container, graph.nodes, graph.edges, props.orientado]);
 
-  /*
   var teste = {
-    counter: 3,
+    counter: 7,
     graph: {
       nodes: [
-        { id: 0, label: 'Node 1', color: Cores.lavender_floral, x: 200, y: 0 },
-        { id: 1, label: 'Node 2', color: Cores.lavender_floral, x: 50, y: 250 },
-        { id: 2, label: 'Node 3', color: Cores.lavender_floral, x: 300, y: 0 },
+        { id: 1, label: 'A', x: 200, y: 0 },
+        { id: 2, label: 'B', x: 50, y: 250 },
+        { id: 3, label: 'C', x: 300, y: 0 },
+        { id: 4, label: 'D', x: 300, y: 0 },
+        { id: 5, label: 'E', x: 200, y: 0 },
+        { id: 6, label: 'F', x: 50, y: 250 },
+        { id: 7, label: 'G', x: 300, y: 0 },
       ],
       edges: [
-        { from: 2, to: 1, label: "a" },
-        { from: 1, to: 0, label: "b" },
+        { from: 1, to: 2, label: '7' },
+        { from: 4, to: 1, label: '5' },
+        { from: 4, to: 2, label: '9' },
+        { from: 2, to: 3, label: '8' },
+        { from: 2, to: 5, label: '7' },
+        { from: 3, to: 5, label: '5' },
+        { from: 4, to: 5, label: '15' },
+        { from: 4, to: 6, label: '6' },
+        { from: 6, to: 5, label: '8' },
+        { from: 6, to: 7, label: '11' },
+        { from: 5, to: 7, label: '9' },
       ],
     },
   };
-  var teste2 = {
-    counter: 0,
-    graph: {nodes: [], edges: [],},
-  };
-  ordenacaoTopologica(teste, teste2);*/
+
+  //ordenacaoTopologica(teste, teste2);
+  //componentesFortes(state.graph.nodes, state.graph.edges);
+  //isStrong(state.graph.nodes, state.graph.edges);  //criaMatrizAdjacenciaNaoOrientad();
+  //arvoreGeradoraMinima(teste.graph.nodes, teste.graph.edges);
+
+  /*
+  const [resultadoVisivel, setResultadoVisivel] = useState(false);
+
+  const operacoes = () => {
+    setResultadoVisivel(!resultadoVisivel);
+    if (props.aba === 'ordenacao') {
+      state = ordenacaoTopologica(state);
+      console.log('a');
+    } else if (props.aba === 'agm') {
+      state = arvoreGeradoraMinima(state).arvore;
+      console.log(state);
+    }
+  };*/
 
   return (
     <>
@@ -278,16 +272,14 @@ const GraphView = props => {
         ) : (
           <></>
         )}
-
         {/*
-        {props.aba === 'ordenacao' ? (
-          
+        {props.aba !== 'grafo' ? (
           <Button
-            onClick= {ordenacaoTopologica(state)}
+            onClick={operacoes}
             marginEnd={4}
             size="sm"
             color="white"
-            leftIcon={<ViewIcon/>}
+            leftIcon={<ViewIcon />}
             fontFamily={Fontes.principal}
             fontWeight={400}
             bgColor="rgba(255,255,255,0.05)"
@@ -305,8 +297,11 @@ const GraphView = props => {
           </Button>
         ) : (
           <></>
-        )}*/}
+        )}
+        */}
       </Flex>
+
+      
       <div ref={container} style={{ height: '100%', width: '100%' }} />
     </>
   );

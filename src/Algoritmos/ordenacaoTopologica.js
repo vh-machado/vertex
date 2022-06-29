@@ -1,6 +1,8 @@
 import converteGrafo from './converteGrafo';
 
 const ordenacaoTopologica = graphData => {
+  var ordem = [];
+
   class Graph {
     constructor() {
       this.adjacencyList = {};
@@ -46,13 +48,20 @@ const ordenacaoTopologica = graphData => {
         n = dfsTopSortHelper(v, n, visited, topNums);
       }
     }
-    return topNums;
+
+    vertices.forEach(v => {
+      var vertice = graphData.graph.nodes.find(vert => vert.id == v);
+      ordem[topNums[v]] = vertice.label;
+    })
+    //return topNums;
   }
 
   console.log(dfsTopSort(graph));
   //console.log(converteGrafo(dfsTopSort(graph), graphData));
 
-  return converteGrafo(dfsTopSort(graph), graphData);
+  console.log(ordem);
+  return ordem
+  //return converteGrafo(dfsTopSort(graph), graphData);
 };
 
 export default ordenacaoTopologica;
