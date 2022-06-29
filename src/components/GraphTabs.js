@@ -17,6 +17,9 @@ import profundidade from '../Algoritmos/profundidade';
 import isStrong from '../Algoritmos/isStrong';
 import arvoreGeradoraMinima from '../Algoritmos/arvoreGeradoraMinima';
 import criaMatrizAdjacenciaNaoOrientado from '../Algoritmos/criaMatrizAdjacenciaNaoOrientado';
+import criaMatrizAdjacenciaOrientado from '../Algoritmos/criaMatrizAdjacenciaOrientado';
+import criaMatrizCaminho from '../Algoritmos/criaMatrizCaminho';
+import verificaConexidade from '../Algoritmos/verificaConexidade';
 
 const orientacao = true;
 const colorNode = Cores.lavender_floral;
@@ -100,18 +103,34 @@ function GraphTabs(props) {
     },
   };
 
+  var teste3 = {
+    counter: 3,
+    graph: {
+      nodes: [
+        { id: 1, label: 'A', x: 200, y: 0 },
+        { id: 2, label: 'B', x: 50, y: 250 },
+        { id: 3, label: 'C', x: 300, y: 0 },
+      ],
+      edges: [
+        { from: 1, to: 2, label: "" },
+        { from: 2, to: 3, label: "" },
+      ],
+    },
+  };
+
   const [graphData, setGraphData] = useState(initialGraphData);
   var grafoOrdenado = initialGraphData;
   var grafoArvore = initialGraphData;
-  //console.log(grafoArvore);
   var custoAGM = 0;
 
   const childToParent = childData => {
     setGraphData(childData);
     //grafoOrdenado = ordenacaoTopologica(graphData);
     
-    var resultadoAGM = {};
-    resultadoAGM = arvoreGeradoraMinima(teste);
+    //var resultadoAGM = {};
+    //resultadoAGM = arvoreGeradoraMinima(teste, true);
+
+    verificaConexidade(teste3, false);
   };
 
 

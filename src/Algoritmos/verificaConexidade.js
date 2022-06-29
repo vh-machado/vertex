@@ -1,5 +1,7 @@
-export default function verificaConexidade() {
-  let V = 3;
+import criaMatrizCaminho from "./criaMatrizCaminho";
+
+export default function verificaConexidade(graphData, possuiPeso) {
+  let V = graphData.counter;
 
   // Function to find the characteristic
   // of the given graph
@@ -29,7 +31,7 @@ export default function verificaConexidade() {
     // If true then print strongly
     // connected and return
     if (strongly) {
-      document.write('Strongly Connected');
+      console.log("Fortemente Conexo")
       return 0;
     }
 
@@ -60,7 +62,7 @@ export default function verificaConexidade() {
     // If true then print unilaterally
     // connected and return
     if (uppertri) {
-      document.write('Unilaterally Connected');
+      console.log("Unilateralmente Conexo")
       return 0;
     }
 
@@ -88,7 +90,8 @@ export default function verificaConexidade() {
     // If true then print unilaterally
     // connected and return
     if (lowertri) {
-      document.write('Unilaterally Connected');
+      //document.write('Unilaterally Connected');
+      console.log("Unilateralmente Conexo")
       return 0;
     }
 
@@ -96,7 +99,7 @@ export default function verificaConexidade() {
     // unsynchronized then print weakly
     // connected and return
     else {
-      document.write('Weakly Connected');
+      console.log("Fracamente Conexo")
     }
     return 0;
   }
@@ -104,14 +107,16 @@ export default function verificaConexidade() {
   // Driver Code
 
   // Number of nodes
-  let n = 3;
+  let n = graphData.counter;
 
   // Given Path Matrix
+  /*
   let graph = [
     [0, 1, 1],
     [0, 0, 1],
     [0, 0, 0],
-  ];
+  ];*/
+  var graph = criaMatrizCaminho(graphData, possuiPeso)
 
   // Function call
   checkConnected(graph, n);
