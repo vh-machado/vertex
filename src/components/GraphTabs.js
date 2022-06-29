@@ -11,11 +11,12 @@ import { Cores } from '../assets/Cores';
 import GraphView from './GraphView';
 import { Fontes } from '../assets/Fontes';
 import ordenacaoTopologica from '../Algoritmos/ordenacaoTopologica';
-import criaMatrizAdjacencia from '../Algoritmos/criaMatrizAdjacencia';
 import criaListaAdjacencia from '../Algoritmos/criaListaAdjacencia';
 import componentesFortes from '../Algoritmos/componentesFortes';
 import profundidade from '../Algoritmos/profundidade';
 import isStrong from '../Algoritmos/isStrong';
+import arvoreGeradoraMinima from '../Algoritmos/arvoreGeradoraMinima';
+import criaMatrizAdjacenciaNaoOrientado from '../Algoritmos/criaMatrizAdjacenciaNaoOrientado';
 
 const orientacao = true;
 const colorNode = Cores.lavender_floral;
@@ -43,17 +44,76 @@ function GraphTabs(props) {
     },
   };
 
-  
-  
+  var teste = {
+    counter: 7,
+    graph: {
+      nodes: [
+        { id: 1, label: 'A', x: 200, y: 0 },
+        { id: 2, label: 'B', x: 50, y: 250 },
+        { id: 3, label: 'C', x: 300, y: 0 },
+        { id: 4, label: 'D', x: 300, y: 0 },
+        { id: 5, label: 'E', x: 200, y: 0 },
+        { id: 6, label: 'F', x: 50, y: 250 },
+        { id: 7, label: 'G', x: 200, y: 0 },
+
+      ],
+      edges: [
+        { from: 1, to: 2, label: "7" },
+        { from: 4, to: 1, label: "5" },
+        { from: 4, to: 2, label: "9" },
+        { from: 2, to: 3, label: "8" },
+        { from: 2, to: 5, label: "7" },
+        { from: 3, to: 5, label: "5" },
+        { from: 4, to: 5, label: "15" },
+        { from: 4, to: 6, label: "6" },
+        { from: 6, to: 5, label: "8" },
+        { from: 6, to: 7, label: "11" },
+        { from: 5, to: 7, label: "9" },
+      ],
+    },
+  };
+
+  var teste2 = {
+    counter: 6,
+    graph: {
+      nodes: [
+        { id: 1, label: '0', x: 200, y: 0 },
+        { id: 2, label: '1', x: 50, y: 250 },
+        { id: 3, label: '2', x: 300, y: 0 },
+        { id: 4, label: '3', x: 300, y: 0 },
+        { id: 5, label: '4', x: 200, y: 0 },
+        { id: 6, label: '5', x: 50, y: 250 },
+
+      ],
+      edges: [
+        { from: 1, to: 2, label: "6" },
+        { from: 1, to: 4, label: "5" },
+        { from: 1, to: 3, label: "1" },
+        { from: 3, to: 2, label: "2" },
+        { from: 3, to: 4, label: "2" },
+        { from: 3, to: 5, label: "6" },
+        { from: 3, to: 6, label: "4" },
+        { from: 2, to: 5, label: "5" },
+        { from: 5, to: 6, label: "3" },
+        { from: 4, to: 6, label: "4" },
+      ],
+    },
+  };
 
   const [graphData, setGraphData] = useState(initialGraphData);
   var grafoOrdenado = initialGraphData;
+  var grafoArvore = initialGraphData;
+  //console.log(grafoArvore);
+  var custoAGM = 0;
 
   const childToParent = childData => {
     setGraphData(childData);
-    grafoOrdenado = ordenacaoTopologica(graphData);
-    //setSortGraph(ordenacaoTopologica(childData));
+    //grafoOrdenado = ordenacaoTopologica(graphData);
+    
+    var resultadoAGM = {};
+    resultadoAGM = arvoreGeradoraMinima(teste);
   };
+
 
   /*
   const nodes = [
@@ -113,23 +173,6 @@ function GraphTabs(props) {
   ];
   */
 
-  var teste = {
-    counter: 3,
-    graph: {
-      nodes: [
-        { id: 1, label: 'Node 1', x: 200, y: 0 },
-        { id: 2, label: 'Node 2', x: 50, y: 250 },
-        { id: 3, label: 'Node 3', x: 300, y: 0 },
-      ],
-      edges: [
-        { from: 1, to: 2, label: "" },
-        { from: 2, to: 3, label: "" },
-        { from: 3, to: 1, label: "" },
-      ],
-    },
-  }
-
-
   return (
     <Tabs isLazy variant="unstyled" size="sm" h="100%" p="8">
       <TabPanels h="92%">
@@ -143,6 +186,7 @@ function GraphTabs(props) {
             curva={false}
           ></GraphView>
         </TabPanel>
+        {/*
         <TabPanel h="100%" w="100%">
           <GraphView
             aba={'ordenacao'}
@@ -153,6 +197,17 @@ function GraphTabs(props) {
             curva={true}
           ></GraphView>
         </TabPanel>
+        <TabPanel h="100%" w="100%">
+          <GraphView
+            aba={'agm'}
+            state={grafoArvore}
+            childToParent={childToParent}
+            orientado={false}
+            hierarquico={false}
+            curva={true}
+          ></GraphView>
+        </TabPanel>
+        */}
       </TabPanels>
       <TabList h="8%" fontFamily={Fontes.principal} theme={theme}>
         <Tab
@@ -169,6 +224,7 @@ function GraphTabs(props) {
         >
           Grafo
         </Tab>
+        {/*
         <Tab
           flex={[1, 0, 'auto']}
           borderBottomWidth={2}
@@ -225,6 +281,7 @@ function GraphTabs(props) {
         >
           Árvore Geradora Mínima
         </Tab>
+        */}
       </TabList>
     </Tabs>
   );
