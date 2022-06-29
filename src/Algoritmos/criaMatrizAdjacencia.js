@@ -19,7 +19,7 @@ export function criaMatrizAdjacencia(listaVertices, listaArestas) {
       return listaVertices
   }
   
-  converteListaVertices(vertices)
+  var verticesConvertidos = converteListaVertices(vertices)
   
   function converteIdLabel(listaVertices, listaArestas){
       var listaArestasLabel = []
@@ -47,7 +47,7 @@ export function criaMatrizAdjacencia(listaVertices, listaArestas) {
       listaArestasLabel = listaArestas
       return listaArestasLabel
   }
-  var listaConvertida = converteIdLabel(vertices, arestas)
+  var listaConvertida = converteIdLabel(verticesConvertidos, arestas)
   
   
   for(var j = 0; j<listaConvertida.length; j++){
