@@ -1,6 +1,6 @@
 import cicloEuleriano from "./cicloEuleriano";
 
-export default function verificaEuleriano(listaVertices, listaArestas) {
+export function verificaEuleriano(listaVertices, listaArestas) {
   // This class represents an undirected graph using adjacency list
   // representation
   class Graph {

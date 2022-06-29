@@ -4,7 +4,7 @@ import { Cores } from '../assets/Cores';
 import { Fontes } from '../assets/Fontes';
 import { algoritmosGrafos } from '../Algoritmos/funcoesBasicas';
 
-export function viewCard(title, info) {
+export function viewCard(title, info, visible) {
   
   return (
     <Flex
@@ -30,6 +30,7 @@ export function viewCard(title, info) {
       fontFamily={Fontes.principal}
     >
       <Box
+        visibility={visible}
         display={"flex"}
         width="100%"
         fontSize={15}
