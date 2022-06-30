@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { network, Network } from 'vis-network';
-import { Button, Flex } from '@chakra-ui/react';
+import { Box, Button, Flex } from '@chakra-ui/react';
 import { Cores } from '../assets/Cores';
 import EditPopOver from './EditPopOver';
 import { Fontes } from '../assets/Fontes';
@@ -34,11 +34,11 @@ const GraphView = props => {
     counter: 5,
     graph: {
       nodes: [
-        { id: 1, label: 'Node 1', color: Cores.lavender_floral, x: 200, y: 0 },
-        { id: 2, label: 'Node 2', color: Cores.lavender_floral, x: 50, y: 250 },
-        { id: 3, label: 'Node 3', color: Cores.lavender_floral, x: 300, y: 0 },
-        { id: 4, label: 'Node 4', color: Cores.lavender_floral, x: 90, y: 100 },
-        { id: 5, label: 'Node 5', color: Cores.lavender_floral, x: 0, y: 10 },
+        { id: 1, label: 'Node 1', x: 200, y: 0 },
+        { id: 2, label: 'Node 2', x: 50, y: 250 },
+        { id: 3, label: 'Node 3', x: 300, y: 0 },
+        { id: 4, label: 'Node 4', x: 90, y: 100 },
+        { id: 5, label: 'Node 5', x: 0, y: 10 },
       ],
       edges: [
         { from: 1, to: 2 },
@@ -59,7 +59,7 @@ const GraphView = props => {
     width: '100%',
     layout: {
       hierarchical: {
-        enabled: props.hierarquico,
+        enabled: false,
         direction: 'LR',
         sortMethod: 'directed',
         shakeTowards: 'leaves',
@@ -117,7 +117,7 @@ const GraphView = props => {
       },
     },
     interaction: {
-      dragNodes: props.aba === 'grafo' ? true : false,
+      dragNodes: true,
       hover: true,
       dragView: false,
       zoomView: false,
@@ -192,8 +192,9 @@ const GraphView = props => {
     });
 
     grafo = network;
-  }, [container, graph.nodes, graph.edges, props.orientado]);
 
+  }, [container, graph.nodes, graph.edges, props.orientado]);
+  /*
   var teste = {
     counter: 7,
     graph: {
@@ -220,7 +221,7 @@ const GraphView = props => {
         { from: 5, to: 7, label: '9' },
       ],
     },
-  };
+  };*/
 
   //ordenacaoTopologica(teste, teste2);
   //componentesFortes(state.graph.nodes, state.graph.edges);
@@ -242,36 +243,30 @@ const GraphView = props => {
   };*/
 
   return (
-    <>
+    <Box h='100%' p="8">
       <Flex direction={'row'} justifyItems={'flex-start'}>
-        {props.aba === 'grafo' ? (
-          <>
-            <EditPopOver
-              operation={'add'}
-              buttonText={'Adicionar Vértice'}
-              headerText={'Novo Vértice'}
-              inputText={'Rótulo'}
-              eventClick={buttonAddNode}
-            />
+        <EditPopOver
+          operation={'add'}
+          buttonText={'Adicionar Vértice'}
+          headerText={'Novo Vértice'}
+          inputText={'Rótulo'}
+          eventClick={buttonAddNode}
+        />
 
-            <EditPopOver
-              operation={'add'}
-              buttonText={'Adicionar Aresta'}
-              headerText={'Nova Aresta'}
-              inputText={'Peso'}
-              eventClick={buttonAddEdge}
-            />
+        <EditPopOver
+          operation={'add'}
+          buttonText={'Adicionar Aresta'}
+          headerText={'Nova Aresta'}
+          inputText={'Peso'}
+          eventClick={buttonAddEdge}
+        />
 
-            <EditPopOver
-              operation={'del'}
-              buttonText={'Remover'}
-              headerText={'Remover Elemento?'}
-              eventClick={buttonDelete}
-            />
-          </>
-        ) : (
-          <></>
-        )}
+        <EditPopOver
+          operation={'del'}
+          buttonText={'Remover'}
+          headerText={'Remover Elemento?'}
+          eventClick={buttonDelete}
+        />
         {/*
         {props.aba !== 'grafo' ? (
           <Button
@@ -301,9 +296,8 @@ const GraphView = props => {
         */}
       </Flex>
 
-      
       <div ref={container} style={{ height: '100%', width: '100%' }} />
-    </>
+    </Box>
   );
 };
 

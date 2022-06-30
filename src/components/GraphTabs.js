@@ -23,11 +23,11 @@ function GraphTabs(props) {
     graph: {
       nodes: [
         /*
-        { id: 1, label: 'Node 1', color: Cores.lavender_floral, x: 200, y: 0 },
-        { id: 2, label: 'Node 2', color: Cores.lavender_floral, x: 50, y: 250 },
-        { id: 3, label: 'Node 3', color: Cores.lavender_floral, x: 300, y: 0 },
-        { id: 4, label: 'Node 4', color: Cores.lavender_floral, x: 90, y: 100 },
-        { id: 5, label: 'Node 5', color: Cores.lavender_floral, x: 0, y: 10 },*/
+        { id: 1, label: 'Node 1', x: 200, y: 0 },
+        { id: 2, label: 'Node 2', x: 50, y: 250 },
+        { id: 3, label: 'Node 3', x: 300, y: 0 },
+        { id: 4, label: 'Node 4', x: 90, y: 100 },
+        { id: 5, label: 'Node 5', x: 0, y: 10 },*/
       ],
       edges: [
         /*
