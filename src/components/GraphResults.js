@@ -29,6 +29,7 @@ const stateOriginal = {
       { from: 1, to: 3, label: '5' },
       { from: 3, to: 2, label: '3' },
       { from: 3, to: 4, label: '9' },
+      { from: 4, to: 5, label: '4' },
       { from: 5, to: 6, label: '6' },
     ],
   },
@@ -148,7 +149,7 @@ if (tipoGrafo === 'orientado') {
 //console.log(resultadoConexidade)
 console.log(grafo)
 var resultadoEuleriano = ''
-if (!teste.eConexo(copia9)) {
+if (teste.eConexo(copia9)) {
   console.log('aaaaaaaa')
   console.log(grafo)
   resultadoEuleriano = verificaEuleriano(grafo.nodes, grafo.edges);
