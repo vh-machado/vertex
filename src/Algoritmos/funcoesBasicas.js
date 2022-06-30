@@ -12,11 +12,13 @@ export class algoritmosGrafos {
         });
     }
 
-    procuraAresta(origem, destino, grafo) {
+    procuraAresta(origem, destino, grafo, orientado) {
         var resposta = "Não existe a aresta"
         grafo.edges.forEach(teste)
         function teste(item) {
             if (item.from === origem && item.to === destino) {
+                resposta = "Existe a aresta"
+            } else if (!orientado && item.to === origem && item.from === destino){
                 resposta = "Existe a aresta"
             }
         }

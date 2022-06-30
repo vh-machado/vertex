@@ -1,4 +1,4 @@
-export function criaMatrizAdjacencia(listaVertices, listaArestas) {
+export function criaMatrizAdjacencia(listaVertices, listaArestas, origem, destino) {
     var graph = {
       nodes: listaVertices,
       edges: listaArestas
@@ -10,33 +10,34 @@ export function criaMatrizAdjacencia(listaVertices, listaArestas) {
   
     function converteListaVertices(listaVertices){
         for(var i = 0; i<listaVertices.length; i++){
-              if(i===0){
+              if(listaVertices[i].label===origem){
                 listaVertices[i].label = 'start'
-              }else if (i===listaVertices.length-1){
+              }if(listaVertices[i].label===destino){
                 listaVertices[i].label = 'finish'  
               }
         }
+        console.log(listaVertices);
         return listaVertices
     }
   
     converteListaVertices(vertices)
   
-    function converteIdLabel(listaVertices, listaArestas){
+    function converteIdLabel(listaVertices, listaArestas, origem, destino){
         var listaArestasLabel = []
         for(var i = 0; i<listaVertices.length; i++){
             for(var j = 0; j<listaArestas.length; j++){
                 if(listaVertices[i].id === listaArestas[j].from){
-                    if(i===0){
+                    if(listaVertices[i].label===origem){
                         listaArestas[j].from = 'start'
-                    }else if (i===listaVertices.length-1){
+                    }else if (listaVertices[i].label===destino){
                         listaArestas[j].from = 'finish'
                     }else{
                         listaArestas[j].from = listaVertices[i].label
                     }
                 }else if(listaVertices[i].id === listaArestas[j].to){
-                    if(i===0){
+                    if(listaVertices[i].label===origem){
                         listaArestas[j].to = 'start'
-                    }else if (i===listaVertices.length-1){
+                    }else if (listaVertices[i].label===destino){
                         listaArestas[j].to = 'finish'
                     }else{
                         listaArestas[j].to = listaVertices[i].label
@@ -47,7 +48,7 @@ export function criaMatrizAdjacencia(listaVertices, listaArestas) {
         listaArestasLabel = listaArestas
         return listaArestasLabel
     }
-    var listaConvertida = converteIdLabel(vertices, arestas)
+    var listaConvertida = converteIdLabel(vertices, arestas, origem, destino)
   
   
     for(var j = 0; j<listaConvertida.length; j++){

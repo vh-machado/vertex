@@ -1,5 +1,5 @@
-import React from 'react';
-import { viewCard, viewCardSelection } from '../components/CardInfo';
+import React, { useEffect, useState } from 'react';
+import { viewCard, viewCardSelectionAdj, viewCardSelectionAresta, viewCardSelectionGrau, viewCardSelectionMenorCaminhoNaoOrient, viewCardSelectionMenorCaminhoOrient } from '../components/CardInfo';
 import { algoritmosGrafos } from '../Algoritmos/funcoesBasicas'
 import { dijkstra } from '../Algoritmos/dijkstra';
 import { criaMatrizAdjacencia } from '../Algoritmos/criaMatrizAdjacencia';
@@ -27,10 +27,11 @@ const stateOriginal = {
     edges: [
       { from: 1, to: 2, label: '3' },
       { from: 1, to: 3, label: '5' },
-      //{ from: 3, to: 2, label: '3' },
+      { from: 3, to: 2, label: '3' },
       { from: 3, to: 4, label: '9' },
       { from: 4, to: 5, label: '4' },
       { from: 5, to: 6, label: '6' },
+      { from: 2, to: 6, label: '11' },
     ],
   },
 };
@@ -110,18 +111,16 @@ const copia9 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para n�
 //console.log(grafo)
 //Implementados
 
-const resultadoAresta = teste.procuraAresta(origem, destino, copia5);
-const grauVertice = teste.calcularGrau(copia6, vertice.id, 'nao_orientado');
-const adjacenciasVertice = teste.recuperarAdjacencias(copia7, vertice.id, 'nao_orientado');
 const resultadoConexo = teste.eConexo(copia8);
 
 resultadoConexidade = verificaConexidade(vertices, arestas)
 
 var resultadoConexidade = ''
-
 var resultadoComponentesFortes = ''
 if (resultadoConexo) {
   resultadoConexidade = verificaConexidade(vertices, arestas)
+  console.log('Teste conexidade')
+  console.log(resultadoConexidade)
   if (resultadoConexidade !== 'Fortemente Conexo') {
     resultadoComponentesFortes = componentesFortes(grafo.nodes, grafo.edges);
   }
@@ -153,6 +152,7 @@ if (resultadoConexo) {
   }
 }
 
+/*
 const resulatdoDijkstra = algDijkstra.dijkstra(criaMatrizAdjacencia(copia1.nodes, copia1.edges))
 console.log(resulatdoDijkstra.distance)
 
@@ -161,7 +161,8 @@ resulatdoDijkstra.path[resulatdoDijkstra.path.length - 1] = state.graph.nodes[ta
 const resultadoMenorCaminho = resulatdoDijkstra.path.toString();
 const MenorCaminhoNorientado = teste.bfs(copia3, origemBFS, destinoBFS)
 const resultadoMenorCusto = resulatdoDijkstra.distance;
-const tipoGrafo = 'orientado';
+*/
+//const tipoGrafo = 'orientado';
 const visibility = false;
 
 var resultadosAGM = ''
@@ -192,22 +193,48 @@ console.log(resultadoArestasAGM);
 
 //Retorna os cards com os resultados
 function GraphResults(props) {
+
+  const [existeAresta, setExisteAresta] = useState([]);
+  const [selectGrauVertice, setSelectGrauVertice] = useState();
+  const [selectVerticeAdj, setSelectVerticeAdj] = useState();
+  const [selectMenorCaminhoOrient, setSelectMenorCaminhoOrient] = useState([]);
+  const [selectMenorCaminhoNaoOrient, setSelectMenorCaminhoNaoOrient] = useState([]);
+  
+
+  const resultadoAresta = teste.procuraAresta(existeAresta[0], existeAresta[1], copia5, props.orientacao);
+  const grauVertice = teste.calcularGrau(copia6, selectGrauVertice, (props.orientacao)?'orientado':'nao_orientado');
+  const adjacenciasVertice = teste.recuperarAdjacencias(copia7, selectVerticeAdj, (props.orientacao)?'orientado':'nao_orientado');
+
+  console.log('origem, daestino')
+  console.log(selectMenorCaminhoOrient)
+
+  const resulatdoDijkstra = algDijkstra.dijkstra(criaMatrizAdjacencia(copia1.nodes, copia1.edges, selectMenorCaminhoOrient[0], selectMenorCaminhoOrient[1]))
+  console.log(resulatdoDijkstra.distance)
+
+  resulatdoDijkstra.path[0] = state.graph.nodes[0].label
+  resulatdoDijkstra.path[resulatdoDijkstra.path.length - 1] = state.graph.nodes[tamanhoListavertices - 1].label
+  const resultadoMenorCaminho = resulatdoDijkstra.path.toString();
+  console.log("menor caminho orientado=")
+  console.log(resultadoMenorCaminho)
+  const MenorCaminhoNorientado = teste.bfs(copia3, origemBFS, destinoBFS)
+  const resultadoMenorCusto = resulatdoDijkstra.distance;
+
   return (
     <>
-      {viewCardSelection('Existe a Aresta ', resultadoAresta, grafo)}
-      {viewCard('Grau do Vértice ' + vertice.label, grauVertice, visibility)}
-      {viewCard('Adjacentes do Vértice ' + vertice.label, adjacenciasVertice.toString(), visibility)}
+      {viewCardSelectionAresta('Existe a Aresta ', resultadoAresta, grafo, existeAresta, setExisteAresta)}
+      {viewCardSelectionGrau('Grau do Vértice ', grauVertice, grafo, setSelectGrauVertice)}
+      {viewCardSelectionAdj('Adjacentes do Vértice ', adjacenciasVertice.toString(), grafo, setSelectVerticeAdj)}
       {!props.orientacao ? viewCard('Grafo não-orientado Conexo?', (resultadoConexo) ? "Sim" : "Não", visibility) : null}
-      {props.orientacao ? viewCard('Conexidade do Dígrafo?', resultadoConexidade, visibility) : null}
-      {(resultadoConexidade !== 'Fortemente Conexo') ? viewCard('Componentes Fortes:', resultadoComponentesFortes, visibility): null}
+      {(props.orientacao && resultadoConexo) ? viewCard('Conexidade do Dígrafo?', resultadoConexidade, visibility) : null}
+      {(resultadoConexidade !== 'Fortemente Conexo' && resultadoConexo) ? viewCard('Componentes Fortes:', resultadoComponentesFortes, visibility): null}
       {resultadoConexo ? viewCard('Grafo Ciclico:', (resultadoCiclico) ? "Sim" : "Não", visibility) : null}
       {(props.orientacao && !resultadoCiclico && resultadoConexo) ? viewCard('Ordenação Topológica:', resultadoOrdenacaoTopologica, visibility) : null}
       {(!props.orientacao && resultadoConexo) ? viewCard('Grafo Planar?', (resultadoPlanar) ? "Sim" : "Não", visibility) : null}
       {(!props.orientacao && resultadoConexo) ? viewCard('Grafo Biconexo?', (resultadoBiconexo) ? "Sim" : "Não", visibility) : null}
       {(!props.orientacao && resultadoConexo) ? viewCard('Grafo Euleriano?', (resultadoEuleriano) ? "Sim" : "Não", visibility) : null}
       {(!props.orientacao && resultadoConexo && resultadoEuleriano) ? viewCard('Ciclo Euleriano?', resultadoCicloEuleriano.toString(), visibility) : null}
-      {!props.orientacao ? viewCard('Menor Caminho não orientado:', MenorCaminhoNorientado.expandedNodes, visibility) : null}
-      {props.orientacao ? viewCard('Menor Caminho:', resultadoMenorCaminho, visibility) : null}
+      {!props.orientacao ? viewCardSelectionMenorCaminhoNaoOrient('Menor Caminho não orientado:', MenorCaminhoNorientado.expandedNodes, grafo, selectMenorCaminhoNaoOrient, setSelectMenorCaminhoNaoOrient) : null}
+      {props.orientacao ? viewCardSelectionMenorCaminhoOrient('Menor Caminho:', resultadoMenorCaminho, grafo, selectMenorCaminhoOrient, setSelectMenorCaminhoOrient) : null}
       {props.orientacao ? viewCard('Menor Custo:', resultadoMenorCusto, visibility) : null}
       {(!props.orientacao && resultadoConexo) ? viewCard('Custo Árvore Geradora Mínima:', resultadoCustoAGM, visibility) : null}
       {(!props.orientacao && resultadoConexo) ? viewCard('Arestas Árvore Geradora Mínima:', resultadoArestasAGM, visibility) : null}
