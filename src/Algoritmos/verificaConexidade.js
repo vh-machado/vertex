@@ -91,7 +91,7 @@ export function verificaConexidade(listaVertices, listaArestas) {
     // connected and return
     if (lowertri) {
       //document.write('Unilaterally Connected');
-      console.log('Unilateralmente Conexo');
+     // console.log('Unilateralmente Conexo');
       return 'Unilateralmente Conexo';
     }
 
@@ -99,7 +99,7 @@ export function verificaConexidade(listaVertices, listaArestas) {
     // unsynchronized then print weakly
     // connected and return
     else {
-      console.log('Fracamente Conexo');
+     // console.log('Fracamente Conexo');
     }
     return 'Fracamente Conexo';
   }

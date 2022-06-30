@@ -44,6 +44,6 @@ export default function criaMatrizCaminho(listaVertices, listaArestas) {
     }
   }
 
-  console.log(matrizCaminho);
+  //console.log(matrizCaminho);
   return matrizCaminho;
 }

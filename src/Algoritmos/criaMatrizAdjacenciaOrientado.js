@@ -20,7 +20,7 @@ export default function criaMatrizAdjacenciaOrientado(
     }
   });
 
-  console.log('matrizAdjOrientado=');
-  console.log(matrizAdjacencia);
+  /*console.log('matrizAdjOrientado=');
+  console.log(matrizAdjacencia);*/
   return matrizAdjacencia;
 }
