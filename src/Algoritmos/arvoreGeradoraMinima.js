@@ -5,7 +5,7 @@ export function arvoreGeradoraMinima(graphData) {
   const listaArestas = graphData.graph.edges;
   // Number of vertices in the graph
   let V = graphData.counter;
-  console.log(graphData);
+  //console.log(graphData);
   var arestasArvore = [];
   var custo = 0;
 
@@ -36,7 +36,7 @@ export function arvoreGeradoraMinima(graphData) {
     for (let i = 1; i < V; i++) {
       var vertice1 = listaVertices.find(v => v.id == parent[i]+1);
       var vertice2 = listaVertices.find(v => v.id == i+1);
-      console.log(vertice1.label + ' - ' + vertice2.label + '  (' + graph[i][parent[i]]+')');
+      //console.log(vertice1.label + ' - ' + vertice2.label + '  (' + graph[i][parent[i]]+')');
       arestasArvore.push(vertice1.label + ' - ' + vertice2.label + '  (' + graph[i][parent[i]]+')');
       custo += graph[i][parent[i]];
       //console.log((parent[i]) + '  - ' + (i) + '  ' + graph[i][parent[i]]);
@@ -120,9 +120,9 @@ export function arvoreGeradoraMinima(graphData) {
   var resultadoAGM = {};
   resultadoAGM['custo'] = custo;
   resultadoAGM['arestas'] = arestasArvore;
-  console.log('agm=');
+ /* console.log('agm=');
   console.log(resultadoAGM.arestas);
   console.log('custo agm=');
-  console.log(resultadoAGM.custo);
+  console.log(resultadoAGM.custo);*/
   return resultadoAGM;
 }

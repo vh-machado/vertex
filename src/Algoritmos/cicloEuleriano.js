@@ -43,7 +43,7 @@ export function cicloEuleriano(listaVertices, listaArestas) {
 
       // Print tour starting from oddv
       this.printEulerUtil(u);
-      console.log('');
+      //console.log('');
     }
 
     // Print Euler tour starting from vertex u
@@ -56,7 +56,7 @@ export function cicloEuleriano(listaVertices, listaArestas) {
         if (this.isValidNextEdge(u, v)) {
           var vertice1 = listaVertices.find(vert => vert.id == u + 1);
           var vertice2 = listaVertices.find(vert => vert.id == v + 1);
-          console.log(vertice1.label + ' - ' + vertice2.label + ' ');
+          //console.log(vertice1.label + ' - ' + vertice2.label + ' ');
           ciclo.push(vertice1.label + ' - ' + vertice2.label + ' ');
 
           // This edge is used so remove it now
@@ -119,7 +119,7 @@ export function cicloEuleriano(listaVertices, listaArestas) {
   });
   g.printEulerTour();
 
-  console.log(ciclo);
+  //console.log(ciclo);
   return ciclo;
 
 }

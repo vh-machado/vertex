@@ -1,4 +1,4 @@
-export default function componentesFortes(listaVertices, listaArestas) {
+export function componentesFortes(listaVertices, listaArestas) {
   var componentes = [];
 
   // This class represents a directed graph
