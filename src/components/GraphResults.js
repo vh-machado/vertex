@@ -18,6 +18,7 @@ import { ordenacaoTopologica } from '../Algoritmos/ordenacaoTopologica';
 import { verificaBiconexo } from '../Algoritmos/verificaBiconexo';
 import { verificaConexidade } from '../Algoritmos/verificaConexidade';
 import { verificaEuleriano } from '../Algoritmos/verificaEuleriano';
+import { largura } from '../Algoritmos/largura';
 
 //Grafo de teste
 const stateOriginal = {
@@ -97,7 +98,7 @@ function GraphResults(props) {
   const vertice = state.graph.nodes[0]; // Usado nos resultados que se escolhe um vértice
   const vertices = state.graph.nodes;
   const arestas = state.graph.edges;
-  const grafo = state.graph; //variável com o grafo para se pegar mais facilmente os nodes e as edges
+  const grafo = props.state.graph; //variável com o grafo para se pegar mais facilmente os nodes e as edges
   const tamanhoListavertices = state.graph.nodes.length; //tamanho da lista de vértices
   const origemBFS = state.graph.nodes[0].label;
   const destinoBFS = state.graph.nodes[3].label;
@@ -176,7 +177,7 @@ function GraphResults(props) {
   var resultadoCustoAGM = '';
   var resultadoArestasAGM = '';
   if (resultadoConexo) {
-    resultadosAGM = arvoreGeradoraMinima(state);
+    resultadosAGM = arvoreGeradoraMinima(props.state);
     resultadoCustoAGM = resultadosAGM.custo;
     resultadoArestasAGM = resultadosAGM.arestas;
   }
@@ -197,12 +198,14 @@ function GraphResults(props) {
   console.log(resultadoCustoAGM);
   console.log(resultadoArestasAGM);
 
+
+  
   const [existeAresta, setExisteAresta] = useState([]);
   const [selectGrauVertice, setSelectGrauVertice] = useState();
   const [selectVerticeAdj, setSelectVerticeAdj] = useState();
   const [selectMenorCaminhoOrient, setSelectMenorCaminhoOrient] = useState([]);
   const [selectMenorCaminhoNaoOrient, setSelectMenorCaminhoNaoOrient] =
-    useState([]);
+    useState([])
 
   const resultadoAresta = teste.procuraAresta(
     existeAresta[0],
@@ -238,12 +241,17 @@ function GraphResults(props) {
   resulatdoDijkstra.path[0] = selectMenorCaminhoOrient[0];
   resulatdoDijkstra.path[resulatdoDijkstra.path.length - 1] =
     selectMenorCaminhoOrient[1];
-  const resultadoMenorCaminho = resulatdoDijkstra.path.toString();
+  var resultadoMenorCaminho = ''
+  resultadoMenorCaminho = resulatdoDijkstra.path.toString();
   console.log('origem, daestino');
   console.log(selectMenorCaminhoNaoOrient);
   console.log('menor caminho n orientado=');
-  const MenorCaminhoNorientado = teste.bfs(copia3, selectMenorCaminhoNaoOrient[0], selectMenorCaminhoNaoOrient[1]);
+  var MenorCaminhoNorientado = ''
+  //MenorCaminhoNorientado = teste.bfs(copia3, selectMenorCaminhoNaoOrient[0], selectMenorCaminhoNaoOrient[1]);
+  //MenorCaminhoNorientado = teste.buscaEmLargura(copia3, selectMenorCaminhoNaoOrient[0], selectMenorCaminhoNaoOrient[1]);
+  MenorCaminhoNorientado = largura(copia3, selectMenorCaminhoNaoOrient[0], selectMenorCaminhoNaoOrient[1]).path;
   console.log(MenorCaminhoNorientado);
+
 
   const resultadoMenorCusto = resulatdoDijkstra.distance;
 
@@ -278,7 +286,7 @@ function GraphResults(props) {
       {props.orientacao && resultadoConexo
         ? viewCard('Conexidade do Dígrafo?', resultadoConexidade, visibility)
         : null}
-      {resultadoConexidade !== 'Fortemente Conexo' && resultadoConexo
+      {resultadoConexidade !== 'Fortemente Conexo' && props.orientacao && resultadoConexo
         ? viewCard(
             'Componentes Fortes:',
             resultadoComponentesFortes,
@@ -326,7 +334,7 @@ function GraphResults(props) {
       {!props.orientacao
         ? viewCardSelectionMenorCaminhoNaoOrient(
             'Menor Caminho não orientado:',
-            MenorCaminhoNorientado.expandedNodes,
+            MenorCaminhoNorientado,
             grafo,
             selectMenorCaminhoNaoOrient,
             setSelectMenorCaminhoNaoOrient

@@ -74,7 +74,9 @@ export function componentesFortes(listaVertices, listaArestas) {
           w = st.pop();
           //document.write(w+1 + ' ');
           console.log(w + 1 + ' ');
-          comp += (w + 1) + ' ';
+
+          var vert = listaVertices.find(v => v.id === w+1)
+          comp += vert.label + ' ';
 
           stackMember[w] = false;
         }
