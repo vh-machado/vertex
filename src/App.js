@@ -105,7 +105,7 @@ function App() {
               }}
             >
               {/* Componente da direita */}
-              {graphData.counter > 0 && cardsVisiveis ? (
+              {cardsVisiveis ? (
                 <GraphResults orientacao={orientacao}/>
               ) : (
                 <></>

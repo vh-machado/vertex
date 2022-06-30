@@ -140,7 +140,7 @@ export function componentesFortes(listaVertices, listaArestas) {
   });
   g1.SCC();
 
-  console.log(componentes);
-  return componentes;
+  console.log(componentes.join(" / "));
+  return componentes.join(" / ");
   
 }

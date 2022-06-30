@@ -12,11 +12,13 @@ export class algoritmosGrafos {
         });
     }
 
-    procuraAresta(origem, destino, grafo) {
+    procuraAresta(origem, destino, grafo, orientado) {
         var resposta = "Não existe a aresta"
         grafo.edges.forEach(teste)
         function teste(item) {
             if (item.from === origem && item.to === destino) {
+                resposta = "Existe a aresta"
+            } else if (!orientado && item.to === origem && item.from === destino){
                 resposta = "Existe a aresta"
             }
         }
@@ -241,11 +243,11 @@ export class algoritmosGrafos {
 
     eConexo(grafo) {
         if (grafo.nodes.length > 0) {
-            const primeiroVertice = grafo.nodes[0].id
-            const ultimoVertice = grafo.nodes[grafo.nodes.length - 1].id
+            const primeiroVertice = grafo.nodes[0].label
+            const ultimoVertice = grafo.nodes[grafo.nodes.length - 1].label
             const visitados = this.bfs(grafo, primeiroVertice, ultimoVertice).expandedNodes
             for (var i = 0; i < grafo.nodes.length; i++) {
-                if (!visitados.includes(grafo.nodes[i].id)) {
+                if (!visitados.includes(grafo.nodes[i].label)) {
                     return false
                 }
             }
