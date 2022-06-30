@@ -139,9 +139,8 @@ export class algoritmosGrafos {
         }
     }
 
-
-
-    /*buscaEmLargura(grafo, origem, destino) {
+    /*
+    buscaEmLargura(grafo, origem, destino) {
         const listaAdjacencia = criaListaAdjacencia(grafo.nodes, grafo.edges)
         const visitados = new Set()
 
@@ -197,11 +196,13 @@ export class algoritmosGrafos {
         return adjacencyList
     }
 
+    
     bfs(grafo, origin, destination) {
         //console.log(origin+' para '+ destination)
         const adjacencyList = this.criarMapGrafos(grafo.nodes, this.converteIdLabel(grafo.nodes, grafo.edges))
        // console.log(adjacencyList)
         const visited = new Set()
+        const menorCaminho = new Set()
 
         visited.add(origin)
 
@@ -210,9 +211,17 @@ export class algoritmosGrafos {
         let isPath = ''
 
         while (queue.length > 0 && visited.size !== adjacencyList.size) {
+            
+            
             const node = queue.shift()
 
             const current = adjacencyList.get(node)
+            if(!visited.has(destination)){
+                menorCaminho.add(node)
+            }
+            if(current.includes(destination)){
+                menorCaminho.add(current[current.indexOf(destination)])
+            }
 
             if (!current)
                 break
@@ -223,16 +232,19 @@ export class algoritmosGrafos {
 
                 return node === destination
             })
+            
 
             if (isPath)
                 break
+            
+           
         }
 
-        /*console.log('caminho: '+ isPath)
-        console.log('expandindos: '+ Array.from(visited))*/
+        
 
         return {
             expandedNodes: Array.from(visited),
+            menorCaminho: Array.from(menorCaminho),
             isPath
         }
         

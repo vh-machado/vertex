@@ -335,11 +335,11 @@ export function viewCardSelectionMenorCaminhoNaoOrient(title, info, grafo, selec
 
   const handleChangeOrigem = (event) => {
     //setValue(event.target.value)
-    setSelectMenorCaminhoNaoOrient([parseInt(event.target.value),selectMenorCaminhoNaoOrient[1]])
+    setSelectMenorCaminhoNaoOrient([event.target.value,selectMenorCaminhoNaoOrient[1]])
   }
   const handleChangeDestino = (event) => {
     //setValue(event.target.value)
-    setSelectMenorCaminhoNaoOrient([selectMenorCaminhoNaoOrient[0],parseInt(event.target.value)])
+    setSelectMenorCaminhoNaoOrient([selectMenorCaminhoNaoOrient[0],event.target.value])
   }
 
   return (
@@ -385,7 +385,7 @@ export function viewCardSelectionMenorCaminhoNaoOrient(title, info, grafo, selec
             const idVertice = value.id
             const nomeVertice = value.label
           
-            return (<option key={idVertice.toString()} value={idVertice}>{nomeVertice}</option>)
+            return (<option key={idVertice.toString()} value={nomeVertice}>{nomeVertice}</option>)
             
           })}
         </Select>
@@ -399,7 +399,7 @@ export function viewCardSelectionMenorCaminhoNaoOrient(title, info, grafo, selec
           {grafo.nodes.map((value) => {
             const idVertice = value.id
             const nomeVertice = value.label
-            return (<option key={idVertice.toString()} value={idVertice}>{nomeVertice}</option>)
+            return (<option key={idVertice.toString()} value={nomeVertice}>{nomeVertice}</option>)
           })}
         </Select>
       </Box>
