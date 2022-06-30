@@ -1,8 +1,8 @@
 import criaMatrizAdjacenciaOrientado from './criaMatrizAdjacenciaOrientado';
 
-export default function criaMatrizCaminho(graphData, possuiPeso) {
-  var listaVertices = graphData.graph.nodes;
-  var listaArestas = graphData.graph.edges;
+export default function criaMatrizCaminho(listaVertices, listaArestas) {
+  //var listaVertices = grafo.nodes;
+  //var listaArestas = grafo.edges;
   /*
   function multiplicaMatrizes(m1, m2) {
     var result = [];
@@ -26,7 +26,6 @@ export default function criaMatrizCaminho(graphData, possuiPeso) {
   const matrizAdjacencia = criaMatrizAdjacenciaOrientado(
     listaVertices,
     listaArestas,
-    possuiPeso
   );
   var matrizA = [];
   var matrizB = [];
@@ -45,6 +44,6 @@ export default function criaMatrizCaminho(graphData, possuiPeso) {
     }
   }
 
-  console.log(matrizCaminho);
+  //console.log(matrizCaminho);
   return matrizCaminho;
 }

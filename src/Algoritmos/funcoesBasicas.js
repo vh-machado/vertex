@@ -171,7 +171,7 @@ export class algoritmosGrafos {
             caminho
         }
     }*/
-
+    
     converteIdLabel(listaVertices, listaArestas) {
         var listaArestasLabel = []
         for (var i = 0; i < listaVertices.length; i++) {
@@ -246,21 +246,21 @@ export class algoritmosGrafos {
             const visitados = this.bfs(grafo, primeiroVertice, ultimoVertice).expandedNodes
             for (var i = 0; i < grafo.nodes.length; i++) {
                 if (!visitados.includes(grafo.nodes[i].id)) {
-                    return 'Não'
+                    return false
                 }
             }
         }
-        return 'Sim'
+        return true
     }
 
     possuiCiclo(grafo, origem, destino) {
-        console.log(grafo)
+        /*console.log(grafo)
         console.log(origem)
         console.log(destino)
         console.log(grafo.nodes)
-        console.log(grafo.edges)
+        console.log(grafo.edges)*/
         const listaAdjacencias = criaListaAdjacencia(grafo.nodes, grafo.edges)
-        console.log(listaAdjacencias)
+        //console.log(listaAdjacencias)
         const resultado = this.eCiclo(listaAdjacencias, origem, destino)
         return resultado
     }

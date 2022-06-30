@@ -64,7 +64,7 @@ function App() {
                 },
               }}
             >
-              <GraphResults/>
+              <GraphResults orientacao={orientacao}/>
               {/* Componente da direita */}
 
             </Flex>

@@ -1,6 +1,6 @@
 import converteGrafo from './converteGrafo';
 
-export const ordenacaoTopologica = graphData => {
+export const ordenacaoTopologica = grafo => {
   var ordem = [];
 
   class Graph {
@@ -20,8 +20,8 @@ export const ordenacaoTopologica = graphData => {
   const graph = (function () {
     
     const g = new Graph();
-    graphData.graph.nodes.forEach(v => g.addVertex(v.id));
-    graphData.graph.edges.forEach(a => g.addEdge(a.from, a.to));
+    grafo.nodes.forEach(v => g.addVertex(v.id));
+    grafo.edges.forEach(a => g.addEdge(a.from, a.to));
     
     return g;
   })();
@@ -50,18 +50,16 @@ export const ordenacaoTopologica = graphData => {
     }
 
     vertices.forEach(v => {
-      var vertice = graphData.graph.nodes.find(vert => vert.id == v);
+      var vertice = grafo.nodes.find(vert => vert.id == v);
       ordem[topNums[v]] = vertice.label;
     })
     //return topNums;
   }
 
-  console.log(dfsTopSort(graph));
-  //console.log(converteGrafo(dfsTopSort(graph), graphData));
+  dfsTopSort(graph);
 
-  console.log(ordem);
+  //console.log(ordem);
   return ordem
-  //return converteGrafo(dfsTopSort(graph), graphData);
 };
 
 

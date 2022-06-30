@@ -1,7 +1,6 @@
 export default function criaMatrizAdjacenciaOrientado(
   listaVertices,
   listaArestas,
-  possuiPeso
 ) {
   var matrizAdjacencia = [];
 
@@ -12,6 +11,7 @@ export default function criaMatrizAdjacenciaOrientado(
     }
   }
 
+  //console.log(listaArestas);
   listaArestas.forEach(aresta => {
     if (aresta.label === '') {
       matrizAdjacencia[aresta.from - 1][aresta.to - 1] = 1;
@@ -20,7 +20,7 @@ export default function criaMatrizAdjacenciaOrientado(
     }
   });
 
-  console.log('matrizAdjOrientado=');
-  console.log(matrizAdjacencia);
+  /*console.log('matrizAdjOrientado=');
+  console.log(matrizAdjacencia);*/
   return matrizAdjacencia;
 }

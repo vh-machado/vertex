@@ -101,12 +101,12 @@ export function verificaEuleriano(listaVertices, listaArestas) {
     test() {
       let res = this.isEulerian();
       if (res == 0) {
-        console.log('O grafo não é euleriano');
+       // console.log('O grafo não é euleriano');
         return false;
       } else if (res == 1) {
-        console.log('O grafo tem um caminho euleriano');
+       // console.log('O grafo tem um caminho euleriano');
       } else {
-        console.log('O grafo tem um ciclo euleriano');
+       // console.log('O grafo tem um ciclo euleriano');
         return true;
         //cicloEuleriano(listaVertices, listaArestas);
       }
