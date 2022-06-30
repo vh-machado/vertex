@@ -29,8 +29,7 @@ const stateOriginal = {
       { from: 1, to: 3, label: '5' },
       { from: 3, to: 2, label: '3' },
       { from: 3, to: 4, label: '9' },
-      { from: 4, to: 5, label: '4' },
-      { from: 4, to: 6, label: '6' },
+      { from: 5, to: 6, label: '6' },
     ],
   },
 };
@@ -104,6 +103,7 @@ const copia5 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para n�
 const copia6 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
 const copia7 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
 const copia8 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
+const copia9 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
 
 
 //console.log(grafo)
@@ -146,9 +146,11 @@ if (tipoGrafo === 'orientado') {
   resultadoConexidade = 'Não cabe'
 }
 //console.log(resultadoConexidade)
-
+console.log(grafo)
 var resultadoEuleriano = ''
-if (teste.eConexo(grafo)) {
+if (!teste.eConexo(copia9)) {
+  console.log('aaaaaaaa')
+  console.log(grafo)
   resultadoEuleriano = verificaEuleriano(grafo.nodes, grafo.edges);
 } else {
   resultadoEuleriano = 'Grafo não é conexo'
