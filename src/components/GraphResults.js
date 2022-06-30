@@ -27,7 +27,7 @@ const stateOriginal = {
     edges: [
       { from: 1, to: 2, label: '3' },
       { from: 1, to: 3, label: '5' },
-      { from: 3, to: 2, label: '3' },
+      //{ from: 3, to: 2, label: '3' },
       { from: 3, to: 4, label: '9' },
       { from: 4, to: 5, label: '4' },
       { from: 5, to: 6, label: '6' },
@@ -110,21 +110,47 @@ const copia9 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para n�
 //console.log(grafo)
 //Implementados
 
-var resultadoPlanar = ''
-if (teste.eConexo(copia8)) {
-  resultadoPlanar = planarity_test(copia4.nodes, copia4.edges);
-} else {
-  resultadoPlanar = 'Grafo não é conexo'
-}
 const resultadoAresta = teste.procuraAresta(origem, destino, copia5);
 const grauVertice = teste.calcularGrau(copia6, vertice.id, 'nao_orientado');
 const adjacenciasVertice = teste.recuperarAdjacencias(copia7, vertice.id, 'nao_orientado');
 const resultadoConexo = teste.eConexo(copia8);
+
+resultadoConexidade = verificaConexidade(vertices, arestas)
+
+var resultadoConexidade = ''
+
+var resultadoComponentesFortes = ''
+if (resultadoConexo) {
+  resultadoConexidade = verificaConexidade(vertices, arestas)
+  if (resultadoConexidade !== 'Fortemente Conexo') {
+    resultadoComponentesFortes = componentesFortes(grafo.nodes, grafo.edges);
+  }
+}
+
 var resultadoCiclico = ''
-if (teste.eConexo(copia8)) {
+if (resultadoConexo) {
   resultadoCiclico = teste.possuiCiclo(copia2, origem, destino)
-} else {
-  resultadoCiclico = 'Grafo não é Conexo'
+}
+
+var resultadoOrdenacaoTopologica = ''
+if (!resultadoCiclico && resultadoConexo) {
+  resultadoOrdenacaoTopologica = ordenacaoTopologica(grafo)
+}
+
+var resultadoPlanar = ''
+var resultadoBiconexo = ''
+var resultadoEuleriano = ''
+var resultadoCicloEuleriano = ''
+
+if (resultadoConexo) {
+  console.log('teste euleriano')
+  console.log(grafo)
+  resultadoPlanar = planarity_test(copia4.nodes, copia4.edges);
+  resultadoBiconexo = verificaBiconexo(grafo.nodes, grafo.edges);
+  resultadoEuleriano = verificaEuleriano(grafo.nodes, grafo.edges);
+  if(resultadoEuleriano){
+    resultadoCicloEuleriano = cicloEuleriano(grafo.nodes, grafo.edges);
+  }
 }
 
 const resulatdoDijkstra = algDijkstra.dijkstra(criaMatrizAdjacencia(copia1.nodes, copia1.edges))
@@ -137,59 +163,31 @@ const MenorCaminhoNorientado = teste.bfs(copia3, origemBFS, destinoBFS)
 const resultadoMenorCusto = resulatdoDijkstra.distance;
 const tipoGrafo = 'orientado';
 const visibility = false;
-var resultadoConexidade = ''
-//Falta Implementar
 
+var resultadosAGM = ''
+var resultadoCustoAGM = ''
+var resultadoArestasAGM = ''
+if (resultadoConexo) {
+  resultadosAGM = arvoreGeradoraMinima(state)
+  resultadoCustoAGM = resultadosAGM.custo;
+  resultadoArestasAGM = resultadosAGM.arestas;
+}
 
+/*
 if (tipoGrafo === 'orientado') {
   resultadoConexidade = verificaConexidade(vertices, arestas)
 } else {
   resultadoConexidade = 'Não cabe'
-}
-//console.log(resultadoConexidade)
-console.log(grafo)
-var resultadoEuleriano = ''
-if (teste.eConexo(copia9)) {
-  console.log('aaaaaaaa')
-  console.log(grafo)
-  resultadoEuleriano = verificaEuleriano(grafo.nodes, grafo.edges);
-} else {
-  resultadoEuleriano = 'Grafo não é conexo'
-}
+}*/
 
-var resultadoCicloEuleriano = ''
-if(resultadoEuleriano){
-   resultadoCicloEuleriano = cicloEuleriano(grafo.nodes, grafo.edges);
-}else{
-   resultadoCicloEuleriano = 'Grafo não é Euleriano'
-}
-var resultadosAGM = ''
-var resultadoCustoAGM = ''
-var resultadoArestasAGM = ''
-var resultadoBiconexo = ''
-if (teste.eConexo(copia8)) {
-  resultadosAGM = arvoreGeradoraMinima(state)
-  resultadoCustoAGM = resultadosAGM.custo;
-  resultadoArestasAGM = resultadosAGM.arestas;
-  resultadoBiconexo = verificaBiconexo(grafo.nodes, grafo.edges);
-}
-
-
-
-var resultadoComponentesFortes = componentesFortes(grafo.nodes, grafo.edges);
-if (resultadoConexidade === 'Fortemente Conexo') {
-  resultadoComponentesFortes = componentesFortes(grafo.nodes, grafo.edges);
-} else {
-  resultadoComponentesFortes = 'Não é Fortemente Conexo'
-}
-
-
-var resultadoOrdenacaoTopologica = ''
-if (resultadoCiclico === false && resultadoConexo === true) {
-  resultadoOrdenacaoTopologica = ordenacaoTopologica(grafo)
-} else {
-  resultadoOrdenacaoTopologica = 'Grafo cíclico ou não é conexo'
-}
+console.log("LOGS")
+console.log(resultadoConexo);
+console.log(resultadoPlanar);
+console.log(resultadoBiconexo);
+console.log(resultadoEuleriano);
+console.log(resultadoCicloEuleriano);
+console.log(resultadoCustoAGM);
+console.log(resultadoArestasAGM);
 
 
 //Retorna os cards com os resultados
@@ -199,20 +197,20 @@ function GraphResults(props) {
       {viewCardSelection('Existe a Aresta ', resultadoAresta, grafo)}
       {viewCard('Grau do Vértice ' + vertice.label, grauVertice, visibility)}
       {viewCard('Adjacentes do Vértice ' + vertice.label, adjacenciasVertice.toString(), visibility)}
-      {!props.orientacao ? viewCard('Grafo não-orientado Conexo?', resultadoConexo.toString(), visibility) : null}
-      {props.orientacao ? viewCard('Ordenação Topológica:', resultadoOrdenacaoTopologica, visibility) : null}
+      {!props.orientacao ? viewCard('Grafo não-orientado Conexo?', (resultadoConexo) ? "Sim" : "Não", visibility) : null}
       {props.orientacao ? viewCard('Conexidade do Dígrafo?', resultadoConexidade, visibility) : null}
-      {viewCard('Componentes Fortes:', resultadoComponentesFortes, visibility)}
-      {!props.orientacao ? viewCard('Grafo Planar?', resultadoPlanar.toString(), visibility) : null}
-      {!props.orientacao ? viewCard('Grafo Biconexo?', resultadoBiconexo.toString(), visibility) : null}
-      {!props.orientacao ? viewCard('Grafo Euleriano?', resultadoEuleriano.toString(), visibility) : null}
-      {!props.orientacao ? viewCard('Ciclo Euleriano?', resultadoCicloEuleriano.toString(), visibility) : null}
+      {(resultadoConexidade !== 'Fortemente Conexo') ? viewCard('Componentes Fortes:', resultadoComponentesFortes, visibility): null}
+      {resultadoConexo ? viewCard('Grafo Ciclico:', (resultadoCiclico) ? "Sim" : "Não", visibility) : null}
+      {(props.orientacao && !resultadoCiclico && resultadoConexo) ? viewCard('Ordenação Topológica:', resultadoOrdenacaoTopologica, visibility) : null}
+      {(!props.orientacao && resultadoConexo) ? viewCard('Grafo Planar?', (resultadoPlanar) ? "Sim" : "Não", visibility) : null}
+      {(!props.orientacao && resultadoConexo) ? viewCard('Grafo Biconexo?', (resultadoBiconexo) ? "Sim" : "Não", visibility) : null}
+      {(!props.orientacao && resultadoConexo) ? viewCard('Grafo Euleriano?', (resultadoEuleriano) ? "Sim" : "Não", visibility) : null}
+      {(!props.orientacao && resultadoConexo && resultadoEuleriano) ? viewCard('Ciclo Euleriano?', resultadoCicloEuleriano.toString(), visibility) : null}
       {!props.orientacao ? viewCard('Menor Caminho não orientado:', MenorCaminhoNorientado.expandedNodes, visibility) : null}
       {props.orientacao ? viewCard('Menor Caminho:', resultadoMenorCaminho, visibility) : null}
       {props.orientacao ? viewCard('Menor Custo:', resultadoMenorCusto, visibility) : null}
-      {viewCard('Grafo Ciclico:', resultadoCiclico.toString(), visibility)}
-      {!props.orientacao ? viewCard('Custo Árvore Geradora Mínima:', resultadoCustoAGM, visibility) : null}
-      {!props.orientacao ? viewCard('Arestas Árvore Geradora Mínima:', resultadoArestasAGM, visibility) : null}
+      {(!props.orientacao && resultadoConexo) ? viewCard('Custo Árvore Geradora Mínima:', resultadoCustoAGM, visibility) : null}
+      {(!props.orientacao && resultadoConexo) ? viewCard('Arestas Árvore Geradora Mínima:', resultadoArestasAGM, visibility) : null}
     </>
   );
 }

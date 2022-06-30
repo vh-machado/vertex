@@ -241,11 +241,11 @@ export class algoritmosGrafos {
 
     eConexo(grafo) {
         if (grafo.nodes.length > 0) {
-            const primeiroVertice = grafo.nodes[0].id
-            const ultimoVertice = grafo.nodes[grafo.nodes.length - 1].id
+            const primeiroVertice = grafo.nodes[0].label
+            const ultimoVertice = grafo.nodes[grafo.nodes.length - 1].label
             const visitados = this.bfs(grafo, primeiroVertice, ultimoVertice).expandedNodes
             for (var i = 0; i < grafo.nodes.length; i++) {
-                if (!visitados.includes(grafo.nodes[i].id)) {
+                if (!visitados.includes(grafo.nodes[i].label)) {
                     return false
                 }
             }
