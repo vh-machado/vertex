@@ -34,7 +34,6 @@ const stateOriginal = {
     ],
   },
 };
-//console.log(stateOriginal)
 
 const state = JSON.parse(JSON.stringify(stateOriginal));
 
@@ -106,6 +105,7 @@ const copia6 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para n�
 const copia7 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
 const copia8 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
 
+
 //console.log(grafo)
 //Implementados
 
@@ -128,6 +128,7 @@ if (teste.eConexo(copia8)) {
 
 const resulatdoDijkstra = algDijkstra.dijkstra(criaMatrizAdjacencia(copia1.nodes, copia1.edges))
 console.log(resulatdoDijkstra.distance)
+
 resulatdoDijkstra.path[0] = state.graph.nodes[0].label
 resulatdoDijkstra.path[resulatdoDijkstra.path.length - 1] = state.graph.nodes[tamanhoListavertices - 1].label
 const resultadoMenorCaminho = resulatdoDijkstra.path.toString();
@@ -137,6 +138,7 @@ const tipoGrafo = 'orientado';
 const visibility = false;
 var resultadoConexidade = ''
 //Falta Implementar
+
 
 if (tipoGrafo === 'orientado') {
   resultadoConexidade = verificaConexidade(vertices, arestas)
@@ -177,7 +179,6 @@ if (resultadoConexidade === 'Fortemente Conexo') {
 } else {
   resultadoComponentesFortes = 'Não é Fortemente Conexo'
 }
-
 
 
 var resultadoOrdenacaoTopologica = ''
