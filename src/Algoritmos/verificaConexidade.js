@@ -1,7 +1,7 @@
 import componentesFortes from './componentesFortes';
 import criaMatrizCaminho from './criaMatrizCaminho';
 
-export function verificaConexidade(graphData) {
+export function verificaConexidade(listaVertices, listaArestas) {
 
   // Function to find the characteristic
   // of the given graph
@@ -107,11 +107,11 @@ export function verificaConexidade(graphData) {
   // Driver Code
 
   // Number of nodes
-  let n = graphData.counter;
+  let n = listaVertices.length;
 
   // Given Path Matrix
   
-  var graph = criaMatrizCaminho(graphData);
+  var graph = criaMatrizCaminho(listaVertices, listaArestas);
 
   // Function call
   return checkConnected(graph, n);

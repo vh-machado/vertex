@@ -91,7 +91,7 @@ export function viewCardSelection(title, info, grafo) {
             const idVertice = value.id
             const nomeVertice = value.label
           
-            return (<option value={idVertice}>{nomeVertice}</option>)
+            return (<option key={idVertice.toString()} value={idVertice}>{nomeVertice}</option>)
             
           })}
         </Select>
@@ -104,7 +104,7 @@ export function viewCardSelection(title, info, grafo) {
           {grafo.nodes.map((value) => {
             const idVertice = value.id
             const nomeVertice = value.label
-            return (<option value={idVertice}>{nomeVertice}</option>)
+            return (<option key={idVertice.toString()} value={idVertice}>{nomeVertice}</option>)
           })}
         </Select>
       </Box>
