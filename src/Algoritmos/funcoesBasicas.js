@@ -239,7 +239,8 @@ export class algoritmosGrafos {
         console.log(destino)
         console.log(grafo.nodes)
         console.log(grafo.edges)*/
-        const listaAdjacencias = criaListaAdjacencia(grafo.nodes, grafo.edges)
+        const listaAdjacencias = criaListaAdjacencia(grafo.nodes, grafo.edges, false)
+        console.log('listaAdj=',listaAdjacencias);
         //console.log(listaAdjacencias)
         const resultado = this.eCiclo(listaAdjacencias, origem, destino)
         return resultado
@@ -328,81 +329,41 @@ export class algoritmosGrafos {
     verificaConexo(grafo, n, orientacao) {
         console.log(grafo, n, orientacao)
         if (orientacao) {
-            let gr1 = [];
-            let gr2 = [];
-            let N = 10000;
-            for (let i = 0; i < N; i++) {
-                gr1.push([]);
-                gr2.push([]);
+            var vertices = n;
+            var adjacencyList = [];
+            for (let i = 0; i < vertices; i++) {
+                adjacencyList[i] = [];
             }
-            for (let i = 0; i < N; i++) {
-                gr1[i] = [];
-                gr2[i] = [];
+            // Function for adding edges
+            function addEdgeOrientado(source, dest) {
+                adjacencyList[source].unshift(dest);
             }
+
+
             for (let i = 0; i < grafo.edges.length; i++) {
-                Add_edge_digrafo(grafo.edges[i].from, grafo.edges[i].to)
+                addEdgeOrientado(grafo.edges[i].from - 1, grafo.edges[i].to - 1)
             }
-          
-
-            let vis1 = new Array(N);
-            let vis2 = new Array(N);
-            vis1.fill(false);
-            vis2.fill(false);
-
-            return Is_connected_Digrafo(n)
-
-            function Add_edge_digrafo(u, v) {
-                gr1[u].push(v);
-                gr2[v].push(u);
-
-            }
-
-
-            function dfs1(x) {
-                vis1[x] = true;
-                for (let i = 0; i < gr1[x].length; i++) {
-                    if (!vis1[gr1[x][i]]) {
-
-                        dfs1(gr1[x][i]);
+            
+            console.log('lista de adj=',adjacencyList)
+            for(let i = 0; i < adjacencyList.length; i++){
+                var presente = false;
+                for(let j = 0; j < adjacencyList.length; j++){
+                    for(let k = 0; k < adjacencyList[j].length; k++){
+                        if(adjacencyList[j][k] === i && j !== i){
+                            presente = true;
+                            break;
+                        }
+                    }
+                    if(presente){
+                        break;
                     }
                 }
-            }
-
-            // DFS function
-            function dfs2(x) {
-                vis2[x] = true;
-                for (let i = 0; i < gr2[x].length; i++) {
-                    if (!vis2[gr2[x][i]]) {
-
-                        dfs2(gr2[x][i]);
-                    }
+                if(!adjacencyList[i].length && !presente){
+                    console.log('Vértice desconexo detectado')
+                    return false
                 }
             }
-
-            function Is_connected_Digrafo(n) {
-
-                // Call for correct direction
-                for (let i = 0; i < n; i++)
-                    vis1[i] = false;
-                dfs1(1);
-
-                // Call for reverse direction
-                for (let i = 0; i < n; i++)
-                    vis2[i] = false;
-                dfs2(1);
-
-                for (let i = 1; i <= n; i++) {
-
-                    // If any vertex it not visited in any direction
-                    // Then graph is not connected
-                    if (!vis1[i] && !vis2[i])
-                        return false;
-                }
-
-                // If graph is connected
-                return true;
-            }
-
+            return true;
         } else if (!orientacao) {
             var vertices = n;
             var adjacencyList = [];
