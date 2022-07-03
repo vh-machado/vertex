@@ -121,8 +121,40 @@ export class algoritmosGrafos {
             caminho: visitados.has(destino)
         }
     }
+    /*
+    buscaEmLargura(grafo, origem, destino) {
+        const listaAdjacencia = criaListaAdjacencia(grafo.nodes, grafo.edges)
+        const visitados = new Set()
 
+        visitados.add(origem)
 
+        const fila = [origem]
+
+        let caminho = ''
+
+        while (fila.length > 0 && visitados.size !== listaAdjacencia.size) {
+            const vertice = fila.shift()
+            const atual = listaAdjacencia[vertice]
+            if (!atual)
+                break
+
+            caminho = atual.find(vertice => {
+                visitados.add(vertice)
+                fila.push(vertice)
+
+                return vertice === destino
+            })
+
+            if (caminho)
+                break
+        }
+
+        return {
+            verticesExpandidos: Array.from(visitados),
+            caminho
+        }
+    }*/
+  
     converteIdLabel(listaVertices, listaArestas) {
         var listaArestasLabel = []
         for (var i = 0; i < listaVertices.length; i++) {
@@ -182,6 +214,7 @@ export class algoritmosGrafos {
 
                 return node === destination
             })
+            
 
 
             if (isPath)

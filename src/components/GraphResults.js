@@ -121,6 +121,7 @@ function GraphResults(props) {
   const resultadoConexo = teste.verificaConexo(copia8, props.state.counter, props.orientacao);
   console.log("Resultado conexo:", resultadoConexo)
 
+
   resultadoConexidade = verificaConexidade(vertices, arestas);
 
   var resultadoConexidade = '';
@@ -138,8 +139,8 @@ function GraphResults(props) {
   if (resultadoConexo && props.orientacao) {
     resultadoCiclico = teste.possuiCicloOrientado(copia9.nodes, copia9.edges)
   }else if(resultadoConexo && !props.orientacao){
-    resultadoCiclico = teste.possuiCiclo(copia2, origem, destino);
-  }
+
+   
 
   var resultadoOrdenacaoTopologica = '';
   if (!resultadoCiclico && resultadoConexo) {
@@ -173,6 +174,8 @@ function GraphResults(props) {
     resultadoArestasAGM = resultadosAGM.arestas;
   }
 
+
+  
   /*
   if (tipoGrafo === 'orientado') {
     resultadoConexidade = verificaConexidade(vertices, arestas)
@@ -219,6 +222,7 @@ function GraphResults(props) {
 
   const algDijkstra = new dijkstra(); //Cria objeto da classe dijkstra para aplicar o algoritmo
 
+
   var resulatdoDijkstra = algDijkstra.dijkstra(
     criaMatrizAdjacencia(
       copia1.nodes,
@@ -228,6 +232,7 @@ function GraphResults(props) {
     )
   );
   console.log(resulatdoDijkstra.distance);
+
 
   resulatdoDijkstra.path[0] = selectMenorCaminhoOrient[0];
   resulatdoDijkstra.path[resulatdoDijkstra.path.length - 1] =
