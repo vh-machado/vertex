@@ -409,14 +409,7 @@ export class algoritmosGrafos {
             for (let i = 0; i < vertices; i++) {
                 adjacencyList[i] = [];
             }
-
-
-            for (let i = 0; i < grafo.edges.length; i++) {
-                addEdgeNaoOrientado(grafo.edges[i].from - 1, grafo.edges[i].to - 1)
-            }
-
-            return isConnectedNaoOrientado()
-
+            
             // Function for adding edges
             function addEdgeNaoOrientado(source, dest) {
                 adjacencyList[source].unshift(dest);
@@ -424,49 +417,19 @@ export class algoritmosGrafos {
             }
 
 
-            function isConnectedNaoOrientado() {
-
-                // Take a boolean visited array
-                let visited = []
-
-                // Start the DFS from vertex 0
-                DFSNaoOrientado(0, adjacencyList, visited);
-
-                // Check if all the vertices are visited
-                // Set connected to False if one node is unvisited
-                let connected = true;
-
-                for (let i = 0; i < visited.length; i++) {
-                    if (!visited[i]) {
-                        connected = false;
-                        break;
-                    }
-                }
-
-                return connected;
-
-
+            for (let i = 0; i < grafo.edges.length; i++) {
+                addEdgeNaoOrientado(grafo.edges[i].from - 1, grafo.edges[i].to - 1)
             }
-
-
-
-            function DFSNaoOrientado(source, adjacencyList, visited) {
-
-                // Mark the vertex visited as True
-                visited = true;
-
-                // Travel the adjacent neighbours
-                for (let i = 0; i < adjacencyList.length; i++) {
-
-                    let neighbour = adjacencyList[i];
-
-                    if (visited[neighbour] == false) {
-
-                        // Call DFS from neighbour
-                        DFSNaoOrientado(neighbour, adjacencyList, visited);
-                    }
+            
+            console.log('lista de adj=',adjacencyList)
+            for(let i = 0; i < adjacencyList.length; i++){
+                if(!adjacencyList[i].length){
+                    console.log('Vértice desconexo detectado')
+                    return false
                 }
             }
+            
+            return true;
         }
     }
 

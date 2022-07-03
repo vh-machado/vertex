@@ -93,12 +93,12 @@ var K5 = {
 function GraphResults(props) {
   const teste = new algoritmosGrafos(); //Cria objeto da classe algoritmosGrafos para realizar os testes e gerar os resultados
 
-  const origem = state.graph.edges[0].from; // Usado no resultado de existe aresta
-  const destino = state.graph.edges[3].to; // Usado no resultado de existe aresta
   const vertice = state.graph.nodes[0]; // Usado nos resultados que se escolhe um vértice
-  const vertices = state.graph.nodes;
-  const arestas = state.graph.edges;
   const grafo = props.state.graph; //variável com o grafo para se pegar mais facilmente os nodes e as edges
+  const vertices = grafo.nodes;
+  const arestas = grafo.edges;
+  const origem = grafo.nodes[0].id;
+  const destino = grafo.nodes[grafo.nodes.length - 1].id;
   const tamanhoListavertices = state.graph.nodes.length; //tamanho da lista de vértices
   const origemBFS = state.graph.nodes[0].label;
   const destinoBFS = state.graph.nodes[3].label;
@@ -118,9 +118,13 @@ function GraphResults(props) {
 
   //console.log(grafo)
   //Implementados
-  const resultadoConexo = teste.verificaConexo(copia8, props.state.counter, props.orientacao);
-  console.log("Resultado conexo:", resultadoConexo)
-
+  const resultadoConexo = teste.verificaConexo(
+    copia8,
+    props.state.counter,
+    props.orientacao
+  );
+  console.log(copia8)
+  console.log('Resultado conexo:', resultadoConexo);
 
   resultadoConexidade = verificaConexidade(vertices, arestas);
 
@@ -137,15 +141,15 @@ function GraphResults(props) {
 
   var resultadoCiclico = '';
   if (resultadoConexo && props.orientacao) {
-    resultadoCiclico = teste.possuiCicloOrientado(copia9.nodes, copia9.edges)
-  }else if(resultadoConexo && !props.orientacao){
-
-   
-
-  var resultadoOrdenacaoTopologica = '';
-  if (!resultadoCiclico && resultadoConexo) {
-    resultadoOrdenacaoTopologica = ordenacaoTopologica(grafo);
+    resultadoCiclico = teste.possuiCicloOrientado(copia9.nodes, copia9.edges);
+  } else if (resultadoConexo && !props.orientacao) {
+    resultadoCiclico = teste.possuiCiclo(copia2, origem, destino);
   }
+    var resultadoOrdenacaoTopologica = '';
+    if (!resultadoCiclico && resultadoConexo) {
+      resultadoOrdenacaoTopologica = ordenacaoTopologica(grafo);
+    }
+  
 
   var resultadoPlanar = '';
   var resultadoBiconexo = '';
@@ -174,14 +178,12 @@ function GraphResults(props) {
     resultadoArestasAGM = resultadosAGM.arestas;
   }
 
-
-  
   /*
-  if (tipoGrafo === 'orientado') {
-    resultadoConexidade = verificaConexidade(vertices, arestas)
-  } else {
-    resultadoConexidade = 'Não cabe'
-  }*/
+    if (tipoGrafo === 'orientado') {
+      resultadoConexidade = verificaConexidade(vertices, arestas)
+    } else {
+      resultadoConexidade = 'Não cabe'
+    }*/
 
   console.log('LOGS');
   console.log(resultadoConexo);
@@ -192,14 +194,12 @@ function GraphResults(props) {
   console.log(resultadoCustoAGM);
   console.log(resultadoArestasAGM);
 
-
-  
   const [existeAresta, setExisteAresta] = useState([]);
   const [selectGrauVertice, setSelectGrauVertice] = useState();
   const [selectVerticeAdj, setSelectVerticeAdj] = useState();
   const [selectMenorCaminhoOrient, setSelectMenorCaminhoOrient] = useState([]);
   const [selectMenorCaminhoNaoOrient, setSelectMenorCaminhoNaoOrient] =
-    useState([])
+    useState([]);
 
   const resultadoAresta = teste.procuraAresta(
     existeAresta[0],
@@ -218,10 +218,7 @@ function GraphResults(props) {
     props.orientacao ? 'orientado' : 'nao_orientado'
   );
 
-  
-
   const algDijkstra = new dijkstra(); //Cria objeto da classe dijkstra para aplicar o algoritmo
-
 
   var resulatdoDijkstra = algDijkstra.dijkstra(
     criaMatrizAdjacencia(
@@ -233,21 +230,23 @@ function GraphResults(props) {
   );
   console.log(resulatdoDijkstra.distance);
 
-
   resulatdoDijkstra.path[0] = selectMenorCaminhoOrient[0];
   resulatdoDijkstra.path[resulatdoDijkstra.path.length - 1] =
     selectMenorCaminhoOrient[1];
-  var resultadoMenorCaminho = ''
+  var resultadoMenorCaminho = '';
   resultadoMenorCaminho = resulatdoDijkstra.path.toString();
   console.log('origem, daestino');
   console.log(selectMenorCaminhoNaoOrient);
   console.log('menor caminho n orientado=');
-  var MenorCaminhoNorientado = ''
+  var MenorCaminhoNorientado = '';
   //MenorCaminhoNorientado = teste.bfs(copia3, selectMenorCaminhoNaoOrient[0], selectMenorCaminhoNaoOrient[1]);
   //MenorCaminhoNorientado = teste.buscaEmLargura(copia3, selectMenorCaminhoNaoOrient[0], selectMenorCaminhoNaoOrient[1]);
-  MenorCaminhoNorientado = largura(copia3, selectMenorCaminhoNaoOrient[0], selectMenorCaminhoNaoOrient[1]).path;
+  MenorCaminhoNorientado = largura(
+    copia3,
+    selectMenorCaminhoNaoOrient[0],
+    selectMenorCaminhoNaoOrient[1]
+  ).path;
   console.log(MenorCaminhoNorientado);
-
 
   const resultadoMenorCusto = resulatdoDijkstra.distance;
 
@@ -282,7 +281,9 @@ function GraphResults(props) {
       {props.orientacao && resultadoConexo
         ? viewCard('Conexidade do Dígrafo?', resultadoConexidade, visibility)
         : null}
-      {resultadoConexidade !== 'Fortemente Conexo' && props.orientacao && resultadoConexo
+      {resultadoConexidade !== 'Fortemente Conexo' &&
+      props.orientacao &&
+      resultadoConexo
         ? viewCard(
             'Componentes Fortes:',
             resultadoComponentesFortes,
