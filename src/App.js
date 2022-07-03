@@ -106,7 +106,7 @@ function App() {
             >
               {/* Componente da direita */}
               {cardsVisiveis ? (
-                <GraphResults orientacao={orientacao}/>
+                <GraphResults orientacao={orientacao} state={graphData}/>
               ) : (
                 <></>
               )}
