@@ -118,8 +118,9 @@ function GraphResults(props) {
 
   //console.log(grafo)
   //Implementados
+  const resultadoConexo = teste.verificaConexo(copia8, props.state.counter, props.orientacao);
+  console.log("Resultado conexo:", resultadoConexo)
 
-  const resultadoConexo = teste.eConexo(copia8);
 
   resultadoConexidade = verificaConexidade(vertices, arestas);
 
@@ -135,9 +136,11 @@ function GraphResults(props) {
   }
 
   var resultadoCiclico = '';
-  if (resultadoConexo) {
-    resultadoCiclico = teste.possuiCiclo(copia2, origem, destino);
-  }
+  if (resultadoConexo && props.orientacao) {
+    resultadoCiclico = teste.possuiCicloOrientado(copia9.nodes, copia9.edges)
+  }else if(resultadoConexo && !props.orientacao){
+
+   
 
   var resultadoOrdenacaoTopologica = '';
   if (!resultadoCiclico && resultadoConexo) {
@@ -160,17 +163,6 @@ function GraphResults(props) {
     }
   }
 
-  /*
-  const resulatdoDijkstra = algDijkstra.dijkstra(criaMatrizAdjacencia(copia1.nodes, copia1.edges))
-  console.log(resulatdoDijkstra.distance)
-
-  resulatdoDijkstra.path[0] = state.graph.nodes[0].label
-  resulatdoDijkstra.path[resulatdoDijkstra.path.length - 1] = state.graph.nodes[tamanhoListavertices - 1].label
-  const resultadoMenorCaminho = resulatdoDijkstra.path.toString();
-  const MenorCaminhoNorientado = teste.bfs(copia3, origemBFS, destinoBFS)
-  const resultadoMenorCusto = resulatdoDijkstra.distance;
-  */
-  //const tipoGrafo = 'orientado';
   const visibility = false;
 
   var resultadosAGM = '';
@@ -182,6 +174,8 @@ function GraphResults(props) {
     resultadoArestasAGM = resultadosAGM.arestas;
   }
 
+
+  
   /*
   if (tipoGrafo === 'orientado') {
     resultadoConexidade = verificaConexidade(vertices, arestas)
@@ -228,6 +222,7 @@ function GraphResults(props) {
 
   const algDijkstra = new dijkstra(); //Cria objeto da classe dijkstra para aplicar o algoritmo
 
+
   var resulatdoDijkstra = algDijkstra.dijkstra(
     criaMatrizAdjacencia(
       copia1.nodes,
@@ -237,6 +232,7 @@ function GraphResults(props) {
     )
   );
   console.log(resulatdoDijkstra.distance);
+
 
   resulatdoDijkstra.path[0] = selectMenorCaminhoOrient[0];
   resulatdoDijkstra.path[resulatdoDijkstra.path.length - 1] =

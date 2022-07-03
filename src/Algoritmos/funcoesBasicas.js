@@ -1,5 +1,5 @@
 import { criaListaAdjacencia } from './criaListaAdjacencia'
-import { dijkstra } from '../Algoritmos/dijkstra';
+import { largura } from '../Algoritmos/largura';
 var ciclo = false
 
 
@@ -18,7 +18,7 @@ export class algoritmosGrafos {
         function teste(item) {
             if (item.from === origem && item.to === destino) {
                 resposta = "Existe a aresta"
-            } else if (!orientado && item.to === origem && item.from === destino){
+            } else if (!orientado && item.to === origem && item.from === destino) {
                 resposta = "Existe a aresta"
             }
         }
@@ -92,28 +92,11 @@ export class algoritmosGrafos {
     }
 
 
-
-    /*eCiclo(grafo, origem, empilhados) {
-        empilhados.push(origem)
-        const arestas = this.recuperarArestas(grafo, origem)
-        for (var i = 0; i < arestas.length; i++) {
-            console.log('teste ciclo orientado'+ arestas[i], empilhados, this.eCicloOrientado(grafo, arestas[i].to, empilhados))
-            if (arestas[i].to in empilhados && this.eCiclo(grafo, arestas[i].to, empilhados)) {
-                return true
-            } else if (arestas[i].to in empilhados) {
-                return true
-            }
-        }
-        this.arrayRemove(empilhados, origem)
-        return false
-    }*/
-
-
-
     eCiclo(listaAdjacencia, origem, destino, visitados = new Set()) {
         visitados.add(origem)
         const atual = listaAdjacencia[origem]
         atual.find(vertice => {
+            console.log(visitados, vertice)
             if (visitados.has(vertice)) {
                 ciclo = true
             }
@@ -138,7 +121,6 @@ export class algoritmosGrafos {
             caminho: visitados.has(destino)
         }
     }
-
     /*
     buscaEmLargura(grafo, origem, destino) {
         const listaAdjacencia = criaListaAdjacencia(grafo.nodes, grafo.edges)
@@ -172,7 +154,7 @@ export class algoritmosGrafos {
             caminho
         }
     }*/
-    
+  
     converteIdLabel(listaVertices, listaArestas) {
         var listaArestasLabel = []
         for (var i = 0; i < listaVertices.length; i++) {
@@ -196,11 +178,11 @@ export class algoritmosGrafos {
         return adjacencyList
     }
 
-    
+
     bfs(grafo, origin, destination) {
         //console.log(origin+' para '+ destination)
         const adjacencyList = this.criarMapGrafos(grafo.nodes, this.converteIdLabel(grafo.nodes, grafo.edges))
-       // console.log(adjacencyList)
+        // console.log(adjacencyList)
         const visited = new Set()
         const menorCaminho = new Set()
 
@@ -211,15 +193,15 @@ export class algoritmosGrafos {
         let isPath = ''
 
         while (queue.length > 0 && visited.size !== adjacencyList.size) {
-            
-            
+
+
             const node = queue.shift()
 
             const current = adjacencyList.get(node)
-            if(!visited.has(destination)){
+            if (!visited.has(destination)) {
                 menorCaminho.add(node)
             }
-            if(current.includes(destination)){
+            if (current.includes(destination)) {
                 menorCaminho.add(current[current.indexOf(destination)])
             }
 
@@ -234,37 +216,21 @@ export class algoritmosGrafos {
             })
             
 
+
             if (isPath)
                 break
-            
-           
+
+
         }
 
-        
+
 
         return {
             expandedNodes: Array.from(visited),
             menorCaminho: Array.from(menorCaminho),
             isPath
         }
-        
-    }
 
-
-
-
-    eConexo(grafo) {
-        if (grafo.nodes.length > 0) {
-            const primeiroVertice = grafo.nodes[0].label
-            const ultimoVertice = grafo.nodes[grafo.nodes.length - 1].label
-            const visitados = this.bfs(grafo, primeiroVertice, ultimoVertice).expandedNodes
-            for (var i = 0; i < grafo.nodes.length; i++) {
-                if (!visitados.includes(grafo.nodes[i].label)) {
-                    return false
-                }
-            }
-        }
-        return true
     }
 
     possuiCiclo(grafo, origem, destino) {
@@ -279,12 +245,229 @@ export class algoritmosGrafos {
         return resultado
     }
 
-    executaDijkstra(grafo) {
-        var algDijkstra = new dijkstra()
-        console.log(grafo)
-        var resultado = algDijkstra.dijkstra(grafo)
-        console.log(resultado)
-        return resultado
+    possuiCicloOrientado(listaVertices, listaArestas) {
+    
+        let V = listaVertices.length 
+        let adj = new Array(V);
+         for (let i = 0; i < V; ++i) {
+              adj[i] = [];
+            }
+            
+          for(let i = 0; i<listaArestas.length; i++){
+              adicionarAresta(listaArestas[i].from-1, listaArestas[i].to-1);
+          }
+          
+          function adicionarAresta(v1, v2){
+              adj[v1].push(v2);
+          }
+      
+          
+          if(temCiclo())
+              return true;
+          else
+              return false;
+          
+          
+          
+          function dfs(v){
+              var pilha = [];
+              var visitados = new Array(V)
+              var pilha_rec = new Array(V);
+          
+              // inicializa visitados e pilha_rec com false
+              for(let i = 0; i < V; i++){
+                  visitados[i] = false;
+                  pilha_rec[i] = false;
+              }
+          
+              // faz uma DFS
+              while(true){
+                  var achou_vizinho = false;
+                  var vizinho_achado;
+                  
+                  if(!visitados[v]){
+                      pilha.push(v);
+                      visitados[v] = true
+                      pilha_rec[v] = true;
+                  }
+                  
+                  for(let i = 0; i < adj[v].length; i++){
+                      if(pilha_rec[adj[v][i]]){
+                          return true;
+                      }else if(!visitados[adj[v][i]]){
+                          // se não está na pilha e não foi visitado, indica que achou
+                          achou_vizinho = true;
+                          vizinho_achado = adj[v][i];
+                          break;
+                      }
+                  }
+          
+                  if(!achou_vizinho){
+                      pilha_rec[pilha[pilha.length - 1]] = false; // marca que saiu da pilha
+                      pilha.pop(); // remove da pilha
+                      if(!pilha.length)
+                          break;
+                      v = pilha[pilha.length - 1]
+                  }
+                  else
+                      v = vizinho_achado
+              }
+          
+              return false;
+          }
+          
+          function temCiclo(){
+              for(let i = 0; i < V; i++){
+                  if(dfs(i))
+                      return true;
+              }
+              return false;
+          }
+        }
+
+    verificaConexo(grafo, n, orientacao) {
+        console.log(grafo, n, orientacao)
+        if (orientacao) {
+            let gr1 = [];
+            let gr2 = [];
+            let N = 10000;
+            for (let i = 0; i < N; i++) {
+                gr1.push([]);
+                gr2.push([]);
+            }
+            for (let i = 0; i < N; i++) {
+                gr1[i] = [];
+                gr2[i] = [];
+            }
+            for (let i = 0; i < grafo.edges.length; i++) {
+                Add_edge_digrafo(grafo.edges[i].from, grafo.edges[i].to)
+            }
+          
+
+            let vis1 = new Array(N);
+            let vis2 = new Array(N);
+            vis1.fill(false);
+            vis2.fill(false);
+
+            return Is_connected_Digrafo(n)
+
+            function Add_edge_digrafo(u, v) {
+                gr1[u].push(v);
+                gr2[v].push(u);
+
+            }
+
+
+            function dfs1(x) {
+                vis1[x] = true;
+                for (let i = 0; i < gr1[x].length; i++) {
+                    if (!vis1[gr1[x][i]]) {
+
+                        dfs1(gr1[x][i]);
+                    }
+                }
+            }
+
+            // DFS function
+            function dfs2(x) {
+                vis2[x] = true;
+                for (let i = 0; i < gr2[x].length; i++) {
+                    if (!vis2[gr2[x][i]]) {
+
+                        dfs2(gr2[x][i]);
+                    }
+                }
+            }
+
+            function Is_connected_Digrafo(n) {
+
+                // Call for correct direction
+                for (let i = 0; i < n; i++)
+                    vis1[i] = false;
+                dfs1(1);
+
+                // Call for reverse direction
+                for (let i = 0; i < n; i++)
+                    vis2[i] = false;
+                dfs2(1);
+
+                for (let i = 1; i <= n; i++) {
+
+                    // If any vertex it not visited in any direction
+                    // Then graph is not connected
+                    if (!vis1[i] && !vis2[i])
+                        return false;
+                }
+
+                // If graph is connected
+                return true;
+            }
+
+        } else if (!orientacao) {
+            var vertices = n;
+            var adjacencyList = [];
+            for (let i = 0; i < vertices; i++) {
+                adjacencyList[i] = [];
+            }
+
+
+            for (let i = 0; i < grafo.edges.length; i++) {
+                addEdgeNaoOrientado(grafo.edges[i].from - 1, grafo.edges[i].to - 1)
+            }
+
+            return isConnectedNaoOrientado()
+
+            // Function for adding edges
+            function addEdgeNaoOrientado(source, dest) {
+                adjacencyList[source].unshift(dest);
+                adjacencyList[dest].unshift(source);
+            }
+
+
+            function isConnectedNaoOrientado() {
+
+                // Take a boolean visited array
+                let visited = []
+
+                // Start the DFS from vertex 0
+                DFSNaoOrientado(0, adjacencyList, visited);
+
+                // Check if all the vertices are visited
+                // Set connected to False if one node is unvisited
+                let connected = true;
+
+                for (let i = 0; i < visited.length; i++) {
+                    if (!visited[i]) {
+                        connected = false;
+                        break;
+                    }
+                }
+
+                return connected;
+
+
+            }
+
+
+
+            function DFSNaoOrientado(source, adjacencyList, visited) {
+
+                // Mark the vertex visited as True
+                visited = true;
+
+                // Travel the adjacent neighbours
+                for (let i = 0; i < adjacencyList.length; i++) {
+
+                    let neighbour = adjacencyList[i];
+
+                    if (visited[neighbour] == false) {
+
+                        // Call DFS from neighbour
+                        DFSNaoOrientado(neighbour, adjacencyList, visited);
+                    }
+                }
+            }
+        }
     }
 
 
