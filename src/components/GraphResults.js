@@ -215,7 +215,6 @@ function GraphResults(props) {
   const adjacenciasVertice = teste.recuperarAdjacencias(
     copia7,
     selectVerticeAdj,
-    props.orientacao ? 'orientado' : 'nao_orientado'
   );
 
   const algDijkstra = new dijkstra(); //Cria objeto da classe dijkstra para aplicar o algoritmo
@@ -363,7 +362,8 @@ function GraphResults(props) {
             visibility
           )
         : null}
-    </>
-  );
+     </>
+    );
+  }
 }
 export default GraphResults;
