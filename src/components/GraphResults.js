@@ -212,7 +212,6 @@ function GraphResults(props) {
   const adjacenciasVertice = teste.recuperarAdjacencias(
     copia7,
     selectVerticeAdj,
-    props.orientacao ? 'orientado' : 'nao_orientado'
   );
 
   

@@ -49,11 +49,10 @@ export class algoritmosGrafos {
     }
 
 
-    recuperarAdjacencias(grafo, verticeEscolhido, tipoGrafo) {
+    recuperarAdjacencias(grafo, verticeEscolhido) {
         const verticesAdjacentes = []
         const arestas = grafo.edges
         const vertices = grafo.nodes
-        if (tipoGrafo === 'nao_orientado') {
             arestas.forEach(aresta => {
                 vertices.forEach(vertice => {
                     if (aresta.from === verticeEscolhido && aresta.to === vertice.id) {
@@ -65,17 +64,6 @@ export class algoritmosGrafos {
                 })
             })
             return verticesAdjacentes
-        }
-        if (tipoGrafo === 'orientado') {
-            arestas.forEach(aresta => {
-                vertices.forEach(vertice => {
-                    if (aresta.from === verticeEscolhido && aresta.to === vertice.id) {
-                        verticesAdjacentes.push(vertice.label)
-                    }
-                })
-            })
-            return verticesAdjacentes
-        }
     }
 
 
