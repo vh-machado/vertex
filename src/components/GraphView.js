@@ -145,17 +145,21 @@ const GraphView = props => {
         callback(nodeData);
       },
       addEdge: function (edgeData, callback) {
-        edgeData.label = editData;
-        state.graph.edges = [
-          ...state.graph.edges,
-          {
-            from: edgeData.from,
-            to: edgeData.to,
-            label: edgeData.label,
-          },
-        ];
-        props.childToParent(state);
-        callback(edgeData);
+        if (edgeData.from == edgeData.to) {
+          callback(null);
+        } else {
+          edgeData.label = editData;
+          state.graph.edges = [
+            ...state.graph.edges,
+            {
+              from: edgeData.from,
+              to: edgeData.to,
+              label: edgeData.label,
+            },
+          ];
+          props.childToParent(state);
+          callback(edgeData);
+        }
       },
       deleteNode: function (deleteData, callback) {
         state.graph.nodes = state.graph.nodes.filter(
@@ -165,6 +169,7 @@ const GraphView = props => {
           state.graph.edges = state.graph.edges.filter(e => e.id !== edge);
         });
         props.childToParent(state);
+        console.log(state.graph)
         callback(deleteData);
       },
       deleteEdge: function (deleteData, callback) {
@@ -172,6 +177,7 @@ const GraphView = props => {
           e => e.id !== deleteData.edges[0]
         );
         props.childToParent(state);
+        console.log(state.graph)
         callback(deleteData);
       },
     },
@@ -192,7 +198,7 @@ const GraphView = props => {
     });
 
     grafo = network;
-
+    console.log(grafo)
   }, [container, graph.nodes, graph.edges, props.orientado]);
   /*
   var teste = {

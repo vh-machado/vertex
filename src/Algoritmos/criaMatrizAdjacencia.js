@@ -49,7 +49,13 @@ export function criaMatrizAdjacencia(listaVertices, listaArestas, origem, destin
         return listaArestasLabel
     }
     var listaConvertida = converteIdLabel(vertices, arestas, origem, destino)
-  
+    
+    
+    for(let i = 0; i<listaConvertida.length; i++){
+        if(listaConvertida[i].label === '' || listaConvertida[i].label === null || listaConvertida[i].label === undefined){
+            listaConvertida[i].label = '1'
+        }
+    }
   
     for(var j = 0; j<listaConvertida.length; j++){
         var from = listaConvertida[j].from

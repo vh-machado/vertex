@@ -123,7 +123,7 @@ function GraphResults(props) {
     props.state.counter,
     props.orientacao
   );
-  console.log(copia8)
+  console.log(copia8);
   console.log('Resultado conexo:', resultadoConexo);
 
   resultadoConexidade = verificaConexidade(vertices, arestas);
@@ -145,11 +145,11 @@ function GraphResults(props) {
   } else if (resultadoConexo && !props.orientacao) {
     resultadoCiclico = teste.possuiCiclo(copia2, origem, destino);
   }
-    var resultadoOrdenacaoTopologica = '';
-    if (!resultadoCiclico && resultadoConexo) {
-      resultadoOrdenacaoTopologica = ordenacaoTopologica(grafo);
-    }
-  
+
+  var resultadoOrdenacaoTopologica = '';
+  if (!resultadoCiclico && resultadoConexo) {
+    resultadoOrdenacaoTopologica = ordenacaoTopologica(grafo);
+  }
 
   var resultadoPlanar = '';
   var resultadoBiconexo = '';
@@ -214,7 +214,7 @@ function GraphResults(props) {
   );
   const adjacenciasVertice = teste.recuperarAdjacencias(
     copia7,
-    selectVerticeAdj,
+    selectVerticeAdj
   );
 
   const algDijkstra = new dijkstra(); //Cria objeto da classe dijkstra para aplicar o algoritmo
@@ -362,8 +362,7 @@ function GraphResults(props) {
             visibility
           )
         : null}
-     </>
-    );
-  }
+    </>
+  );
 }
 export default GraphResults;
