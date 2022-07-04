@@ -361,7 +361,8 @@ function GraphResults(props) {
             visibility
           )
         : null}
-    </>
-  );
+     </>
+    );
+  }
 }
 export default GraphResults;
