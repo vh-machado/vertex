@@ -37,7 +37,7 @@ export function arvoreGeradoraMinima(graphData) {
       var vertice1 = listaVertices.find(v => v.id == parent[i]+1);
       var vertice2 = listaVertices.find(v => v.id == i+1);
       //console.log(vertice1.label + ' - ' + vertice2.label + '  (' + graph[i][parent[i]]+')');
-      arestasArvore.push(vertice1.label + ' - ' + vertice2.label + '  (' + graph[i][parent[i]]+')');
+      arestasArvore.push(vertice1.label + ' - ' + vertice2.label + '  ( ' + graph[i][parent[i]]+' )');
       custo += graph[i][parent[i]];
       //console.log((parent[i]) + '  - ' + (i) + '  ' + graph[i][parent[i]]);
 
@@ -119,7 +119,7 @@ export function arvoreGeradoraMinima(graphData) {
 
   var resultadoAGM = {};
   resultadoAGM['custo'] = custo;
-  resultadoAGM['arestas'] = arestasArvore;
+  resultadoAGM['arestas'] = arestasArvore.join(', ');
  /* console.log('agm=');
   console.log(resultadoAGM.arestas);
   console.log('custo agm=');

@@ -21,7 +21,7 @@ export default function criaMatrizAdjacenciaNaoOrientado(
     }
   });
 
-  /*console.log('matrizAdj=');
-  console.log(matrizAdjacencia);*/
+  console.log('matrizAdj=');
+  console.log(matrizAdjacencia);
   return matrizAdjacencia;
 }

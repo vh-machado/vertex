@@ -1,18 +1,25 @@
 import React from 'react';
-import { ChakraProvider, Box, theme, Center, HStack, Flex, Select } from '@chakra-ui/react';
+import {
+  ChakraProvider,
+  Box,
+  theme,
+  Center,
+  HStack,
+  Flex,
+  Select,
+} from '@chakra-ui/react';
 import { Cores } from '../assets/Cores';
 import { Fontes } from '../assets/Fontes';
 import { algoritmosGrafos } from '../Algoritmos/funcoesBasicas';
 
 export function viewCard(title, info, visible) {
-  
   return (
     <Flex
       h="auto"
       w="auto"
-      direction={"column"}
-      flex={[1, 0, "auto"]}
-      justify={"stretch"}
+      direction={'column'}
+      flex={[1, 0, 'auto']}
+      justify={'stretch'}
       margin={2}
       borderRadius={10}
       borderWidth="0px"
@@ -31,7 +38,7 @@ export function viewCard(title, info, visible) {
     >
       <Box
         visibility={visible}
-        display={"flex"}
+        display={'flex'}
         width="100%"
         fontSize={15}
         fontWeight="semibold"
@@ -40,31 +47,42 @@ export function viewCard(title, info, visible) {
       >
         {title}
       </Box>
-      <Box display={"flex"} fontSize={14} fontWeight="regular">
+      <Box display={'flex'} fontSize={14} fontWeight="regular">
         {info}
       </Box>
     </Flex>
   );
 }
 
-export function viewCardSelectionAresta(title, info, grafo, existeAresta, setExisteAresta) {
-
-  const handleChangeOrigem = (event) => {
-    //setValue(event.target.value)
-    setExisteAresta([parseInt(event.target.value),existeAresta[1]])
-  }
-  const handleChangeDestino = (event) => {
-    //setValue(event.target.value)
-    setExisteAresta([existeAresta[0],parseInt(event.target.value)])
-  }
+export function viewCardSelectionAresta(
+  title,
+  info,
+  grafo,
+  existeAresta,
+  setExisteAresta
+) {
+  const handleChangeOrigem = event => {
+    if (event.target.value !== '') {
+      setExisteAresta([parseInt(event.target.value), existeAresta[1]]);
+    } else {
+      setExisteAresta(['', existeAresta[1]]);
+    }
+  };
+  const handleChangeDestino = event => {
+    if (event.target.value !== '') {
+      setExisteAresta([existeAresta[0], parseInt(event.target.value)]);
+    } else {
+      setExisteAresta([existeAresta[0], '']);
+    }
+  };
 
   return (
     <Flex
       h="auto"
       w="auto"
-      direction={"column"}
-      flex={[1, 0, "auto"]}
-      justify={"stretch"}
+      direction={'column'}
+      flex={[1, 0, 'auto']}
+      justify={'stretch'}
       margin={2}
       borderRadius={10}
       borderWidth="0px"
@@ -82,7 +100,7 @@ export function viewCardSelectionAresta(title, info, grafo, existeAresta, setExi
       fontFamily={Fontes.principal}
     >
       <Box
-        display={"flex"}
+        display={'flex'}
         width="100%"
         fontSize={15}
         fontWeight="bold"
@@ -90,56 +108,75 @@ export function viewCardSelectionAresta(title, info, grafo, existeAresta, setExi
         fontFamily={Fontes.principal}
       >
         {title}
-        
+
         <Select
-          id='origem'
-          placeholder='Origem'
-          w='auto'
-          h='auto'
-          onChange={handleChangeOrigem}>
-          {grafo.nodes.map((value) => {
-            const idVertice = value.id
-            const nomeVertice = value.label
-          
-            return (<option key={idVertice.toString()} value={idVertice}>{nomeVertice}</option>)
-            
+          id="origem"
+          placeholder="Origem"
+          w="auto"
+          h="auto"
+          onChange={handleChangeOrigem}
+        >
+          {grafo.nodes.map(value => {
+            const idVertice = value.id;
+            const nomeVertice = value.label;
+
+            return (
+              <option key={idVertice.toString()} value={idVertice}>
+                {nomeVertice}
+              </option>
+            );
           })}
         </Select>
         {'-'}
         <Select
-          id='destino'
-          placeholder='Destino'
-          w='auto'
-          h='auto'
-          onChange={handleChangeDestino}>
-          {grafo.nodes.map((value) => {
-            const idVertice = value.id
-            const nomeVertice = value.label
-            return (<option key={idVertice.toString()} value={idVertice}>{nomeVertice}</option>)
+          id="destino"
+          placeholder="Destino"
+          w="auto"
+          h="auto"
+          onChange={handleChangeDestino}
+        >
+          {grafo.nodes.map(value => {
+            const idVertice = value.id;
+            const nomeVertice = value.label;
+            return (
+              <option key={idVertice.toString()} value={idVertice}>
+                {nomeVertice}
+              </option>
+            );
           })}
         </Select>
       </Box>
-      <Box display={"flex"} fontSize={12} fontWeight="bold">
+      <Box display={'flex'} fontSize={12} fontWeight="bold">
         {info}
       </Box>
     </Flex>
   );
 }
 
-export function viewCardSelectionGrau(title, info, grafo, setSelectGrauVertice) {
-  
-  const handleChangeGrauVertice = (event) => {
+export function viewCardSelectionGrau(
+  title,
+  info,
+  grafo,
+  setSelectGrauVertice
+) {
+  const handleChangeGrauVertice = event => {
     //setValue(event.target.value)
-    setSelectGrauVertice(parseInt(event.target.value))
-  }
+    console.log(event.target.value)
+    if (event.target.value !== '') {
+      setSelectGrauVertice(parseInt(event.target.value));
+    } else {
+      setSelectGrauVertice('');
+    }
+    
+  };
 
   return (
     <Flex
       h="auto"
       w="auto"
-      direction={"column"}
-      flex={[1, 0, "auto"]}
-      justify={"stretch"}
+      direction={'column'}
+      flex={[1, 0, 'auto']}
+      justify={'stretch'}
       margin={2}
       borderRadius={10}
       borderWidth="0px"
@@ -157,7 +194,7 @@ export function viewCardSelectionGrau(title, info, grafo, setSelectGrauVertice) 
       fontFamily={Fontes.principal}
     >
       <Box
-        display={"flex"}
+        display={'flex'}
         width="100%"
         fontSize={15}
         fontWeight="semibold"
@@ -168,21 +205,25 @@ export function viewCardSelectionGrau(title, info, grafo, setSelectGrauVertice) 
       </Box>
 
       <Select
-          id='vertice'
-          placeholder='Vértice'
-          w='auto'
-          h='auto'
-          onChange={handleChangeGrauVertice}>
-          {grafo.nodes.map((value) => {
-            const idVertice = value.id
-            const nomeVertice = value.label
-          
-            return (<option key={idVertice.toString()} value={idVertice}>{nomeVertice}</option>)
-            
-          })}
-        </Select>
+        id="vertice"
+        placeholder="Vértice"
+        w="auto"
+        h="auto"
+        onChange={handleChangeGrauVertice}
+      >
+        {grafo.nodes.map(value => {
+          const idVertice = value.id;
+          const nomeVertice = value.label;
 
-      <Box display={"flex"} fontSize={14} fontWeight="regular">
+          return (
+            <option key={idVertice.toString()} value={idVertice}>
+              {nomeVertice}
+            </option>
+          );
+        })}
+      </Select>
+
+      <Box display={'flex'} fontSize={14} fontWeight="regular">
         {info}
       </Box>
     </Flex>
@@ -190,19 +231,18 @@ export function viewCardSelectionGrau(title, info, grafo, setSelectGrauVertice) 
 }
 
 export function viewCardSelectionAdj(title, info, grafo, setSelectAdj) {
-  
-  const handleChangeAdj = (event) => {
+  const handleChangeAdj = event => {
     //setValue(event.target.value)
-    setSelectAdj(parseInt(event.target.value))
-  }
+    setSelectAdj(parseInt(event.target.value));
+  };
 
   return (
     <Flex
       h="auto"
       w="auto"
-      direction={"column"}
-      flex={[1, 0, "auto"]}
-      justify={"stretch"}
+      direction={'column'}
+      flex={[1, 0, 'auto']}
+      justify={'stretch'}
       margin={2}
       borderRadius={10}
       borderWidth="0px"
@@ -220,7 +260,7 @@ export function viewCardSelectionAdj(title, info, grafo, setSelectAdj) {
       fontFamily={Fontes.principal}
     >
       <Box
-        display={"flex"}
+        display={'flex'}
         width="100%"
         fontSize={15}
         fontWeight="semibold"
@@ -231,45 +271,60 @@ export function viewCardSelectionAdj(title, info, grafo, setSelectAdj) {
       </Box>
 
       <Select
-          id='vertice'
-          placeholder='Vértice'
-          w='auto'
-          h='auto'
-          onChange={handleChangeAdj}>
-          {grafo.nodes.map((value) => {
-            const idVertice = value.id
-            const nomeVertice = value.label
-          
-            return (<option key={idVertice.toString()} value={idVertice}>{nomeVertice}</option>)
-            
-          })}
-        </Select>
+        id="vertice"
+        placeholder="Vértice"
+        w="auto"
+        h="auto"
+        onChange={handleChangeAdj}
+      >
+        {grafo.nodes.map(value => {
+          const idVertice = value.id;
+          const nomeVertice = value.label;
 
-      <Box display={"flex"} fontSize={14} fontWeight="regular">
+          return (
+            <option key={idVertice.toString()} value={idVertice}>
+              {nomeVertice}
+            </option>
+          );
+        })}
+      </Select>
+
+      <Box display={'flex'} fontSize={14} fontWeight="regular">
         {info}
       </Box>
     </Flex>
   );
 }
 
-export function viewCardSelectionMenorCaminhoOrient(title, info, grafo, selectMenorCaminhoOrient, setSelectMenorCaminhoOrient) {
-
-  const handleChangeOrigem = (event) => {
+export function viewCardSelectionMenorCaminhoOrient(
+  title,
+  info,
+  grafo,
+  selectMenorCaminhoOrient,
+  setSelectMenorCaminhoOrient
+) {
+  const handleChangeOrigem = event => {
     //setValue(event.target.value)
-    setSelectMenorCaminhoOrient([event.target.value,selectMenorCaminhoOrient[1]])
-  }
-  const handleChangeDestino = (event) => {
+    setSelectMenorCaminhoOrient([
+      event.target.value,
+      selectMenorCaminhoOrient[1],
+    ]);
+  };
+  const handleChangeDestino = event => {
     //setValue(event.target.value)
-    setSelectMenorCaminhoOrient([selectMenorCaminhoOrient[0],event.target.value])
-  }
+    setSelectMenorCaminhoOrient([
+      selectMenorCaminhoOrient[0],
+      event.target.value,
+    ]);
+  };
 
   return (
     <Flex
       h="auto"
       w="auto"
-      direction={"column"}
-      flex={[1, 0, "auto"]}
-      justify={"stretch"}
+      direction={'column'}
+      flex={[1, 0, 'auto']}
+      justify={'stretch'}
       margin={2}
       borderRadius={10}
       borderWidth="0px"
@@ -287,7 +342,7 @@ export function viewCardSelectionMenorCaminhoOrient(title, info, grafo, selectMe
       fontFamily={Fontes.principal}
     >
       <Box
-        display={"flex"}
+        display={'flex'}
         width="100%"
         fontSize={15}
         fontWeight="bold"
@@ -295,60 +350,80 @@ export function viewCardSelectionMenorCaminhoOrient(title, info, grafo, selectMe
         fontFamily={Fontes.principal}
       >
         {title}
-        
+
         <Select
-          id='origem'
-          placeholder='Origem'
-          w='auto'
-          h='auto'
-          onChange={handleChangeOrigem}>
-          {grafo.nodes.map((value) => {
-            const idVertice = value.id
-            const nomeVertice = value.label
-          
-            return (<option key={idVertice.toString()} value={nomeVertice}>{nomeVertice}</option>)
-            
+          id="origem"
+          placeholder="Origem"
+          w="auto"
+          h="auto"
+          onChange={handleChangeOrigem}
+        >
+          {grafo.nodes.map(value => {
+            const idVertice = value.id;
+            const nomeVertice = value.label;
+
+            return (
+              <option key={idVertice.toString()} value={nomeVertice}>
+                {nomeVertice}
+              </option>
+            );
           })}
         </Select>
         {'-'}
         <Select
-          id='destino'
-          placeholder='Destino'
-          w='auto'
-          h='auto'
-          onChange={handleChangeDestino}>
-          {grafo.nodes.map((value) => {
-            const idVertice = value.id
-            const nomeVertice = value.label
-            return (<option key={idVertice.toString()} value={nomeVertice}>{nomeVertice}</option>)
+          id="destino"
+          placeholder="Destino"
+          w="auto"
+          h="auto"
+          onChange={handleChangeDestino}
+        >
+          {grafo.nodes.map(value => {
+            const idVertice = value.id;
+            const nomeVertice = value.label;
+            return (
+              <option key={idVertice.toString()} value={nomeVertice}>
+                {nomeVertice}
+              </option>
+            );
           })}
         </Select>
       </Box>
-      <Box display={"flex"} fontSize={12} fontWeight="bold">
+      <Box display={'flex'} fontSize={12} fontWeight="bold">
         {info}
       </Box>
     </Flex>
   );
 }
 
-export function viewCardSelectionMenorCaminhoNaoOrient(title, info, grafo, selectMenorCaminhoNaoOrient, setSelectMenorCaminhoNaoOrient) {
-
-  const handleChangeOrigem = (event) => {
+export function viewCardSelectionMenorCaminhoNaoOrient(
+  title,
+  info,
+  grafo,
+  selectMenorCaminhoNaoOrient,
+  setSelectMenorCaminhoNaoOrient
+) {
+  const handleChangeOrigem = event => {
     //setValue(event.target.value)
-    setSelectMenorCaminhoNaoOrient([event.target.value,selectMenorCaminhoNaoOrient[1]])
-  }
-  const handleChangeDestino = (event) => {
+    setSelectMenorCaminhoNaoOrient([
+      event.target.value,
+      selectMenorCaminhoNaoOrient[1],
+    ]);
+  };
+  const handleChangeDestino = event => {
     //setValue(event.target.value)
-    setSelectMenorCaminhoNaoOrient([selectMenorCaminhoNaoOrient[0],event.target.value])
-  }
+    setSelectMenorCaminhoNaoOrient([
+      selectMenorCaminhoNaoOrient[0],
+      event.target.value,
+    ]);
+  };
 
   return (
     <Flex
       h="auto"
       w="auto"
-      direction={"column"}
-      flex={[1, 0, "auto"]}
-      justify={"stretch"}
+      direction={'column'}
+      flex={[1, 0, 'auto']}
+      justify={'stretch'}
       margin={2}
       borderRadius={10}
       borderWidth="0px"
@@ -366,7 +441,7 @@ export function viewCardSelectionMenorCaminhoNaoOrient(title, info, grafo, selec
       fontFamily={Fontes.principal}
     >
       <Box
-        display={"flex"}
+        display={'flex'}
         width="100%"
         fontSize={15}
         fontWeight="bold"
@@ -374,36 +449,45 @@ export function viewCardSelectionMenorCaminhoNaoOrient(title, info, grafo, selec
         fontFamily={Fontes.principal}
       >
         {title}
-        
+
         <Select
-          id='origem'
-          placeholder='Origem'
-          w='auto'
-          h='auto'
-          onChange={handleChangeOrigem}>
-          {grafo.nodes.map((value) => {
-            const idVertice = value.id
-            const nomeVertice = value.label
-          
-            return (<option key={idVertice.toString()} value={nomeVertice}>{nomeVertice}</option>)
-            
+          id="origem"
+          placeholder="Origem"
+          w="auto"
+          h="auto"
+          onChange={handleChangeOrigem}
+        >
+          {grafo.nodes.map(value => {
+            const idVertice = value.id;
+            const nomeVertice = value.label;
+
+            return (
+              <option key={idVertice.toString()} value={nomeVertice}>
+                {nomeVertice}
+              </option>
+            );
           })}
         </Select>
         {'-'}
         <Select
-          id='destino'
-          placeholder='Destino'
-          w='auto'
-          h='auto'
-          onChange={handleChangeDestino}>
-          {grafo.nodes.map((value) => {
-            const idVertice = value.id
-            const nomeVertice = value.label
-            return (<option key={idVertice.toString()} value={nomeVertice}>{nomeVertice}</option>)
+          id="destino"
+          placeholder="Destino"
+          w="auto"
+          h="auto"
+          onChange={handleChangeDestino}
+        >
+          {grafo.nodes.map(value => {
+            const idVertice = value.id;
+            const nomeVertice = value.label;
+            return (
+              <option key={idVertice.toString()} value={nomeVertice}>
+                {nomeVertice}
+              </option>
+            );
           })}
         </Select>
       </Box>
-      <Box display={"flex"} fontSize={12} fontWeight="bold">
+      <Box display={'flex'} fontSize={12} fontWeight="bold">
         {info}
       </Box>
     </Flex>
