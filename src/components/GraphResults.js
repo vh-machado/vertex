@@ -158,6 +158,8 @@ function GraphResults(props) {
   if (!resultadoCiclico && resultadoConexo && props.orientacao) {
     resultadoOrdenacaoTopologica = ordenacaoTopologica(grafo);
   }
+  console.log('Ordenação Topológica:')
+  console.log(resultadoOrdenacaoTopologica)
 
   // Verifica se o grafo é planar, biconexo e euleriano, 
   // retornando também o ciclo euleriano se houver
@@ -167,8 +169,6 @@ function GraphResults(props) {
   var resultadoCicloEuleriano = '';
   
   if (resultadoConexo && !props.orientacao) {
-    console.log('teste euleriano');
-    console.log(grafo);
     resultadoPlanar = planarity_test(copia4.nodes, copia4.edges);
     resultadoBiconexo = verificaBiconexo(grafo.nodes, grafo.edges);
     resultadoEuleriano = verificaEuleriano(grafo.nodes, grafo.edges);
@@ -176,54 +176,51 @@ function GraphResults(props) {
       resultadoCicloEuleriano = cicloEuleriano(grafo.nodes, grafo.edges);
     }
   }
+  console.log('Planar?',resultadoPlanar);
+  console.log('Biconexo?',resultadoBiconexo);
+  console.log('Euleriano?',resultadoEuleriano);
+  console.log('Ciclo Euleriano:')
+  console.log(resultadoCicloEuleriano);
 
   const visibility = false;
 
+  // Obtém a Árvore Geradora Mínima do grafo
   var resultadosAGM = '';
   var resultadoCustoAGM = '';
   var resultadoArestasAGM = '';
   
-  /*
   if (resultadoConexo) {
     resultadosAGM = arvoreGeradoraMinima(props.state);
     resultadoCustoAGM = resultadosAGM.custo;
     resultadoArestasAGM = resultadosAGM.arestas;
-  }*/
+  }
 
-  /*
-    if (tipoGrafo === 'orientado') {
-      resultadoConexidade = verificaConexidade(vertices, arestas)
-    } else {
-      resultadoConexidade = 'Não cabe'
-    }*/
-
-  console.log('LOGS');
-  console.log(resultadoConexo);
-  console.log(resultadoPlanar);
-  console.log(resultadoBiconexo);
-  console.log(resultadoEuleriano);
-  console.log(resultadoCicloEuleriano);
-  console.log(resultadoCustoAGM);
+  console.log('Custo AGM:', resultadoCustoAGM);
+  console.log('AGM:')
   console.log(resultadoArestasAGM);
 
   const [existeAresta, setExisteAresta] = useState([]);
   const [selectGrauVertice, setSelectGrauVertice] = useState();
   const [selectVerticeAdj, setSelectVerticeAdj] = useState();
   const [selectMenorCaminhoOrient, setSelectMenorCaminhoOrient] = useState([]);
-  const [selectMenorCaminhoNaoOrient, setSelectMenorCaminhoNaoOrient] =
-    useState([]);
+  const [selectMenorCaminhoNaoOrient, setSelectMenorCaminhoNaoOrient] = useState([]);
 
+  // Procura a existência da aresta
   const resultadoAresta = teste.procuraAresta(
     existeAresta[0],
     existeAresta[1],
     copia5,
     props.orientacao
   );
+
+  // Verifica grau do vértice
   const grauVertice = teste.calcularGrau(
     copia6,
     selectGrauVertice,
     props.orientacao ? 'orientado' : 'nao_orientado'
   );
+
+  // Verifica as adjacências do vértice
   const adjacenciasVertice = teste.recuperarAdjacencias(
     copia7,
     selectVerticeAdj
@@ -231,6 +228,7 @@ function GraphResults(props) {
 
   const algDijkstra = new dijkstra(); //Cria objeto da classe dijkstra para aplicar o algoritmo
   
+  // Cálculo do caminho mais curto para dígrafo ponderado
   var resulatdoDijkstra = ''
   /*
   resulatdoDijkstra = algDijkstra.dijkstra(
@@ -251,18 +249,22 @@ function GraphResults(props) {
 
   var resultadoMenorCaminho = '';
   /*
-  resultadoMenorCaminho = resulatdoDijkstra.path.toString();
+  if(props.orientacao){
+    resultadoMenorCaminho = resulatdoDijkstra.path.toString();
+  }
   console.log('origem, daestino');
   console.log(selectMenorCaminhoNaoOrient);
   console.log('menor caminho n orientado=');*/
   
+  // Cálculo do menor caminho entre dois vértices para grafos não orientados
   var MenorCaminhoNorientado = '';
-  /*
-  MenorCaminhoNorientado = largura(
-    copia3,
-    selectMenorCaminhoNaoOrient[0],
-    selectMenorCaminhoNaoOrient[1]
-  ).path;*/
+  if(!props.orientacao){
+    MenorCaminhoNorientado = largura(
+      copia3,
+      selectMenorCaminhoNaoOrient[0],
+      selectMenorCaminhoNaoOrient[1]
+    ).path;
+  }
   console.log(MenorCaminhoNorientado);
 
   const resultadoMenorCusto = ''
