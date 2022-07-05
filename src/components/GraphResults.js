@@ -97,6 +97,7 @@ function GraphResults(props) {
   const grafo = props.state.graph; //variável com o grafo para se pegar mais facilmente os nodes e as edges
   const vertices = grafo.nodes;
   const arestas = grafo.edges;
+
   const origem = grafo.nodes[grafo.nodes.length - 1].id;
   const destino = grafo.nodes[0].id;
   const tamanhoListavertices = state.graph.nodes.length; //tamanho da lista de vértices
