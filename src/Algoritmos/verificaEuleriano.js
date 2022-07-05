@@ -43,6 +43,13 @@ export function verificaEuleriano(listaVertices, listaArestas) {
         visited[i] = false;
       }
 
+      // Find a vertex with zero degree
+      for (i = 0; i < this.V; i++) {
+        if (this.adj[i].length === 0) {
+          return false;
+        }
+      }
+
       // Find a vertex with non-zero degree
       for (i = 0; i < this.V; i++) {
         if (this.adj[i].length != 0) {
@@ -58,9 +65,14 @@ export function verificaEuleriano(listaVertices, listaArestas) {
       // Start DFS traversal from a vertex with non-zero degree
       this.DFSUtil(i, visited);
 
-      // Check if all non-zero degree vertices are visited
+      
       for (i = 0; i < this.V; i++) {
+        // Check if all non-zero degree vertices are visited
         if (visited[i] == false && this.adj[i].length > 0) {
+          return false;
+        }
+        // Check if all zero degree vertices are visited
+        if (visited[i] == false && this.adj[i].length == 0) {
           return false;
         }
       }

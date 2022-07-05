@@ -233,7 +233,7 @@ export class algoritmosGrafos {
 
     var nodes = grafo.nodes.length;
     var matriz = criaMatrizAdjacenciaNaoOrientado(grafo.nodes, grafo.edges);
-    console.log(matriz)
+    console.log(matriz);
 
     function dfs(vertex, visited, parent) {
       visited.add(vertex);
@@ -338,69 +338,92 @@ export class algoritmosGrafos {
     }
   }
 
-  verificaConexo(grafo, n, orientacao) {
-    console.log(grafo, n, orientacao);
-    if (orientacao) {
-      var vertices = n;
-      var adjacencyList = [];
-      for (let i = 0; i < vertices; i++) {
-        adjacencyList[i] = [];
-      }
-      // Function for adding edges
-      function addEdgeOrientado(source, dest) {
-        adjacencyList[source].unshift(dest);
+  verificaConexo(grafo) {
+
+    class Graph {
+      // Constructor
+      constructor(v) {
+        this.V = v;
+        this.adj = new Array(v);
+        for (let i = 0; i < v; ++i) {
+          this.adj[i] = [];
+        }
       }
 
-      for (let i = 0; i < grafo.edges.length; i++) {
-        addEdgeOrientado(grafo.edges[i].from - 1, grafo.edges[i].to - 1);
+      // Function to add an edge into the graph
+      addEdge(v, w) {
+        this.adj[v].push(w); // Add w to v's list.
+        this.adj[w].push(v); //The graph is undirected
       }
 
-      console.log('lista de adj=', adjacencyList);
-      for (let i = 0; i < adjacencyList.length; i++) {
-        var presente = false;
-        for (let j = 0; j < adjacencyList.length; j++) {
-          for (let k = 0; k < adjacencyList[j].length; k++) {
-            if (adjacencyList[j][k] === i && j !== i) {
-              presente = true;
-              break;
-            }
+      // A function used by DFS
+      DFSUtil(v, visited) {
+        // Mark the current node as visited
+        visited[v] = true;
+
+        // Recur for all the vertices adjacent to this vertex
+        for (let i of this.adj[v]) {
+          let n = i;
+          if (!visited[n]) {
+            this.DFSUtil(n, visited);
           }
-          if (presente) {
+        }
+      }
+
+      // Method to check if all non-zero degree vertices are
+      // connected. It mainly does DFS traversal starting from
+      isConnected() {
+        // Mark all the vertices as not visited
+        let visited = new Array(this.V);
+        let i;
+        for (i = 0; i < this.V; i++) {
+          visited[i] = false;
+        }
+
+        // Find a vertex with zero degree
+        for (i = 0; i < this.V; i++) {
+          if (this.adj[i].length === 0) {
+            return false;
+          }
+        }
+
+        // Find a vertex with non-zero degree
+        for (i = 0; i < this.V; i++) {
+          if (this.adj[i].length != 0) {
             break;
           }
         }
-        if (!adjacencyList[i].length && !presente) {
-          console.log('Vértice desconexo detectado');
-          return false;
+
+        // If there are no edges in the graph, return true
+        if (i == this.V) {
+          return true;
         }
-      }
-      return true;
-    } else if (!orientacao) {
-      var vertices = n;
-      var adjacencyList = [];
-      for (let i = 0; i < vertices; i++) {
-        adjacencyList[i] = [];
-      }
 
-      // Function for adding edges
-      function addEdgeNaoOrientado(source, dest) {
-        adjacencyList[source].unshift(dest);
-        adjacencyList[dest].unshift(source);
-      }
+        // Start DFS traversal from a vertex with non-zero degree
+        this.DFSUtil(i, visited);
 
-      for (let i = 0; i < grafo.edges.length; i++) {
-        addEdgeNaoOrientado(grafo.edges[i].from - 1, grafo.edges[i].to - 1);
-      }
-
-      console.log('lista de adj=', adjacencyList);
-      for (let i = 0; i < adjacencyList.length; i++) {
-        if (!adjacencyList[i].length) {
-          console.log('Vértice desconexo detectado');
-          return false;
+        // Check if all non-zero degree vertices are visited
+        for (i = 0; i < this.V; i++) {
+          if (visited[i] == false && this.adj[i].length > 0) {
+            return false;
+          }
+          if (visited[i] == false && this.adj[i].length == 0) {
+            return false;
+          }
         }
-      }
+        console.log(visited);
 
-      return true;
+        return true;
+      }
     }
+    var listaVertices = grafo.nodes;
+    var listaArestas = grafo.edges;
+
+    var g = new Graph(listaVertices.length);
+    listaArestas.forEach(aresta => {
+      g.addEdge(aresta.from - 1, aresta.to - 1);
+    });
+    return g.isConnected();
+
   }
 }

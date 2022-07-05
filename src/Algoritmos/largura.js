@@ -33,6 +33,8 @@ export function largura(grafo, origem, destino) {
     }
 
     bfs(goal, root = this.vertices[0]) {
+      let cost = 0;
+
       let adj = this.adjacent;
 
       const queue = [];
@@ -60,7 +62,19 @@ export function largura(grafo, origem, destino) {
 
         stack.push(root);
 
-        let path = stack.reverse().join('-');
+        for (let i = 0; i < stack.length; i++) {
+          var aresta = listaArestasLabels.find(
+            a =>
+              (a.from === stack[i] && a.to === stack[i + 1]) ||
+              (a.to === stack[i] && a.from === stack[i + 1])
+          );
+          if (aresta !== undefined && aresta.label !== '') {
+            cost += parseInt(aresta.label);
+          }
+          console.log(cost);
+        }
+
+        let path = stack.reverse().join(' - ');
 
         return path;
       };
@@ -72,6 +86,7 @@ export function largura(grafo, origem, destino) {
           return {
             distance: edges[goal],
             path: buildPath(goal, root, predecessors),
+            cost: cost,
           };
         }
 
@@ -118,16 +133,13 @@ export function largura(grafo, origem, destino) {
     g.addVertex(vertice.label);
   });
 
-  var listaArestasLabels = converteIdLabel(
-    grafo.nodes,
-    grafo.edges
-  );
+  var listaArestasLabels = converteIdLabel(grafo.nodes, grafo.edges);
 
   listaArestasLabels.forEach(aresta => {
     g.addEdge(aresta.from, aresta.to);
   });
 
-  console.log(origem, destino)
+  console.log(origem, destino);
   console.log(g.bfs(destino, origem));
 
   return g.bfs(destino, origem);

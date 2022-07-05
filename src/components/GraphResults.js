@@ -115,23 +115,19 @@ function GraphResults(props) {
   const copia7 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
   const copia8 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
   const copia9 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
-  
+
   // Algoritmos Implementados
-  
+
   // Verifica se o grafo é conexo
   var resultadoConexo = false;
-  
-  resultadoConexo = teste.verificaConexo(
-    copia8,
-    props.state.counter,
-    props.orientacao
-  );
+
+  resultadoConexo = teste.verificaConexo(copia8);
   console.log('Resultado conexo:', resultadoConexo);
-  
+
   // Verifica se o  dígrafo é fortemente, unilateralmente ou fracamente conexo
   var resultadoConexidade = '';
   var resultadoComponentesFortes = '';
-  
+
   if (resultadoConexo && props.orientacao) {
     resultadoConexidade = verificaConexidade(vertices, arestas);
     console.log('Teste conexidade:');
@@ -144,30 +140,30 @@ function GraphResults(props) {
 
   // Verifica se o grafo possui ciclo
   var resultadoCiclico = false;
-  
+
   if (resultadoConexo && props.orientacao) {
     resultadoCiclico = teste.possuiCicloOrientado(copia9.nodes, copia9.edges);
   } else if (resultadoConexo && !props.orientacao) {
     resultadoCiclico = teste.possuiCiclo(copia2, origem, destino);
   }
-  console.log("Possui ciclo? ", resultadoCiclico);
+  console.log('Possui ciclo? ', resultadoCiclico);
 
   // Realiza a ordenação topológica, caso seja acíclico e conexo
   var resultadoOrdenacaoTopologica = '';
-  
+
   if (!resultadoCiclico && resultadoConexo && props.orientacao) {
     resultadoOrdenacaoTopologica = ordenacaoTopologica(grafo);
   }
-  console.log('Ordenação Topológica:')
-  console.log(resultadoOrdenacaoTopologica)
+  console.log('Ordenação Topológica:');
+  console.log(resultadoOrdenacaoTopologica);
 
-  // Verifica se o grafo é planar, biconexo e euleriano, 
+  // Verifica se o grafo é planar, biconexo e euleriano,
   // retornando também o ciclo euleriano se houver
   var resultadoPlanar = false;
   var resultadoBiconexo = false;
   var resultadoEuleriano = false;
   var resultadoCicloEuleriano = '';
-  
+
   if (resultadoConexo && !props.orientacao) {
     resultadoPlanar = planarity_test(copia4.nodes, copia4.edges);
     resultadoBiconexo = verificaBiconexo(grafo.nodes, grafo.edges);
@@ -176,10 +172,10 @@ function GraphResults(props) {
       resultadoCicloEuleriano = cicloEuleriano(grafo.nodes, grafo.edges);
     }
   }
-  console.log('Planar?',resultadoPlanar);
-  console.log('Biconexo?',resultadoBiconexo);
-  console.log('Euleriano?',resultadoEuleriano);
-  console.log('Ciclo Euleriano:')
+  console.log('Planar?', resultadoPlanar);
+  console.log('Biconexo?', resultadoBiconexo);
+  console.log('Euleriano?', resultadoEuleriano);
+  console.log('Ciclo Euleriano:');
   console.log(resultadoCicloEuleriano);
 
   const visibility = false;
@@ -188,7 +184,7 @@ function GraphResults(props) {
   var resultadosAGM = '';
   var resultadoCustoAGM = '';
   var resultadoArestasAGM = '';
-  
+
   if (resultadoConexo) {
     resultadosAGM = arvoreGeradoraMinima(props.state);
     resultadoCustoAGM = resultadosAGM.custo;
@@ -196,14 +192,15 @@ function GraphResults(props) {
   }
 
   console.log('Custo AGM:', resultadoCustoAGM);
-  console.log('AGM:')
+  console.log('AGM:');
   console.log(resultadoArestasAGM);
 
   const [existeAresta, setExisteAresta] = useState([]);
   const [selectGrauVertice, setSelectGrauVertice] = useState();
   const [selectVerticeAdj, setSelectVerticeAdj] = useState();
   const [selectMenorCaminhoOrient, setSelectMenorCaminhoOrient] = useState([]);
-  const [selectMenorCaminhoNaoOrient, setSelectMenorCaminhoNaoOrient] = useState([]);
+  const [selectMenorCaminhoNaoOrient, setSelectMenorCaminhoNaoOrient] =
+    useState([]);
 
   // Procura a existência da aresta
   const resultadoAresta = teste.procuraAresta(
@@ -227,48 +224,77 @@ function GraphResults(props) {
   );
 
   const algDijkstra = new dijkstra(); //Cria objeto da classe dijkstra para aplicar o algoritmo
-  
-  // Cálculo do caminho mais curto para dígrafo ponderado
-  var resulatdoDijkstra = ''
-  /*
-  resulatdoDijkstra = algDijkstra.dijkstra(
-    criaMatrizAdjacencia(
-      copia1.nodes,
-      copia1.edges,
-      selectMenorCaminhoOrient[0],
-      selectMenorCaminhoOrient[1]
-    )
-  );*/
-  console.log(resulatdoDijkstra.distance);
-  
-  /*
-  resulatdoDijkstra.path[0] = selectMenorCaminhoOrient[0];
-  resulatdoDijkstra.path[resulatdoDijkstra.path.length - 1] =
-    selectMenorCaminhoOrient[1];
-  */
 
+  // Cálculo do caminho mais curto para dígrafo ponderado
+  var resulatdoDijkstra = '';
   var resultadoMenorCaminho = '';
-  /*
-  if(props.orientacao){
-    resultadoMenorCaminho = resulatdoDijkstra.path.toString();
+  var resultadoMenorCusto = '';
+
+  if (props.orientacao) {
+    console.log('origem, destino =');
+    console.log(selectMenorCaminhoOrient[0], selectMenorCaminhoOrient[1]);
+    if (
+      selectMenorCaminhoOrient[0] !== undefined &&
+      selectMenorCaminhoOrient[1] !== undefined &&
+      selectMenorCaminhoOrient[0] !== selectMenorCaminhoOrient[1]
+    ) {
+      resulatdoDijkstra = algDijkstra.dijkstra(
+        criaMatrizAdjacencia(
+          copia1.nodes,
+          copia1.edges,
+          selectMenorCaminhoOrient[0],
+          selectMenorCaminhoOrient[1]
+        )
+      );
+      console.log('Resultado Dijkstra:');
+      console.log(resulatdoDijkstra);
+      
+      resulatdoDijkstra.path[0] = selectMenorCaminhoOrient[0];
+      resulatdoDijkstra.path[resulatdoDijkstra.path.length - 1] = selectMenorCaminhoOrient[1];
+      
+      resultadoMenorCusto = resulatdoDijkstra.distance;
+      if(resultadoMenorCusto !== Infinity){
+        resultadoMenorCaminho = resulatdoDijkstra.path.toString();
+      } else {
+        resultadoMenorCaminho = 'Não existe caminho'
+      }
+      
+
+    }
+    
   }
-  console.log('origem, daestino');
+  console.log(resulatdoDijkstra.distance);
+  console.log('origem, destino');
   console.log(selectMenorCaminhoNaoOrient);
-  console.log('menor caminho n orientado=');*/
-  
+  console.log('menor caminho n orientado=');
+
   // Cálculo do menor caminho entre dois vértices para grafos não orientados
   var MenorCaminhoNorientado = '';
-  if(!props.orientacao){
-    MenorCaminhoNorientado = largura(
-      copia3,
-      selectMenorCaminhoNaoOrient[0],
-      selectMenorCaminhoNaoOrient[1]
-    ).path;
+  if (!props.orientacao) {
+    console.log('origem, destino =');
+    console.log(selectMenorCaminhoNaoOrient[0], selectMenorCaminhoNaoOrient[1]);
+    if (
+      selectMenorCaminhoNaoOrient[0] !== undefined &&
+      selectMenorCaminhoNaoOrient[1] !== undefined &&
+      selectMenorCaminhoNaoOrient[0] !== selectMenorCaminhoNaoOrient[1]
+    ) {
+      var resultadoLargura = largura(
+        copia3,
+        selectMenorCaminhoNaoOrient[0],
+        selectMenorCaminhoNaoOrient[1]
+      );
+
+      console.log(resultadoLargura.cost)
+      MenorCaminhoNorientado = resultadoLargura.path
+      if (resultadoLargura.cost === 0) {
+        resultadoMenorCusto = resultadoLargura.distance;
+      } else {
+        resultadoMenorCusto = resultadoLargura.cost;
+      }
+      
+    }
   }
   console.log(MenorCaminhoNorientado);
-
-  const resultadoMenorCusto = ''
-  //resultadoMenorCusto = resulatdoDijkstra.distance;
 
   return (
     <>
@@ -350,7 +376,7 @@ function GraphResults(props) {
         : null}
       {!props.orientacao
         ? viewCardSelectionMenorCaminhoNaoOrient(
-            'Menor Caminho não orientado:',
+            'Menor Caminho Não Orientado:',
             MenorCaminhoNorientado,
             grafo,
             selectMenorCaminhoNaoOrient,
@@ -366,8 +392,11 @@ function GraphResults(props) {
             setSelectMenorCaminhoOrient
           )
         : null}
-      {props.orientacao
+      {props.orientacao && (resultadoMenorCusto !== Infinity) && (resultadoMenorCusto !== '')
         ? viewCard('Menor Custo:', resultadoMenorCusto, visibility)
+        : null}
+      {!props.orientacao && (resultadoMenorCusto !== '')
+        ? viewCard((resultadoLargura.cost === 0)? 'Distância do Menor Caminho' : 'Custo do Menor Caminho', resultadoMenorCusto, visibility)
         : null}
       {!props.orientacao && resultadoConexo
         ? viewCard(
