@@ -30,6 +30,7 @@ const GraphView = props => {
 
   const container = useRef(null);
 
+  /*
   var state = {
     counter: 5,
     graph: {
@@ -47,9 +48,12 @@ const GraphView = props => {
         { from: 2, to: 5 },
       ],
     },
-  };
+  };*/
 
   var state = props.state;
+
+  console.log('state:')
+  console.log(state)
 
   const { graph } = state;
 
@@ -123,7 +127,7 @@ const GraphView = props => {
       zoomView: false,
     },
     physics: {
-      enabled: false,
+      enabled: true,
       stabilization: true,
     },
     manipulation: {

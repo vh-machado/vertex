@@ -62,6 +62,7 @@ function App() {
                 setOrientacao={setOrientacao}
                 cardsVisiveis={cardsVisiveis}
                 setCardsVisiveis={setCardsVisiveis}
+                setGraphData={setGraphData}
               />
             </Box>
             <Box h="100%" w="55vw">

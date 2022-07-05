@@ -97,8 +97,8 @@ function GraphResults(props) {
   const grafo = props.state.graph; //variável com o grafo para se pegar mais facilmente os nodes e as edges
   const vertices = grafo.nodes;
   const arestas = grafo.edges;
-  const origem = grafo.nodes[0].id;
-  const destino = grafo.nodes[grafo.nodes.length - 1].id;
+  const origem = grafo.nodes[grafo.nodes.length - 1].id;
+  const destino = grafo.nodes[0].id;
   const tamanhoListavertices = state.graph.nodes.length; //tamanho da lista de vértices
   const origemBFS = state.graph.nodes[0].label;
   const destinoBFS = state.graph.nodes[3].label;
@@ -115,48 +115,58 @@ function GraphResults(props) {
   const copia7 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
   const copia8 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
   const copia9 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
-
-  //console.log(grafo)
-  //Implementados
-  const resultadoConexo = teste.verificaConexo(
+  
+  // Algoritmos Implementados
+  
+  // Verifica se o grafo é conexo
+  var resultadoConexo = false;
+  
+  resultadoConexo = teste.verificaConexo(
     copia8,
     props.state.counter,
     props.orientacao
   );
-  console.log(copia8);
   console.log('Resultado conexo:', resultadoConexo);
-
-  resultadoConexidade = verificaConexidade(vertices, arestas);
-
+  
+  // Verifica se o  dígrafo é fortemente, unilateralmente ou fracamente conexo
   var resultadoConexidade = '';
   var resultadoComponentesFortes = '';
-  if (resultadoConexo) {
+  
+  if (resultadoConexo && props.orientacao) {
     resultadoConexidade = verificaConexidade(vertices, arestas);
-    console.log('Teste conexidade');
+    console.log('Teste conexidade:');
     console.log(resultadoConexidade);
+    // Obtém os componentes fortes, caso o dígrafo seja fortemente conexo
     if (resultadoConexidade !== 'Fortemente Conexo') {
       resultadoComponentesFortes = componentesFortes(grafo.nodes, grafo.edges);
     }
   }
 
-  var resultadoCiclico = '';
+  // Verifica se o grafo possui ciclo
+  var resultadoCiclico = false;
+  
   if (resultadoConexo && props.orientacao) {
     resultadoCiclico = teste.possuiCicloOrientado(copia9.nodes, copia9.edges);
   } else if (resultadoConexo && !props.orientacao) {
     resultadoCiclico = teste.possuiCiclo(copia2, origem, destino);
   }
+  console.log("Possui ciclo? ", resultadoCiclico);
 
+  // Realiza a ordenação topológica, caso seja acíclico e conexo
   var resultadoOrdenacaoTopologica = '';
-  if (!resultadoCiclico && resultadoConexo) {
+  
+  if (!resultadoCiclico && resultadoConexo && props.orientacao) {
     resultadoOrdenacaoTopologica = ordenacaoTopologica(grafo);
   }
 
-  var resultadoPlanar = '';
-  var resultadoBiconexo = '';
-  var resultadoEuleriano = '';
+  // Verifica se o grafo é planar, biconexo e euleriano, 
+  // retornando também o ciclo euleriano se houver
+  var resultadoPlanar = false;
+  var resultadoBiconexo = false;
+  var resultadoEuleriano = false;
   var resultadoCicloEuleriano = '';
-
-  if (resultadoConexo) {
+  
+  if (resultadoConexo && !props.orientacao) {
     console.log('teste euleriano');
     console.log(grafo);
     resultadoPlanar = planarity_test(copia4.nodes, copia4.edges);
@@ -172,11 +182,13 @@ function GraphResults(props) {
   var resultadosAGM = '';
   var resultadoCustoAGM = '';
   var resultadoArestasAGM = '';
+  
+  /*
   if (resultadoConexo) {
     resultadosAGM = arvoreGeradoraMinima(props.state);
     resultadoCustoAGM = resultadosAGM.custo;
     resultadoArestasAGM = resultadosAGM.arestas;
-  }
+  }*/
 
   /*
     if (tipoGrafo === 'orientado') {
@@ -218,36 +230,43 @@ function GraphResults(props) {
   );
 
   const algDijkstra = new dijkstra(); //Cria objeto da classe dijkstra para aplicar o algoritmo
-
-  var resulatdoDijkstra = algDijkstra.dijkstra(
+  
+  var resulatdoDijkstra = ''
+  /*
+  resulatdoDijkstra = algDijkstra.dijkstra(
     criaMatrizAdjacencia(
       copia1.nodes,
       copia1.edges,
       selectMenorCaminhoOrient[0],
       selectMenorCaminhoOrient[1]
     )
-  );
+  );*/
   console.log(resulatdoDijkstra.distance);
-
+  
+  /*
   resulatdoDijkstra.path[0] = selectMenorCaminhoOrient[0];
   resulatdoDijkstra.path[resulatdoDijkstra.path.length - 1] =
     selectMenorCaminhoOrient[1];
+  */
+
   var resultadoMenorCaminho = '';
+  /*
   resultadoMenorCaminho = resulatdoDijkstra.path.toString();
   console.log('origem, daestino');
   console.log(selectMenorCaminhoNaoOrient);
-  console.log('menor caminho n orientado=');
+  console.log('menor caminho n orientado=');*/
+  
   var MenorCaminhoNorientado = '';
-  //MenorCaminhoNorientado = teste.bfs(copia3, selectMenorCaminhoNaoOrient[0], selectMenorCaminhoNaoOrient[1]);
-  //MenorCaminhoNorientado = teste.buscaEmLargura(copia3, selectMenorCaminhoNaoOrient[0], selectMenorCaminhoNaoOrient[1]);
+  /*
   MenorCaminhoNorientado = largura(
     copia3,
     selectMenorCaminhoNaoOrient[0],
     selectMenorCaminhoNaoOrient[1]
-  ).path;
+  ).path;*/
   console.log(MenorCaminhoNorientado);
 
-  const resultadoMenorCusto = resulatdoDijkstra.distance;
+  const resultadoMenorCusto = ''
+  //resultadoMenorCusto = resulatdoDijkstra.distance;
 
   return (
     <>
