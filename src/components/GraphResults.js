@@ -203,25 +203,47 @@ function GraphResults(props) {
     useState([]);
 
   // Procura a existência da aresta
-  const resultadoAresta = teste.procuraAresta(
-    existeAresta[0],
-    existeAresta[1],
-    copia5,
-    props.orientacao
-  );
+  var resultadoAresta = 'Informe dois vértices';
+  if (existeAresta[0] !== '' && existeAresta[1] !== '') {
+    resultadoAresta = teste.procuraAresta(
+      existeAresta[0],
+      existeAresta[1],
+      copia5,
+      props.orientacao
+    );
+  } else {
+    resultadoAresta = 'Informe dois vértices';
+  }
 
   // Verifica grau do vértice
-  const grauVertice = teste.calcularGrau(
-    copia6,
-    selectGrauVertice,
-    props.orientacao ? 'orientado' : 'nao_orientado'
-  );
+  var grauVertice = 'Escolha um vértice';
+  console.log(selectGrauVertice);
+  if (selectGrauVertice !== '' && selectGrauVertice !== undefined) {
+    grauVertice = teste.calcularGrau(
+      copia6,
+      selectGrauVertice,
+      props.orientacao ? 'orientado' : 'nao_orientado'
+    );
+  } else {
+    grauVertice = 'Escolha um vértice';
+  }
 
   // Verifica as adjacências do vértice
-  const adjacenciasVertice = teste.recuperarAdjacencias(
-    copia7,
-    selectVerticeAdj
-  );
+  var adjacenciasVertice = 'Escolha um vértice';
+  if (selectVerticeAdj !== '' && selectVerticeAdj !== undefined) {
+    adjacenciasVertice = teste.recuperarAdjacencias(copia7, selectVerticeAdj);
+  } else {
+    adjacenciasVertice = 'Escolha um vértice';
+  }
+
+  // Verifica se o grafo possui peso em pelo menos uma aresta
+  var possuiPeso = false;
+  for (let i = 0; i < grafo.edges.length; i++) {
+    if (grafo.edges[i].label != '') {
+      possuiPeso = true;
+      break;
+    }
+  }
 
   const algDijkstra = new dijkstra(); //Cria objeto da classe dijkstra para aplicar o algoritmo
 
@@ -235,33 +257,60 @@ function GraphResults(props) {
     console.log(selectMenorCaminhoOrient[0], selectMenorCaminhoOrient[1]);
     if (
       selectMenorCaminhoOrient[0] !== undefined &&
+      selectMenorCaminhoOrient[0] !== '' &&
       selectMenorCaminhoOrient[1] !== undefined &&
+      selectMenorCaminhoOrient[1] !== '' &&
       selectMenorCaminhoOrient[0] !== selectMenorCaminhoOrient[1]
     ) {
-      resulatdoDijkstra = algDijkstra.dijkstra(
-        criaMatrizAdjacencia(
-          copia1.nodes,
-          copia1.edges,
-          selectMenorCaminhoOrient[0],
-          selectMenorCaminhoOrient[1]
-        )
+      // Verifica se o vértice de destino é uma fonte (não pode)
+      var verticeDestino = grafo.nodes.find(
+        vertice => vertice.label === selectMenorCaminhoOrient[1]
       );
-      console.log('Resultado Dijkstra:');
-      console.log(resulatdoDijkstra);
-      
-      resulatdoDijkstra.path[0] = selectMenorCaminhoOrient[0];
-      resulatdoDijkstra.path[resulatdoDijkstra.path.length - 1] = selectMenorCaminhoOrient[1];
-      
-      resultadoMenorCusto = resulatdoDijkstra.distance;
-      if(resultadoMenorCusto !== Infinity){
-        resultadoMenorCaminho = resulatdoDijkstra.path.toString();
-      } else {
-        resultadoMenorCaminho = 'Não existe caminho'
-      }
-      
+      var testaDestino = grafo.edges.find(
+        aresta => aresta.to === verticeDestino.id
+      );
 
+      // O menor caminho só será calculado se o destino não for uma fonte
+      if (testaDestino !== undefined) {
+        resulatdoDijkstra = algDijkstra.dijkstra(
+          criaMatrizAdjacencia(
+            copia1.nodes,
+            copia1.edges,
+            selectMenorCaminhoOrient[0],
+            selectMenorCaminhoOrient[1]
+          )
+        );
+        console.log('Resultado Dijkstra:');
+        console.log(resulatdoDijkstra);
+
+        // Vértice de origem selecionado
+        resulatdoDijkstra.path[0] = selectMenorCaminhoOrient[0];
+        // Vértice de destino selecionado
+        resulatdoDijkstra.path[resulatdoDijkstra.path.length - 1] =
+          selectMenorCaminhoOrient[1];
+
+        // Custo do menor caminho / Distância
+        resultadoMenorCusto = resulatdoDijkstra.distance;
+
+        if (resultadoMenorCusto !== Infinity) {
+          resultadoMenorCaminho = resulatdoDijkstra.path.toString();
+
+          if (possuiPeso) {
+            // O custo do menor caminho caso houver peso
+            resultadoMenorCusto = resulatdoDijkstra.distance;
+          } else {
+            // A distância do menor caminho, caso não haja peso
+            resultadoMenorCusto = resulatdoDijkstra.path.length - 1;
+          }
+        } else {
+          resultadoMenorCaminho = 'Não existe caminho';
+        }
+      } else {
+        resultadoMenorCaminho = 'Não existe caminho';
+      }
+    } else {
+      resultadoMenorCaminho = 'Informe dois vértices distintos';
     }
-    
   }
   console.log(resulatdoDijkstra.distance);
   console.log('origem, destino');
@@ -275,7 +324,9 @@ function GraphResults(props) {
     console.log(selectMenorCaminhoNaoOrient[0], selectMenorCaminhoNaoOrient[1]);
     if (
       selectMenorCaminhoNaoOrient[0] !== undefined &&
+      selectMenorCaminhoNaoOrient[0] !== '' &&
       selectMenorCaminhoNaoOrient[1] !== undefined &&
+      selectMenorCaminhoNaoOrient[1] !== '' &&
       selectMenorCaminhoNaoOrient[0] !== selectMenorCaminhoNaoOrient[1]
     ) {
       var resultadoLargura = largura(
@@ -284,14 +335,15 @@ function GraphResults(props) {
         selectMenorCaminhoNaoOrient[1]
       );
 
-      console.log(resultadoLargura.cost)
-      MenorCaminhoNorientado = resultadoLargura.path
+      console.log(resultadoLargura.cost);
+      MenorCaminhoNorientado = resultadoLargura.path;
       if (resultadoLargura.cost === 0) {
         resultadoMenorCusto = resultadoLargura.distance;
       } else {
         resultadoMenorCusto = resultadoLargura.cost;
       }
-      
+    } else {
+      MenorCaminhoNorientado = 'Informe dois vértices distintos';
     }
   }
   console.log(MenorCaminhoNorientado);
@@ -319,7 +371,7 @@ function GraphResults(props) {
       )}
       {!props.orientacao
         ? viewCard(
-            'Grafo não-orientado Conexo?',
+            'Grafo Não Orientado Conexo?',
             resultadoConexo ? 'Sim' : 'Não',
             visibility
           )
@@ -338,7 +390,7 @@ function GraphResults(props) {
         : null}
       {resultadoConexo
         ? viewCard(
-            'Grafo Ciclico:',
+            'Grafo Ciclico?',
             resultadoCiclico ? 'Sim' : 'Não',
             visibility
           )
@@ -376,7 +428,7 @@ function GraphResults(props) {
         : null}
       {!props.orientacao
         ? viewCardSelectionMenorCaminhoNaoOrient(
-            'Menor Caminho Não Orientado:',
+            possuiPeso ? 'Caminho de Menor Custo' : 'Caminho Mais Curto',
             MenorCaminhoNorientado,
             grafo,
             selectMenorCaminhoNaoOrient,
@@ -385,18 +437,32 @@ function GraphResults(props) {
         : null}
       {props.orientacao
         ? viewCardSelectionMenorCaminhoOrient(
-            'Menor Caminho:',
+            possuiPeso ? 'Caminho de Menor Custo' : 'Caminho Mais Curto',
             resultadoMenorCaminho,
             grafo,
             selectMenorCaminhoOrient,
             setSelectMenorCaminhoOrient
           )
         : null}
-      {props.orientacao && (resultadoMenorCusto !== Infinity) && (resultadoMenorCusto !== '')
-        ? viewCard('Menor Custo:', resultadoMenorCusto, visibility)
+      {props.orientacao &&
+      resultadoMenorCusto !== Infinity &&
+      resultadoMenorCusto !== ''
+        ? viewCard(
+            possuiPeso
+              ? 'Custo do Menor Caminho'
+              : 'Distância do Caminho Mais Curto',
+            resultadoMenorCusto,
+            visibility
+          )
         : null}
-      {!props.orientacao && (resultadoMenorCusto !== '')
-        ? viewCard((resultadoLargura.cost === 0)? 'Distância do Menor Caminho' : 'Custo do Menor Caminho', resultadoMenorCusto, visibility)
+      {!props.orientacao && resultadoMenorCusto !== ''
+        ? viewCard(
+            possuiPeso
+              ? 'Custo do Menor Caminho'
+              : 'Distância do Caminho Mais Curto',
+            resultadoMenorCusto,
+            visibility
+          )
         : null}
       {!props.orientacao && resultadoConexo
         ? viewCard(

@@ -68,8 +68,12 @@ export function largura(grafo, origem, destino) {
               (a.from === stack[i] && a.to === stack[i + 1]) ||
               (a.to === stack[i] && a.from === stack[i + 1])
           );
-          if (aresta !== undefined && aresta.label !== '') {
-            cost += parseInt(aresta.label);
+          if (aresta !== undefined) {
+            if(aresta.label !== ''){
+              cost += parseInt(aresta.label);
+            } else {
+              cost += 1;
+            }
           }
           console.log(cost);
         }
