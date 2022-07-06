@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/vertex/static/js/main.80d1a52f.js",
+    "main.js": "/vertex/static/js/main.c57d489d.js",
     "static/js/377.b8857d6a.chunk.js": "/vertex/static/js/377.b8857d6a.chunk.js",
     "index.html": "/vertex/index.html",
-    "main.80d1a52f.js.map": "/vertex/static/js/main.80d1a52f.js.map",
+    "main.c57d489d.js.map": "/vertex/static/js/main.c57d489d.js.map",
     "377.b8857d6a.chunk.js.map": "/vertex/static/js/377.b8857d6a.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.80d1a52f.js"
+    "static/js/main.c57d489d.js"
   ]
 }
