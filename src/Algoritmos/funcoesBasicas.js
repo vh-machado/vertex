@@ -399,6 +399,7 @@ export class algoritmosGrafos {
           return true;
         }
 
+
         // Start DFS traversal from a vertex with non-zero degree
         this.DFSUtil(i, visited);
 
@@ -415,6 +416,7 @@ export class algoritmosGrafos {
 
         return true;
       }
+
     }
     var listaVertices = grafo.nodes;
     var listaArestas = grafo.edges;
