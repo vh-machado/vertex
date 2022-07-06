@@ -254,6 +254,7 @@ const GraphView = props => {
 
   return (
     <Box h='100%' p="8">
+      {/*
       <Flex direction={'row'} justifyItems={'flex-start'}>
         <EditPopOver
           operation={'add'}
@@ -277,34 +278,9 @@ const GraphView = props => {
           headerText={'Remover Elemento?'}
           eventClick={buttonDelete}
         />
-        {/*
-        {props.aba !== 'grafo' ? (
-          <Button
-            onClick={operacoes}
-            marginEnd={4}
-            size="sm"
-            color="white"
-            leftIcon={<ViewIcon />}
-            fontFamily={Fontes.principal}
-            fontWeight={400}
-            bgColor="rgba(255,255,255,0.05)"
-            _hover={{ bg: Cores.dark_purple_2 }}
-            _active={{
-              bg: Cores.purple_mountain_majesty,
-              transform: 'scale(0.98)',
-            }}
-            _focus={{
-              boxShadow:
-                '0 0 1px 2px rgba(88, 144, 255, .75), 0 1px 1px rgba(0, 0, 0, .15)',
-            }}
-          >
-            Visualizar
-          </Button>
-        ) : (
-          <></>
-        )}
-        */}
+        
       </Flex>
+      */}
 
       <div ref={container} style={{ height: '100%', width: '100%' }} />
     </Box>

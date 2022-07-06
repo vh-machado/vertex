@@ -41,14 +41,17 @@ export class dijkstra {
     //console.log('Initial `node`: ', node)
 
     //console.log('while loop starts: ')
+    console.log('Inicio do dijkstra')
     while (node) {
       // console.log(`* 'currentNode': ${node} *`)
       let costToReachNode = trackedCosts[node];
       let childrenOfNode = graph[node];
 
+      console.log('node:',node)
       for (let child in childrenOfNode) {
         let costFromNodetoChild = childrenOfNode[child];
         let costToChild = costToReachNode + costFromNodetoChild;
+        console.log('child:',child)
 
         if (!trackedCosts[child] || trackedCosts[child] > costToChild) {
           nodesList.add(node);
@@ -58,6 +61,7 @@ export class dijkstra {
             trackedParents.finish === null &&
             trackedCosts.finish === Infinity
           ) {
+            console.log('----------AQUI1------------')
             let results = {
               distance: Infinity,
               path: ['Não existe caminho!',[]],
@@ -103,6 +107,7 @@ export class dijkstra {
 
     optimalPath.reverse();
     if (trackedCosts.finish === Infinity) {
+      console.log('----------AQUI2------------')
       optimalPath = ['Não existe caminho!',[]];
     }
 
