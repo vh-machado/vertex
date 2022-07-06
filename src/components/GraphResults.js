@@ -19,6 +19,7 @@ import { verificaBiconexo } from '../Algoritmos/verificaBiconexo';
 import { verificaConexidade } from '../Algoritmos/verificaConexidade';
 import { verificaEuleriano } from '../Algoritmos/verificaEuleriano';
 import { largura } from '../Algoritmos/largura';
+import { caminhoBellmanFord } from '../Algoritmos/caminhoBellmanFord';
 
 //Grafo de teste
 const stateOriginal = {
@@ -248,7 +249,8 @@ function GraphResults(props) {
   const algDijkstra = new dijkstra(); //Cria objeto da classe dijkstra para aplicar o algoritmo
 
   // Cálculo do caminho mais curto para dígrafo ponderado
-  var resulatdoDijkstra = '';
+  //var resulatdoDijkstra = '';
+  var resultadoBellmanFord = '';
   var resultadoMenorCaminho = '';
   var resultadoMenorCusto = '';
 
@@ -272,6 +274,20 @@ function GraphResults(props) {
 
       // O menor caminho só será calculado se o destino não for uma fonte
       if (testaDestino !== undefined) {
+        resultadoBellmanFord = caminhoBellmanFord(
+          copia1,
+          selectMenorCaminhoOrient[0],
+          selectMenorCaminhoOrient[1]
+        );
+        console.log('Resultado Bellman Ford:');
+        console.log(resultadoBellmanFord);
+
+        // Menor Caminho / Caminho mais curto
+        resultadoMenorCaminho = resultadoBellmanFord.menorCaminho;
+        // Custo do menor caminho / Distância
+        resultadoMenorCusto = resultadoBellmanFord.distanciaCusto;
+
+        /*
         resulatdoDijkstra = algDijkstra.dijkstra(
           criaMatrizAdjacencia(
             copia1.nodes,
@@ -282,16 +298,20 @@ function GraphResults(props) {
         );
         console.log('Resultado Dijkstra:');
         console.log(resulatdoDijkstra);
+        */
 
+        /*
         // Vértice de origem selecionado
         resulatdoDijkstra.path[0] = selectMenorCaminhoOrient[0];
         // Vértice de destino selecionado
         resulatdoDijkstra.path[resulatdoDijkstra.path.length - 1] =
           selectMenorCaminhoOrient[1];
+        */
 
         // Custo do menor caminho / Distância
-        resultadoMenorCusto = resulatdoDijkstra.distance;
+        //resultadoMenorCusto = resulatdoDijkstra.distance;
 
+        /*
         if (resultadoMenorCusto !== Infinity) {
           resultadoMenorCaminho = resulatdoDijkstra.path.toString();
 
@@ -305,6 +325,7 @@ function GraphResults(props) {
         } else {
           resultadoMenorCaminho = 'Não existe caminho';
         }
+        */
       } else {
         resultadoMenorCaminho = 'Não existe caminho';
       }
@@ -312,7 +333,9 @@ function GraphResults(props) {
       resultadoMenorCaminho = 'Informe dois vértices distintos';
     }
   }
-  console.log(resulatdoDijkstra.distance);
+  console.log(resultadoBellmanFord);
+  //console.log(resulatdoDijkstra.distance);
+
   console.log('origem, destino');
   console.log(selectMenorCaminhoNaoOrient);
   console.log('menor caminho n orientado=');
@@ -446,6 +469,7 @@ function GraphResults(props) {
         : null}
       {props.orientacao &&
       resultadoMenorCusto !== Infinity &&
+      resultadoMenorCusto !== undefined &&
       resultadoMenorCusto !== ''
         ? viewCard(
             possuiPeso

@@ -90,7 +90,7 @@ export function criaMatrizAdjacencia(listaVertices, listaArestas, origem, destin
     }
   }
 
-  console.log('matriz=')
+  console.log('matrizAdj pro Dijkstra=')
   console.log(matriz);
   return matriz;
 }
