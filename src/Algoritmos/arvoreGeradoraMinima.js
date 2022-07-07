@@ -119,7 +119,7 @@ export function arvoreGeradoraMinima(graphData) {
 
   var resultadoAGM = {};
   resultadoAGM['custo'] = custo;
-  resultadoAGM['arestas'] = arestasArvore.join(', ');
+  resultadoAGM['arestas'] = arestasArvore;
  /* console.log('agm=');
   console.log(resultadoAGM.arestas);
   console.log('custo agm=');

@@ -111,7 +111,7 @@ export function caminhoBellmanFord(grafo, origem, destino) {
     var vertice = grafo.nodes.find(v => v.id - 1 === resultado.menorCaminho[i]);
     resultado.menorCaminho[i] = vertice.label;
   }
-  resultado.menorCaminho = resultado.menorCaminho.toString();
+  resultado.menorCaminho = resultado.menorCaminho;
 
   console.log(resultado);
   return resultado;

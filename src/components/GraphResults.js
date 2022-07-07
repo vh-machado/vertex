@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   viewCard,
+  viewCardList,
   viewCardSelectionAdj,
   viewCardSelectionAresta,
   viewCardSelectionGrau,
@@ -247,7 +248,7 @@ function GraphResults(props) {
     }
   }
 
-  const algDijkstra = new dijkstra(); //Cria objeto da classe dijkstra para aplicar o algoritmo
+  //const algDijkstra = new dijkstra(); //Cria objeto da classe dijkstra para aplicar o algoritmo
 
   // Cálculo do caminho mais curto para dígrafo ponderado
   //var resulatdoDijkstra = '';
@@ -375,21 +376,22 @@ function GraphResults(props) {
   return (
     <>
       {viewCardSelectionAresta(
-        'Existe a Aresta ',
+        'Existe a Aresta?',
         resultadoAresta,
         grafo,
         existeAresta,
-        setExisteAresta
+        setExisteAresta,
+        props.orientacao
       )}
       {viewCardSelectionGrau(
-        'Grau do Vértice ',
+        'Grau do Vértice',
         grauVertice,
         grafo,
         setSelectGrauVertice
       )}
       {viewCardSelectionAdj(
-        'Adjacentes do Vértice ',
-        adjacenciasVertice.toString(),
+        'Adjacentes do Vértice',
+        adjacenciasVertice.join(', '),
         grafo,
         setSelectVerticeAdj
       )}
@@ -407,7 +409,7 @@ function GraphResults(props) {
       props.orientacao &&
       resultadoConexo
         ? viewCard(
-            'Componentes Fortes:',
+            'Componentes Fortes',
             resultadoComponentesFortes,
             visibility
           )
@@ -421,8 +423,8 @@ function GraphResults(props) {
         : null}
       {props.orientacao && !resultadoCiclico && resultadoConexo
         ? viewCard(
-            'Ordenação Topológica:',
-            resultadoOrdenacaoTopologica,
+            'Ordenação Topológica',
+            resultadoOrdenacaoTopologica.join(' - '),
             visibility
           )
         : null}
@@ -453,7 +455,7 @@ function GraphResults(props) {
       {!props.orientacao
         ? viewCardSelectionMenorCaminhoNaoOrient(
             possuiPeso ? 'Caminho de Menor Custo' : 'Caminho Mais Curto',
-            MenorCaminhoNorientado,
+            MenorCaminhoNorientado.join(' - '),
             grafo,
             selectMenorCaminhoNaoOrient,
             setSelectMenorCaminhoNaoOrient
@@ -462,7 +464,7 @@ function GraphResults(props) {
       {props.orientacao
         ? viewCardSelectionMenorCaminhoOrient(
             possuiPeso ? 'Caminho de Menor Custo' : 'Caminho Mais Curto',
-            resultadoMenorCaminho,
+            resultadoMenorCaminho.join(' - '),
             grafo,
             selectMenorCaminhoOrient,
             setSelectMenorCaminhoOrient
@@ -491,14 +493,14 @@ function GraphResults(props) {
         : null}
       {!props.orientacao && resultadoConexo
         ? viewCard(
-            'Custo Árvore Geradora Mínima:',
+            'Custo Árvore Geradora Mínima',
             resultadoCustoAGM,
             visibility
           )
         : null}
       {!props.orientacao && resultadoConexo
-        ? viewCard(
-            'Arestas Árvore Geradora Mínima:',
+        ? viewCardList(
+            'Arestas Árvore Geradora Mínima',
             resultadoArestasAGM,
             visibility
           )
