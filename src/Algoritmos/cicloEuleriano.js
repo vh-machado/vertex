@@ -120,6 +120,6 @@ export function cicloEuleriano(listaVertices, listaArestas) {
   g.printEulerTour();
 
   //console.log(ciclo);
-  return ciclo;
+  return ciclo.join(',  ');
 
 }

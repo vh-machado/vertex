@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   viewCard,
+  viewCardList,
   viewCardSelectionAdj,
   viewCardSelectionAresta,
   viewCardSelectionGrau,
@@ -197,12 +198,12 @@ function GraphResults(props) {
   console.log('AGM:');
   console.log(resultadoArestasAGM);
 
-  const [existeAresta, setExisteAresta] = useState([]);
+  const [existeAresta, setExisteAresta] = useState(['','']);
   const [selectGrauVertice, setSelectGrauVertice] = useState();
   const [selectVerticeAdj, setSelectVerticeAdj] = useState();
-  const [selectMenorCaminhoOrient, setSelectMenorCaminhoOrient] = useState([]);
+  const [selectMenorCaminhoOrient, setSelectMenorCaminhoOrient] = useState(['','']);
   const [selectMenorCaminhoNaoOrient, setSelectMenorCaminhoNaoOrient] =
-    useState([]);
+    useState(['','']);
 
   // Procura a existência da aresta
   var resultadoAresta = 'Informe dois vértices';
@@ -221,7 +222,7 @@ function GraphResults(props) {
   var grauVertice = 'Escolha um vértice';
   console.log(selectGrauVertice);
   if (selectGrauVertice !== '' && selectGrauVertice !== undefined) {
-    grauVertice = teste.calcularGrau(
+    grauVertice = "Grau "+ teste.calcularGrau(
       copia6,
       selectGrauVertice,
       props.orientacao ? 'orientado' : 'nao_orientado'
@@ -247,7 +248,7 @@ function GraphResults(props) {
     }
   }
 
-  const algDijkstra = new dijkstra(); //Cria objeto da classe dijkstra para aplicar o algoritmo
+  //const algDijkstra = new dijkstra(); //Cria objeto da classe dijkstra para aplicar o algoritmo
 
   // Cálculo do caminho mais curto para dígrafo ponderado
   //var resulatdoDijkstra = '';
@@ -375,21 +376,22 @@ function GraphResults(props) {
   return (
     <>
       {viewCardSelectionAresta(
-        'Existe a Aresta ',
+        'Existe a Aresta?',
         resultadoAresta,
         grafo,
         existeAresta,
-        setExisteAresta
+        setExisteAresta,
+        props.orientacao
       )}
       {viewCardSelectionGrau(
-        'Grau do Vértice ',
+        'Grau do Vértice',
         grauVertice,
         grafo,
         setSelectGrauVertice
       )}
       {viewCardSelectionAdj(
-        'Adjacentes do Vértice ',
-        adjacenciasVertice.toString(),
+        'Adjacentes do Vértice',
+        adjacenciasVertice,
         grafo,
         setSelectVerticeAdj
       )}
@@ -401,13 +403,13 @@ function GraphResults(props) {
           )
         : null}
       {props.orientacao && resultadoConexo
-        ? viewCard('Conexidade do Dígrafo?', resultadoConexidade, visibility)
+        ? viewCard('Conexidade do Dígrafo', resultadoConexidade, visibility)
         : null}
       {resultadoConexidade !== 'Fortemente Conexo' &&
       props.orientacao &&
       resultadoConexo
         ? viewCard(
-            'Componentes Fortes:',
+            'Componentes Fortes',
             resultadoComponentesFortes,
             visibility
           )
@@ -421,7 +423,7 @@ function GraphResults(props) {
         : null}
       {props.orientacao && !resultadoCiclico && resultadoConexo
         ? viewCard(
-            'Ordenação Topológica:',
+            'Ordenação Topológica',
             resultadoOrdenacaoTopologica,
             visibility
           )
@@ -491,14 +493,14 @@ function GraphResults(props) {
         : null}
       {!props.orientacao && resultadoConexo
         ? viewCard(
-            'Custo Árvore Geradora Mínima:',
+            'Custo da Árvore Geradora Mínima',
             resultadoCustoAGM,
             visibility
           )
         : null}
       {!props.orientacao && resultadoConexo
-        ? viewCard(
-            'Arestas Árvore Geradora Mínima:',
+        ? viewCardList(
+            'Arestas da Árvore Geradora Mínima',
             resultadoArestasAGM,
             visibility
           )

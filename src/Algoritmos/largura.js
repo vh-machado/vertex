@@ -94,6 +94,8 @@ export function largura(grafo, origem, destino) {
           };
         }
 
+        console.log('largura=',adj[v])
+        
         for (let i = 0; i < adj[v].length; i++) {
           if (!discovered[adj[v][i]]) {
             discovered[adj[v][i]] = true;

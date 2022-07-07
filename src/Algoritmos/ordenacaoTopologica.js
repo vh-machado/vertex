@@ -18,11 +18,10 @@ export const ordenacaoTopologica = grafo => {
   }
 
   const graph = (function () {
-    
     const g = new Graph();
     grafo.nodes.forEach(v => g.addVertex(v.id));
     grafo.edges.forEach(a => g.addEdge(a.from, a.to));
-    
+
     return g;
   })();
 
@@ -52,14 +51,12 @@ export const ordenacaoTopologica = grafo => {
     vertices.forEach(v => {
       var vertice = grafo.nodes.find(vert => vert.id == v);
       ordem[topNums[v]] = vertice.label;
-    })
+    });
     //return topNums;
   }
 
   dfsTopSort(graph);
 
   //console.log(ordem);
-  return ordem
+  return ordem.join(' - ');
 };
-
-

@@ -64,7 +64,7 @@ export class algoritmosGrafos {
         }
       });
     });
-    return [...verticesAdjacentes];
+    return [...verticesAdjacentes].join(', ');
   }
 
   recuperarArestas(grafo, verticeEscolhido) {

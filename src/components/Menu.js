@@ -15,11 +15,14 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  Image,
+  Text,
 } from '@chakra-ui/react';
 import { EditIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 import { render } from '@testing-library/react';
 import { Fontes } from '../assets/Fontes';
+
 
 function Menu(props) {
   //const { isOpenGerar, onOpenGerar, onCloseGerar } = useDisclosure();
