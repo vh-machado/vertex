@@ -58,5 +58,5 @@ export const ordenacaoTopologica = grafo => {
   dfsTopSort(graph);
 
   //console.log(ordem);
-  return ordem;
+  return ordem.join(' - ');
 };

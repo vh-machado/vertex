@@ -78,7 +78,7 @@ export function largura(grafo, origem, destino) {
           console.log(cost);
         }
 
-        let path = stack.reverse();
+        let path = stack.reverse().join(' - ');
 
         return path;
       };

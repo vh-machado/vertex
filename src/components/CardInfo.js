@@ -42,7 +42,7 @@ export function viewCard(title, info, visible) {
         display={'flex'}
         width="100%"
         fontSize={15}
-        fontWeight="semibold"
+        fontWeight="bold"
         textColor={Cores.lavender_floral}
         fontFamily={Fontes.principal}
         mb="1"
@@ -119,6 +119,7 @@ export function viewCardSelectionAresta(
             w="auto"
             h="auto"
             onChange={handleChangeOrigem}
+            borderColor={Cores.amethyst}
           >
             {grafo.nodes.map(value => {
               const idVertice = value.id;
@@ -147,6 +148,7 @@ export function viewCardSelectionAresta(
             w="auto"
             h="auto"
             onChange={handleChangeDestino}
+            borderColor={Cores.amethyst}
           >
             {grafo.nodes.map(value => {
               const idVertice = value.id;
@@ -210,35 +212,37 @@ export function viewCardSelectionGrau(
         display={'flex'}
         width="100%"
         fontSize={15}
-        fontWeight="semibold"
+        fontWeight="bold"
         textColor={Cores.lavender_floral}
         fontFamily={Fontes.principal}
+        flexDirection={'column'}
       >
         {title}
+        <Select
+          id="vertice"
+          placeholder="Vértice"
+          w="auto"
+          h="auto"
+          onChange={handleChangeGrauVertice}
+          mt="2"
+          mb="3"
+          borderColor={Cores.amethyst}
+        >
+          {grafo.nodes.map(value => {
+            const idVertice = value.id;
+            const nomeVertice = value.label;
+
+            return (
+              <option key={idVertice.toString()} value={idVertice}>
+                {nomeVertice}
+              </option>
+            );
+          })}
+        </Select>
       </Box>
 
-      <Select
-        id="vertice"
-        placeholder="Vértice"
-        w="auto"
-        h="auto"
-        onChange={handleChangeGrauVertice}
-        mb="2"
-      >
-        {grafo.nodes.map(value => {
-          const idVertice = value.id;
-          const nomeVertice = value.label;
-
-          return (
-            <option key={idVertice.toString()} value={idVertice}>
-              {nomeVertice}
-            </option>
-          );
-        })}
-      </Select>
-
       <Box display={'flex'} fontSize={14} fontWeight="regular">
-        {'Grau ' + info}
+        {info}
       </Box>
     </Flex>
   );
@@ -277,33 +281,34 @@ export function viewCardSelectionAdj(title, info, grafo, setSelectAdj) {
         display={'flex'}
         width="100%"
         fontSize={15}
-        fontWeight="semibold"
+        fontWeight="bold"
         textColor={Cores.lavender_floral}
         fontFamily={Fontes.principal}
+        flexDirection={'column'}
       >
         {title}
+        <Select
+          id="vertice"
+          placeholder="Vértice"
+          w="auto"
+          h="auto"
+          onChange={handleChangeAdj}
+          mt="2"
+          mb="3"
+          borderColor={Cores.amethyst}
+        >
+          {grafo.nodes.map(value => {
+            const idVertice = value.id;
+            const nomeVertice = value.label;
+
+            return (
+              <option key={idVertice.toString()} value={idVertice}>
+                {nomeVertice}
+              </option>
+            );
+          })}
+        </Select>
       </Box>
-
-      <Select
-        id="vertice"
-        placeholder="Vértice"
-        w="auto"
-        h="auto"
-        onChange={handleChangeAdj}
-        mb="2"
-        verticalAlign={'center'}
-      >
-        {grafo.nodes.map(value => {
-          const idVertice = value.id;
-          const nomeVertice = value.label;
-
-          return (
-            <option key={idVertice.toString()} value={idVertice}>
-              {nomeVertice}
-            </option>
-          );
-        })}
-      </Select>
 
       <Box display={'flex'} fontSize={14} fontWeight="regular">
         {info}
@@ -367,13 +372,14 @@ export function viewCardSelectionMenorCaminhoOrient(
         flexDirection={'column'}
       >
         {title}
-        <Box mt="2" mb="2" display={'flex'} flexDirection={'row'}>
+        <Box mt="2" mb="3" display={'flex'} flexDirection={'row'}>
           <Select
             id="origem"
             placeholder="Origem"
             w="auto"
             h="auto"
             onChange={handleChangeOrigem}
+            borderColor={Cores.amethyst}
           >
             {grafo.nodes.map(value => {
               const idVertice = value.id;
@@ -401,6 +407,7 @@ export function viewCardSelectionMenorCaminhoOrient(
             w="auto"
             h="auto"
             onChange={handleChangeDestino}
+            borderColor={Cores.amethyst}
           >
             {grafo.nodes.map(value => {
               const idVertice = value.id;
@@ -476,12 +483,13 @@ export function viewCardSelectionMenorCaminhoNaoOrient(
         flexDirection={'column'}
       >
         {title}
-        <Box mt="2" mb="2" display={'flex'} flexDirection={'row'}>
+        <Box mt="2" mb="3" display={'flex'} flexDirection={'row'}>
           <Select
             id="origem"
             placeholder="Origem"
             w="auto"
             h="auto"
+            borderColor={Cores.amethyst}
             onChange={handleChangeOrigem}
           >
             {grafo.nodes.map(value => {
@@ -508,6 +516,7 @@ export function viewCardSelectionMenorCaminhoNaoOrient(
             w="auto"
             h="auto"
             onChange={handleChangeDestino}
+            borderColor={Cores.amethyst}
           >
             {grafo.nodes.map(value => {
               const idVertice = value.id;
@@ -529,6 +538,7 @@ export function viewCardSelectionMenorCaminhoNaoOrient(
 }
 
 export function viewCardList(title, infoList, visible) {
+  console.log(infoList);
   return (
     <Flex
       h="auto"
@@ -557,7 +567,7 @@ export function viewCardList(title, infoList, visible) {
         display={'flex'}
         width="100%"
         fontSize={15}
-        fontWeight="semibold"
+        fontWeight="bold"
         textColor={Cores.lavender_floral}
         fontFamily={Fontes.principal}
         mb="1"

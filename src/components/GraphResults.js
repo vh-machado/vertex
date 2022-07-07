@@ -222,7 +222,7 @@ function GraphResults(props) {
   var grauVertice = 'Escolha um vértice';
   console.log(selectGrauVertice);
   if (selectGrauVertice !== '' && selectGrauVertice !== undefined) {
-    grauVertice = teste.calcularGrau(
+    grauVertice = "Grau "+ teste.calcularGrau(
       copia6,
       selectGrauVertice,
       props.orientacao ? 'orientado' : 'nao_orientado'
@@ -391,7 +391,7 @@ function GraphResults(props) {
       )}
       {viewCardSelectionAdj(
         'Adjacentes do Vértice',
-        adjacenciasVertice.join(', '),
+        adjacenciasVertice,
         grafo,
         setSelectVerticeAdj
       )}
@@ -403,7 +403,7 @@ function GraphResults(props) {
           )
         : null}
       {props.orientacao && resultadoConexo
-        ? viewCard('Conexidade do Dígrafo?', resultadoConexidade, visibility)
+        ? viewCard('Conexidade do Dígrafo', resultadoConexidade, visibility)
         : null}
       {resultadoConexidade !== 'Fortemente Conexo' &&
       props.orientacao &&
@@ -424,7 +424,7 @@ function GraphResults(props) {
       {props.orientacao && !resultadoCiclico && resultadoConexo
         ? viewCard(
             'Ordenação Topológica',
-            resultadoOrdenacaoTopologica.join(' - '),
+            resultadoOrdenacaoTopologica,
             visibility
           )
         : null}
@@ -455,7 +455,7 @@ function GraphResults(props) {
       {!props.orientacao
         ? viewCardSelectionMenorCaminhoNaoOrient(
             possuiPeso ? 'Caminho de Menor Custo' : 'Caminho Mais Curto',
-            MenorCaminhoNorientado.join(' - '),
+            MenorCaminhoNorientado,
             grafo,
             selectMenorCaminhoNaoOrient,
             setSelectMenorCaminhoNaoOrient
@@ -464,7 +464,7 @@ function GraphResults(props) {
       {props.orientacao
         ? viewCardSelectionMenorCaminhoOrient(
             possuiPeso ? 'Caminho de Menor Custo' : 'Caminho Mais Curto',
-            resultadoMenorCaminho.join(' - '),
+            resultadoMenorCaminho,
             grafo,
             selectMenorCaminhoOrient,
             setSelectMenorCaminhoOrient
@@ -493,14 +493,14 @@ function GraphResults(props) {
         : null}
       {!props.orientacao && resultadoConexo
         ? viewCard(
-            'Custo Árvore Geradora Mínima',
+            'Custo da Árvore Geradora Mínima',
             resultadoCustoAGM,
             visibility
           )
         : null}
       {!props.orientacao && resultadoConexo
         ? viewCardList(
-            'Arestas Árvore Geradora Mínima',
+            'Arestas da Árvore Geradora Mínima',
             resultadoArestasAGM,
             visibility
           )
