@@ -198,12 +198,12 @@ function GraphResults(props) {
   console.log('AGM:');
   console.log(resultadoArestasAGM);
 
-  const [existeAresta, setExisteAresta] = useState([]);
+  const [existeAresta, setExisteAresta] = useState(['','']);
   const [selectGrauVertice, setSelectGrauVertice] = useState();
   const [selectVerticeAdj, setSelectVerticeAdj] = useState();
-  const [selectMenorCaminhoOrient, setSelectMenorCaminhoOrient] = useState([]);
+  const [selectMenorCaminhoOrient, setSelectMenorCaminhoOrient] = useState(['','']);
   const [selectMenorCaminhoNaoOrient, setSelectMenorCaminhoNaoOrient] =
-    useState([]);
+    useState(['','']);
 
   // Procura a existência da aresta
   var resultadoAresta = 'Informe dois vértices';
