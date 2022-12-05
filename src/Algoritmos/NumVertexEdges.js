@@ -7,7 +7,7 @@ class Graph {
       this.adjacencyList[vertex] = [];
     }
   }
-  addEdge(source, destination) {
+  addEdge(source, destination, directed=false) {
     if (!this.adjacencyList[source]) {
       this.addVertex(source);
     }
@@ -15,7 +15,10 @@ class Graph {
       this.addVertex(destination);
     }
     this.adjacencyList[source].push(destination);
-    this.adjacencyList[destination].push(source);
+    
+    if(!directed){
+      this.adjacencyList[destination].push(source);
+    }
   }
   removeEdge(source, destination) {
     this.adjacencyList[source] = this.adjacencyList[source].filter(vertex => vertex !== destination);
@@ -29,22 +32,29 @@ class Graph {
     }
     delete this.adjacencyList[vertex];
   }  
+}
   
-  getVertexNumber(){
-    console.log(Object.keys(this.adjacencyList).length);
-  }
+function getVertexNumber(adjacencyList){
+  console.log(Object.keys(adjacencyList).length);
+}
   
-  getEdgeNumber(){
+function getEdgeNumber(adjacencyList, directed=false){
     
     let count = 0;
-    for (let V of Object.keys(this.adjacencyList)) {
-      count += this.adjacencyList[V].length
+    for (let V of Object.keys(adjacencyList)) {
+      count += adjacencyList[V].length
     }
     
     //grafos não orientados    
-    console.log(count / 2)
+    if(!directed){
+      console.log(count / 2)
+    }
+    
+    //grafos orientados
+    else{
+      console.log(count)
+    }
   }
-}
 
 let G = new Graph()
 
@@ -53,12 +63,12 @@ G.addVertex("B")
 G.addVertex("C")
 G.addVertex("D")
 
-G.addEdge("A", "B")
-G.addEdge("A", "C")
-G.addEdge("A", "D")
-G.addEdge("B", "C")
-G.addEdge("B", "D")
+G.addEdge("A", "B", true)
+G.addEdge("A", "C", true)
+G.addEdge("A", "D", true)
+G.addEdge("B", "C", true)
+G.addEdge("B", "D", true)
 
 
-G.getVertexNumber()
-G.getEdgeNumber()
+getVertexNumber(G.adjacencyList)
+getEdgeNumber(G.adjacencyList, true)
