@@ -3,101 +3,95 @@ import criaMatrizCaminho from './criaMatrizCaminho';
 
 export function verificaConexidade(listaVertices, listaArestas) {
 
-  // Function to find the characteristic
-  // of the given graph
-  function checkConnected(graph, n) {
-    // Check whether the graph is
-    // strongly connected or not
-    let strongly = true;
+  // Função para encontrar a característica do gráfico dado
+  function verificaConectado(graph, n) {
+    //Verifica se o grafo eh fortemente conectado
+    let fortementeConectado = true;
 
-    // Traverse the path matrix
+    // Percorre a matriz
     for (let i = 0; i < n; i++) {
       for (let j = 0; j < n; j++) {
-        // If all the elements are
-        // not equal then the graph
-        // is not strongly connected
+        //Se os elementos nao forem iguais, entao o grafo nao eh fortemente
+        //conectado
         if (graph[i][j] != graph[j][i]) {
-          strongly = false;
+          fortementeConectado = false;
           break;
         }
       }
 
-      // Break out of the loop if false
-      if (!strongly) {
+      // Para o loop se ele nao for fortemente conectado
+      if (!fortementeConectado) {
         break;
       }
     }
 
-    // If true then print strongly
-    // connected and return
-    if (strongly) {
+    //Se o grafo for fortemente conectado
+    // entao eh retornado "Fortemente conectado"
+    if (fortementeConectado) {
       console.log('Fortemente Conexo');
       return 'Fortemente Conexo';
     }
 
-    // Check whether the graph is
-    // Unilaterally connected by
-    // checking Upper Triangle element
-    let uppertri = true;
+    //Verifique se o gráfico está conectado unilateralmente 
+    //verificando o elemento do triângulo superior
+    let trianguloSuperior = true;
 
-    // Traverse the path matrix
+    // Percorre a matriz
     for (let i = 0; i < n; i++) {
       for (let j = 0; j < n; j++) {
-        // If uppertriangle elements
-        // are 0 then break out of the
-        // loop and check the elements
-        // of lowertriangle matrix
+       // Se os elementos do triângulo superior forem 0, 
+       //o loop para e verifica-se os elementos
+       // da matriz do triângulo inferior
         if (i > j && graph[i][j] == 0) {
-          uppertri = false;
+          trianguloSuperior = false;
           break;
         }
       }
 
-      // Break out of the loop if false
-      if (!uppertri) {
+      // Para o loop se ele nao for unilateralmente conectado
+      if (!trianguloSuperior) {
         break;
       }
     }
 
-    // If true then print unilaterally
-    // connected and return
-    if (uppertri) {
+    //Se o grafo for fortemente conectado
+    // entao eh retornado "Unilateralmente conectado"
+    if (trianguloSuperior) {
       console.log('Unilateralmente Conexo');
       return 'Unilateralmente Conexo';
     }
 
-    // Check lowertraingle elements
-    let lowertri = true;
+    // Verifica os elementos do triangulo inferior
+    let trianguloInferior = true;
 
-    // Traverse the path matrix
+    // Percorre a matriz
     for (let i = 0; i < n; i++) {
       for (let j = 0; j < n; j++) {
-        // If lowertraingle elements
-        // are 0 then break cause
-        // 1's are expected
+        //Se os elementos triangulo inferior forem 0, então o laço para
+        // Espera-se que os elementos da matriz inferior
+        //sejam 1
         if (i < j && graph[i][j] == 0) {
-          lowertri = false;
+          trianguloInferior = false;
           break;
         }
       }
 
-      // Break out of the loop if false
-      if (!lowertri) {
+      //  Para o loop se ele nao for unilateralmente conectado
+      if (!trianguloInferior) {
         break;
       }
     }
 
-    // If true then print unilaterally
-    // connected and return
-    if (lowertri) {
-      //document.write('Unilaterally Connected');
+    //Se o grafo for fortemente conectado
+    // entao eh retornado "Unilateralmente conectado"
+    if (trianguloInferior) {
+      
       console.log('Unilateralmente Conexo');
       return 'Unilateralmente Conexo';
     }
 
-    // If elements are in random order
-    // unsynchronized then print weakly
-    // connected and return
+    //Se as condições anteriores nao forem atendidas
+    // retorne "Fracamente conectado"
     else {
      // console.log('Fracamente Conexo');
     }
@@ -105,15 +99,15 @@ export function verificaConexidade(listaVertices, listaArestas) {
     return 'Fracamente Conexo';
   }
 
-  // Driver Code
+ 
 
-  // Number of nodes
+  // Número de nós
   let n = listaVertices.length;
 
-  // Given Path Matrix
+  // Matriz de caminho
   
   var graph = criaMatrizCaminho(listaVertices, listaArestas);
 
-  // Function call
-  return checkConnected(graph, n);
+  // Chamada da função
+  return verificaConectado(graph, n);
 }
