@@ -49,4 +49,3 @@
     return distances;
   };
   
-  console.log(bfs( [[0,1], [1,2]],0))
