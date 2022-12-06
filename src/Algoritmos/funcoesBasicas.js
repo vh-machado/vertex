@@ -9,52 +9,63 @@ export class algoritmosGrafos {
       return ele !== value;
     });
   }
-
+  //Função que verifica se existe uma aresta entre dois vertices
   procuraAresta(origem, destino, grafo, orientado) {
-    var resposta = 'Não existe a aresta';
-    grafo.edges.forEach(teste);
+    var resposta = 'Não existe a aresta'; // variavel que retorna se existe ou nao uma aresta
+    grafo.edges.forEach(teste); // percorre a aresta de um grafo
     function teste(item) {
-      if (item.from === origem && item.to === destino) {
-        resposta = 'Existe a aresta';
+      // verifica se a aresta do vertice de origem eh a mesma
+      // do vertice de destino
+      if (item.from === origem && item.to === destino) { 
+        resposta = 'Existe a aresta'; // se sim, resposta recebe "Existe a aresta"
+      // verifica se o grafo eh nao orientado e se a aresta de saida do vertice de origem
+      //eh a mesma que a aresta de chegada no vertice de destino
       } else if (!orientado && item.to === origem && item.from === destino) {
-        resposta = 'Existe a aresta';
+        resposta = 'Existe a aresta';// se sim, resposta recebe "Existe a aresta"
       }
     }
-    return resposta;
+    return resposta; //retorna a resposta
   }
-
+  //Função que verifica o grau de um vertice
   calcularGrau(grafo, vertice, tipoGrafo) {
-    var contador = 0;
-    if (tipoGrafo === 'orientado') {
-      for (var i = 0; i < grafo.edges.length; i++) {
-        if (grafo.edges[i].from === vertice) {
-          contador++;
+    var contador = 0; // variavel contador para contabilizar o grau
+    if (tipoGrafo === 'orientado') { // verifica se o grafo eh orientado
+      for (var i = 0; i < grafo.edges.length; i++) { //percorre as arestas do grafo
+        if (grafo.edges[i].from === vertice) { // verifica se existem arestas que chegam no vertice
+          contador++; // se sim, entao eh contabilizado
         }
-        if (grafo.edges[i].to === vertice) {
-          contador++;
+        if (grafo.edges[i].to === vertice) { // verifica se existem arestas que saem do vertice
+          contador++; // se sim, eh contabilizado
         }
       }
-      return contador;
-    } else if (tipoGrafo === 'nao_orientado') {
-      for (var j = 0; j < grafo.edges.length; j++) {
+      return contador; // retorna o grau do vertice para grafo orientado
+    } else if (tipoGrafo === 'nao_orientado') { // verifica se o grafo eh nao orientado
+      for (var j = 0; j < grafo.edges.length; j++) { //percorre as arestas do grafo
+        // verifica se existem arestas que chegam ou que saem do vertice
         if (grafo.edges[j].from === vertice || grafo.edges[j].to === vertice) {
-          contador++;
+          contador++; // sim, eh contabilizado
         }
       }
 
-      return contador;
+      return contador; // retorna o grau do vertice para grafo nao orientado
     }
   }
-
+  //Ele recebe o grafo e o vértice escolhido para saber as adjacências.
   recuperarAdjacencias(grafo, verticeEscolhido) {
     const verticesAdjacentes = new Set();
-    const arestas = grafo.edges;
-    const vertices = grafo.nodes;
-    arestas.forEach(aresta => {
-      vertices.forEach(vertice => {
-        if (aresta.from === verticeEscolhido && aresta.to === vertice.id) {
+    const arestas = grafo.edges; // recebe as arestas do grafo
+    const vertices = grafo.nodes; // recebe os nós do grafo
+    arestas.forEach(aresta => { // percorre as arestas do grafo
+      vertices.forEach(vertice => { // percorre os vertices do grafo
+        //Verifica as arestas que chegam no vértice escolhido
+        // e as arestas que saem dele e adiciona em verticesAdjacentes.
+        if (aresta.from === verticeEscolhido && aresta.to === vertice.id) { 
           verticesAdjacentes.add(vertice.label);
         }
+        //verifica as arestas que saem do vértice escolhido
+        //e as arestas que chegam nele e se não está incluso em verticesAdjacentes.
+        // Se essa condição for satisfeita,
+        // então é adicionado em verticesAdjacentes e retorna a lista de vertices adjacentes
         if (
           aresta.to === verticeEscolhido &&
           aresta.from === vertice.id &&
@@ -66,16 +77,16 @@ export class algoritmosGrafos {
     });
     return [...verticesAdjacentes].join(', ');
   }
-
+  //função que recupera a aresta de um vertice
   recuperarArestas(grafo, verticeEscolhido) {
-    var resposta = [];
+    var resposta = []; // variavel que vai receber as arestas do vertice escolhido
     function teste(item) {
-      if (item.from === verticeEscolhido) {
-        resposta.push(item);
+      if (item.from === verticeEscolhido) { //verifica as arestas que chegam no vertice
+        resposta.push(item); //adiciona a aresta recuperada no vetor
       }
     }
-    grafo.edges.forEach(teste);
-    return resposta;
+    grafo.edges.forEach(teste); // recebe as arestas do grafo
+    return resposta; // retorna as arestas recuperadas
   }
 
   eCiclo(listaAdjacencia, origem, destino, visitados = new Set()) {
@@ -337,7 +348,7 @@ export class algoritmosGrafos {
       return false;
     }
   }
-
+  //função que verifica se um grafo eh conexo
   verificaConexo(grafo) {
 
     class Graph {
@@ -350,69 +361,69 @@ export class algoritmosGrafos {
         }
       }
 
-      // Function to add an edge into the graph
-      addEdge(v, w) {
-        this.adj[v].push(w); // Add w to v's list.
-        this.adj[w].push(v); //The graph is undirected
+      // Função para adicionar uma aresta ao grafo
+      adicionaAresta(v, w) {
+        this.adj[v].push(w); // Adicione w à lista de v.
+        this.adj[w].push(v); //O gráfico é não direcionado
       }
 
-      // A function used by DFS
-      DFSUtil(v, visited) {
-        // Mark the current node as visited
-        visited[v] = true;
+      // Uma função usada pelo DFS
+      DFSUtil(v, visitado) {
+        // Marcar o nó atual como visitado
+        visitado[v] = true;
 
-        // Recur for all the vertices adjacent to this vertex
+        // Recuperar para todos os vértices adjacentes a este vértice
         for (let i of this.adj[v]) {
           let n = i;
-          if (!visited[n]) {
-            this.DFSUtil(n, visited);
+          if (!visitado[n]) {
+            this.DFSUtil(n, visitado);
           }
         }
       }
 
-      // Method to check if all non-zero degree vertices are
-      // connected. It mainly does DFS traversal starting from
+      // Método para verificar se todos os vértices de grau diferente de zero estão conectados.
+      
       isConnected() {
-        // Mark all the vertices as not visited
-        let visited = new Array(this.V);
+        // Marque todos os vértices como não visitados
+        let visitado = new Array(this.V);
         let i;
         for (i = 0; i < this.V; i++) {
-          visited[i] = false;
+          visitado[i] = false;
         }
 
-        // Find a vertex with zero degree
+        // Encontrar um vértice com grau zero
         for (i = 0; i < this.V; i++) {
           if (this.adj[i].length === 0) {
             return false;
           }
         }
 
-        // Find a vertex with non-zero degree
+        // Encontre um vértice com grau diferente de zero
         for (i = 0; i < this.V; i++) {
           if (this.adj[i].length != 0) {
             break;
           }
         }
 
-        // If there are no edges in the graph, return true
+        //Se não houver arestas no gráfico, retorne verdadeiro
         if (i == this.V) {
           return true;
         }
 
 
-        // Start DFS traversal from a vertex with non-zero degree
-        this.DFSUtil(i, visited);
+        // Inicie a pesquisa DFS a partir de um vértice com grau diferente de zero
+        this.DFSUtil(i, visitado);
 
-        // Check if all non-zero degree vertices are visited
+        // Verifique se todos os vértices de grau diferente de zero foram visitados
         for (i = 0; i < this.V; i++) {
-          if (visited[i] == false && this.adj[i].length > 0) {
+          if (visitado[i] == false && this.adj[i].length > 0) {
             return false;
           }
-          if (visited[i] == false && this.adj[i].length == 0) {
+          if (visitado[i] == false && this.adj[i].length == 0) {
             return false;
           }
         }
-        console.log(visited);
+        console.log(visitado);
 
         return true;
       }
@@ -421,11 +432,11 @@ export class algoritmosGrafos {
     var listaVertices = grafo.nodes;
     var listaArestas = grafo.edges;
 
-    var g = new Graph(listaVertices.length);
+    var grafo = new Graph(listaVertices.length);
     listaArestas.forEach(aresta => {
-      g.addEdge(aresta.from - 1, aresta.to - 1);
+      grafo.adicionaAresta(aresta.from - 1, aresta.to - 1);
     });
-    return g.isConnected();
+    return grafo.isConnected();
 
   }
 }

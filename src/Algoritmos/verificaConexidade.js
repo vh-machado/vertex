@@ -54,7 +54,7 @@ export function verificaConexidade(listaVertices, listaArestas) {
       }
     }
 
-    //Se o grafo for fortemente conectado
+    //Se o grafo for unilateralmente conectado
     // entao eh retornado "Unilateralmente conectado"
     if (trianguloSuperior) {
       console.log('Unilateralmente Conexo');
