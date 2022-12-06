@@ -5,7 +5,7 @@ class Graph {
     this.v = v;
     this.e = randomIntFromInterval(9, 45);
     this.graph_list = [];
-    this.graph_matrix = [];
+    this.graph_matrix = [[]];
   }
 
   randomIntFromInterval(min, max) {
@@ -15,6 +15,19 @@ class Graph {
 
   getNumberOfEdges() {
     return this.e;
+  }
+  createRandomGraph() {
+    for (let i in this.e) {
+      let src = randomIntFromInterval(0, this.v);
+      let dest = randomIntFromInterval(0, this.v);
+
+      while (src === dest && this.graph_matrix[src][dest] == 1) {
+        src = randomIntFromInterval(0, this.v);
+        dest = randomIntFromInterval(0, this.v);
+      }
+      this.graph_list[src].push(dest);
+      this.graph_matrix[src][dest] = 1;
+    }
   }
 
   dfs() {
@@ -56,3 +69,6 @@ class Graph {
     }
   }
 }
+
+let n = 10;
+let g = new Graph(n);
