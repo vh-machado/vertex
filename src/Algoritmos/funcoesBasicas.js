@@ -183,54 +183,57 @@ export class algoritmosGrafos {
     edges.forEach(aresta => adjacencyList.get(aresta.from).push(aresta.to));
     return adjacencyList;
   }
-
-  bfs(grafo, origin, destination) {
+  //busca em largura
+  bfs(grafo, origem, destino) {
     //console.log(origin+' para '+ destination)
-    const adjacencyList = this.criarMapGrafos(
+    const listaAdjacencia = this.criarMapGrafos(
       grafo.nodes,
       this.converteIdLabel(grafo.nodes, grafo.edges)
     );
     // console.log(adjacencyList)
-    const visited = new Set();
+    const visitado = new Set();
     const menorCaminho = new Set();
 
-    visited.add(origin);
+    visitado.add(origem);
+    // Cria-se uma fila para BFS  
+    const fila = [origem];
 
-    const queue = [origin];
+    let caminho = '';
+    //Enquanto não terminar a fila e os vertices adjacentes naõ forem visitados  
+    while (fila.length > 0 && visitado.size !== listaAdjacencia.size) {
+      const node = fila.shift(); //Retira um vértice da fila e guarda em nodes
 
-    let isPath = '';
-
-    while (queue.length > 0 && visited.size !== adjacencyList.size) {
-      const node = queue.shift();
-
-      const current = adjacencyList.get(node);
-      if (!visited.has(destination)) {
-        menorCaminho.add(node);
+      const atual = listaAdjacencia.get(node);
+      //verifica se o vertice de destino ainda nao foi
+      //visitado
+      if (!visitado.has(destino)) {
+        menorCaminho.add(node); //se ainda nao foi, entao adiciona-o em menor caminho
       }
-      if (current.includes(destination)) {
-        menorCaminho.add(current[current.indexOf(destination)]);
+      //verifica se o vertice de destino esta incluido em atual 
+      if (atual.includes(destino)) {
+        menorCaminho.add(atual[atual.indexOf(destino)]); //se sim, adiciona em menor caminho
       }
+      //se for diferente de atual, entao o algoritmo para
+      if (!atual) break;
 
-      if (!current) break;
+      caminho = atual.find(node => {
+        visitado.add(node); //adiciona como visitado o vertice que foi retirado
+        fila.push(node); //atualiza a fila
 
-      isPath = current.find(node => {
-        visited.add(node);
-        queue.push(node);
-
-        return node === destination;
+        return node === destino;
       });
 
-      if (isPath) break;
+      if (caminho) break;
     }
 
     return {
-      expandedNodes: Array.from(visited),
+      expandedNodes: Array.from(visitado),
       menorCaminho: Array.from(menorCaminho),
-      isPath,
+      caminho,
     };
   }
 
-  possuiCiclo(grafo, origem, destino) {
+  possuiCiclo(grafo) {
     /*
     const listaAdjacencias = criaListaAdjacencia(
       grafo.nodes,
@@ -241,35 +244,36 @@ export class algoritmosGrafos {
     //console.log(listaAdjacencias)
     const resultado = this.eCiclo(listaAdjacencias, origem, destino);
     return resultado;*/
-
+    
+    // recebe vertice do grafo
     var nodes = grafo.nodes.length;
     var matriz = criaMatrizAdjacenciaNaoOrientado(grafo.nodes, grafo.edges);
     console.log(matriz);
-
-    function dfs(vertex, visited, parent) {
-      visited.add(vertex);
-      for (let v = 0; v < nodes; v++) {
-        if (matriz[vertex][v]) {
+    //função da buscaEmProfundidade  
+    function dfs(vertice, visitado, parent) {
+      visitado.add(vertice); //marca o vertice como visitado
+      for (let v = 0; v < nodes; v++) { //percorre os vertices
+        if (matriz[vertice][v]) {
           if (v == parent)
-            //if v is the parent not move that direction
+            //se v é o pai, não se mova nessa direção
             continue;
-          if (visited.has(v))
-            //if v is already visited
-            return true;
-          if (dfs(v, visited, vertex)) return true;
+          if (visitado.has(v))
+            //verifica se v foi visitado
+            return true; // se sim, retorna true
+          if (dfs(v, visitado, vertice)) return true;
         }
       }
       return false;
     }
 
     function hasCycle() {
-      var visited = new Set(); //visited set
+      var visitado = new Set(); //conjunto visitado
       for (let v = 0; v < nodes; v++) {
-        if (visited.has(v))
-          //when visited holds v, jump to next iteration
+        if (visitado.has(v))
+          //quando v ja for visitado, pula para a próxima iteração
           continue;
-        if (dfs(v, visited, -1)) {
-          //-1 as no parent of starting vertex
+        if (dfs(v, visitado, -1)) {
+          //pai eh = -1 se vertice for a origem
           return true;
         }
       }
@@ -278,24 +282,24 @@ export class algoritmosGrafos {
 
     return hasCycle();
   }
-
+  //verifica se o grafo orientado possui ciclo
   possuiCicloOrientado(listaVertices, listaArestas) {
-    let V = listaVertices.length;
-    let adj = new Array(V);
-    for (let i = 0; i < V; ++i) {
-      adj[i] = [];
+    let V = listaVertices.length; // recebe a lista de vertices do grafo
+    let adj = new Array(V); // vetor de adjacentes
+    for (let i = 0; i < V; ++i) { // percorre os vertices
+      adj[i] = []; 
     }
-
+    //percorre as arestas
     for (let i = 0; i < listaArestas.length; i++) {
       adicionarAresta(listaArestas[i].from - 1, listaArestas[i].to - 1);
     }
-
+    //adiciona arestas se for adjacente
     function adicionarAresta(v1, v2) {
       adj[v1].push(v2);
     }
-
+    //se possui ciclo retorna verdadeiro
     if (temCiclo()) return true;
-    else return false;
+    else return false; //senao, falso
 
     function dfs(v) {
       var pilha = [];
@@ -312,13 +316,13 @@ export class algoritmosGrafos {
       while (true) {
         var achou_vizinho = false;
         var vizinho_achado;
-
+        // verifica se nao foi visitado
         if (!visitados[v]) {
           pilha.push(v);
           visitados[v] = true;
           pilha_rec[v] = true;
         }
-
+        //percorre os adjacentes
         for (let i = 0; i < adj[v].length; i++) {
           if (pilha_rec[adj[v][i]]) {
             return true;
@@ -329,7 +333,7 @@ export class algoritmosGrafos {
             break;
           }
         }
-
+        //verifica se nao achou os vertices adjacentes
         if (!achou_vizinho) {
           pilha_rec[pilha[pilha.length - 1]] = false; // marca que saiu da pilha
           pilha.pop(); // remove da pilha
@@ -429,14 +433,14 @@ export class algoritmosGrafos {
       }
 
     }
-    var listaVertices = grafo.nodes;
-    var listaArestas = grafo.edges;
+    var listaVertices = grafo.nodes; // recebe os vertices do grafo
+    var listaArestas = grafo.edges; //recebe as arestas do grafo
 
     var grafo = new Graph(listaVertices.length);
-    listaArestas.forEach(aresta => {
+    listaArestas.forEach(aresta => { //percorre as arestas
       grafo.adicionaAresta(aresta.from - 1, aresta.to - 1);
     });
-    return grafo.isConnected();
+    return grafo.isConnected(); // retorna se o grafo eh conectado
 
   }
 }
