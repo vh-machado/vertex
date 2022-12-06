@@ -161,11 +161,12 @@ export class algoritmosGrafos {
             caminho
         }
     }*/
-
+  // converte o indice do Label
   converteIdLabel(listaVertices, listaArestas) {
-    var listaArestasLabel = [];
-    for (var i = 0; i < listaVertices.length; i++) {
-      for (var j = 0; j < listaArestas.length; j++) {
+    var listaArestasLabel = []; // vetor iniciado com vazio
+    for (var i = 0; i < listaVertices.length; i++) { //percorre a lista de vertice
+      for (var j = 0; j < listaArestas.length; j++) { // percorre a lista de arestas
+        //verifica os vertices que tem o id procurado e substitui
         if (listaVertices[i].id === listaArestas[j].from) {
           listaArestas[j].from = listaVertices[i].label;
         } else if (listaVertices[i].id === listaArestas[j].to) {
