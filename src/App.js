@@ -6,42 +6,22 @@ import {
   Center,
   HStack,
   Flex,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Text,
 } from '@chakra-ui/react';
 import { Cores } from './assets/Cores';
-import GraphResults from './components/GraphResults';
-import Menu from './components/Menu';
-import GraphView from './components/GraphView';
+import GraphResults from './dashboard/GraphResults';
+import Menu from './dashboard/Menu';
+import GraphTabs from './dashboard/GraphTabs/GraphTabs';
+
 
 function App() {
-  var initialGraphData = {
-    counter: 0,
-    graph: {
-      nodes: [
-        /*
-        { id: 1, label: 'Node 1', x: 200, y: 0 },
-        { id: 2, label: 'Node 2', x: 50, y: 250 },
-        { id: 3, label: 'Node 3', x: 300, y: 0 },
-        { id: 4, label: 'Node 4', x: 90, y: 100 },
-        { id: 5, label: 'Node 5', x: 0, y: 10 },*/
-      ],
-      edges: [
-        /*
-        { from: 1, to: 2, label: "" },
-        { from: 1, to: 3, label: "" },
-        { from: 2, to: 4, label: "" },
-        { from: 2, to: 5, label: "" },
-        */
-      ],
-    },
-  };
-
-  const [orientacao, setOrientacao] = useState(true);
-  const [graphData, setGraphData] = useState(initialGraphData);
+  
   const [cardsVisiveis, setCardsVisiveis] = useState(false);
-
-  const childToParent = childData => {
-    setGraphData(childData);
-  };
 
   return (
     <ChakraProvider theme={theme}>
@@ -58,22 +38,12 @@ function App() {
             <Box h="100%" w="10vw" borderRadius={40} p={2}>
               {/* Componente da esquerda */}
               <Menu
-                orientacao={orientacao}
-                setOrientacao={setOrientacao}
                 cardsVisiveis={cardsVisiveis}
                 setCardsVisiveis={setCardsVisiveis}
-                setGraphData={setGraphData}
               />
             </Box>
             <Box h="100%" w="55vw">
-              {/* Componente do meio */}
-              <GraphView
-                state={graphData}
-                orientado={orientacao}
-                childToParent={childToParent}
-                hierarquico={false}
-                curva={false}
-              ></GraphView>
+              <GraphTabs/>
             </Box>
 
             <Flex
@@ -107,7 +77,7 @@ function App() {
             >
               {/* Componente da direita */}
               {cardsVisiveis ? (
-                <GraphResults orientacao={orientacao} state={graphData}/>
+                <GraphResults />
               ) : (
                 <></>
               )}

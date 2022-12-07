@@ -1,21 +1,16 @@
 import React from 'react';
 import {
-  ChakraProvider,
   Box,
-  theme,
-  Center,
-  HStack,
   Flex,
   Select,
-  Text,
 } from '@chakra-ui/react';
 import { Cores } from '../assets/Cores';
 import { Fontes } from '../assets/Fontes';
-import { algoritmosGrafos } from '../Algoritmos/funcoesBasicas';
 
-export function viewCard(title, info, visible) {
+export function viewCard(key, title, info, visible) {
   return (
     <Flex
+      key={key}
       h="auto"
       w="auto"
       direction={'column'}
@@ -62,7 +57,7 @@ export function viewCardSelectionAresta(
   grafo,
   existeAresta,
   setExisteAresta,
-  orientacao
+  orientado
 ) {
   const handleChangeOrigem = event => {
     if (event.target.value !== '') {
@@ -140,7 +135,7 @@ export function viewCardSelectionAresta(
             borderRadius="10"
           />
 
-          {orientacao ? '>' : ''}
+          {orientado ? '>' : ''}
 
           <Select
             id="destino"
@@ -317,13 +312,14 @@ export function viewCardSelectionAdj(title, info, grafo, setSelectAdj) {
   );
 }
 
-export function viewCardSelectionMenorCaminhoOrient(
+export function ViewCardSelectionMenorCaminhoOrient(
   title,
   info,
   grafo,
   selectMenorCaminhoOrient,
   setSelectMenorCaminhoOrient
 ) {
+
   const handleChangeOrigem = event => {
     //setValue(event.target.value)
     setSelectMenorCaminhoOrient([
@@ -424,6 +420,7 @@ export function viewCardSelectionMenorCaminhoOrient(
       <Box display={'flex'} fontSize={14} fontWeight="regular">
         {info}
       </Box>
+      
     </Flex>
   );
 }
@@ -580,8 +577,8 @@ export function viewCardList(title, infoList, visible) {
         fontWeight="regular"
         flexDirection={'column'}
       >
-        {infoList.map(info => (
-          <Box mb="0.5">{info}</Box>
+        {infoList.map((info,index) => (
+          <Box key={index} mb="0.5">{info}</Box>
         ))}
       </Box>
     </Flex>
