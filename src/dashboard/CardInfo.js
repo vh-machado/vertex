@@ -494,7 +494,7 @@ export function viewCardSelectionMenorCaminhoNaoOrient(
               const nomeVertice = value.label;
 
               return (
-                <option key={idVertice.toString()} value={nomeVertice}>
+                <option key={idVertice.toString()} value={idVertice}>
                   {nomeVertice}
                 </option>
               );
@@ -519,7 +519,7 @@ export function viewCardSelectionMenorCaminhoNaoOrient(
               const idVertice = value.id;
               const nomeVertice = value.label;
               return (
-                <option key={idVertice.toString()} value={nomeVertice}>
+                <option key={idVertice.toString()} value={idVertice}>
                   {nomeVertice}
                 </option>
               );
