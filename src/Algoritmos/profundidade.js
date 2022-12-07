@@ -1,70 +1,70 @@
 class Graph {
   constructor(v) {
     this.time = 0;
-    this.traversal_array = [];
-    this.v = v;
-    this.e = randomIntFromInterval(9, 45);
-    this.graph_list = [];
-    this.graph_matrix = [[]];
+    this.array_aux = [];
+    this.vertices = v;
+    this.arestas = geraAleatorio(9, 45);
+    this.lista_grafo = [];
+    this.matriz_grafo = [[]];
   }
 
-  randomIntFromInterval(min, max) {
+  geraAleatorio(min, max) {
     // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  getNumberOfEdges() {
-    return this.e;
+  getNumeroArestas() {
+    return this.arestas;
   }
-  createRandomGraph() {
-    for (let i in this.e) {
-      let src = randomIntFromInterval(0, this.v);
-      let dest = randomIntFromInterval(0, this.v);
+  geraGrafoAleatorio() {
+    for (let i in this.arestas) {
+      let origem = geraAleatorio(0, this.vertices);
+      let destino = geraAleatorio(0, this.vertices);
 
-      while (src === dest && this.graph_matrix[src][dest] == 1) {
-        src = randomIntFromInterval(0, this.v);
-        dest = randomIntFromInterval(0, this.v);
+      while (origem === destino && this.matriz_grafo[origem][destino] == 1) {
+        origem = geraAleatorio(0, this.vertices);
+        destino = geraAleatorio(0, this.vertices);
       }
-      this.graph_list[src].push(dest);
-      this.graph_matrix[src][dest] = 1;
+      this.lista_grafo[origem].push(destino);
+      this.matriz_grafo[origem][destino] = 1;
     }
   }
 
-  dfs() {
-    this.visited = [false] * this.v;
-    this.start_time = [0] * this.v;
-    this.end_time = [0] * this.v;
+  profundidade() {
+    this.vertices_visitados = [false] * this.vertices;
+    this.tempo_inicio = [0] * this.vertices;
+    this.tempo_arestas = [0] * this.vertices;
   }
 
-  traverse_dfs(node) {
-    this.visited[node] = true;
-    this.traversal_array.push(node);
-    this.start_time[node] = this.time;
+  traverse_profundidade(node) {
+    this.vertices_visitados[node] = true;
+    this.array_aux.push(node);
+    this.tempo_inicio[node] = this.time;
     this.time += 1;
 
-    for (let neighbour in this.graph_list[node]) {
-      if (!self.visited[neighbour]) {
-        console.log('Tree edge: ', node, '-->', neighbour);
-        self.traverse_dfs(neighbour);
+    for (let vizinho in this.lista_grafo[node]) {
+      if (!this.visitado[vizinho]) {
+        console.log('Arvore aresta: ', node, '-->', vizinho);
+        this.traverse_profundidade(vizinho);
       } else {
         if (
-          this.start_time[node] > this.start_time[neighbour] &&
-          this.end_time[node] < this.end_time[neighbour]
+          this.tempo_inicio[node] > this.tempo_inicio[vizinho] &&
+          this.tempo_arestas[node] < this.tempo_arestas[vizinho]
         ) {
-          console.log('Back edge: ', node, '-->', neighbour);
+          console.log('Retorno aresta: ', node, '-->', vizinho);
         } else if (
-          this.start_time[node] < this.start_time[neighbour] &&
-          this.end_time[node] > this.end_time[neighbour]
+          this.tempo_inicio[node] < this.tempo_inicio[vizinho] &&
+          this.tempo_arestas[node] > this.tempo_arestas[vizinho]
         ) {
-          console.log('Forward Edge: ', node, '-->', neighbour);
+          console.log('Avanco aresta: ', node, '-->', vizinho);
         } else if (
-          this.start_time[node] > this.start_time[neighbour] &&
-          this.end_time[node] > this.end_time[neighbour]
+          this.tempo_inicio[node] > this.tempo_inicio[vizinho] &&
+          this.tempo_arestas[node] > this.tempo_arestas[vizinho]
         ) {
-          console.log('Cross Edge:', node, '-->', neighbour);
+          console.log('Cruzamento aresta:', node, '-->', vizinho);
         }
       }
-      this.end_time[node] = this.time;
+      this.tempo_arestas[node] = this.time;
       this.time += 1;
     }
   }
