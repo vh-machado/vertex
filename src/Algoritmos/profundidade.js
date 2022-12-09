@@ -1,74 +1,72 @@
-class Graph {
-  constructor(v) {
-    this.time = 0;
-    this.array_aux = [];
-    this.vertices = v;
-    this.arestas = geraAleatorio(9, 45);
-    this.lista_grafo = [];
-    this.matriz_grafo = [[]];
-  }
+// Return the current time
 
-  geraAleatorio(min, max) {
-    // min and max included
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
-
-  getNumeroArestas() {
-    return this.arestas;
-  }
-  geraGrafoAleatorio() {
-    for (let i in this.arestas) {
-      let origem = geraAleatorio(0, this.vertices);
-      let destino = geraAleatorio(0, this.vertices);
-
-      while (origem === destino && this.matriz_grafo[origem][destino] == 1) {
-        origem = geraAleatorio(0, this.vertices);
-        destino = geraAleatorio(0, this.vertices);
-      }
-      this.lista_grafo[origem].push(destino);
-      this.matriz_grafo[origem][destino] = 1;
-    }
-  }
-
-  profundidade() {
-    this.vertices_visitados = [false] * this.vertices;
-    this.tempo_inicio = [0] * this.vertices;
-    this.tempo_arestas = [0] * this.vertices;
-  }
-
-  traverse_profundidade(node) {
-    this.vertices_visitados[node] = true;
-    this.array_aux.push(node);
-    this.tempo_inicio[node] = this.time;
-    this.time += 1;
-
-    for (let vizinho in this.lista_grafo[node]) {
-      if (!this.visitado[vizinho]) {
-        console.log('Arvore aresta: ', node, '-->', vizinho);
-        this.traverse_profundidade(vizinho);
-      } else {
-        if (
-          this.tempo_inicio[node] > this.tempo_inicio[vizinho] &&
-          this.tempo_arestas[node] < this.tempo_arestas[vizinho]
-        ) {
-          console.log('Retorno aresta: ', node, '-->', vizinho);
-        } else if (
-          this.tempo_inicio[node] < this.tempo_inicio[vizinho] &&
-          this.tempo_arestas[node] > this.tempo_arestas[vizinho]
-        ) {
-          console.log('Avanco aresta: ', node, '-->', vizinho);
-        } else if (
-          this.tempo_inicio[node] > this.tempo_inicio[vizinho] &&
-          this.tempo_arestas[node] > this.tempo_arestas[vizinho]
-        ) {
-          console.log('Cruzamento aresta:', node, '-->', vizinho);
-        }
-      }
-      this.tempo_arestas[node] = this.time;
-      this.time += 1;
-    }
-  }
+function calculateDaysBetweenDates(begin, end) {    
+    const diff = Math.abs(begin - end);
+    const diffInDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    return diffInDays;
 }
 
-let n = 10;
-let g = new Graph(n);
+// Rerturn the current time
+function getCurrentTime() {
+    return new Date();
+}
+
+// BFS Algorithm
+function bfs(graph, start, end) {
+    let queue = [];
+    let visited = [];
+    let parent = {};
+    let path = [];
+
+    queue.push(start);
+    visited.push(start);
+
+    while (queue.length > 0) {
+        let current = queue.shift();
+        if (current === end) {
+            while (current !== start) {
+                path.push(current);
+                current = parent[current];
+            }
+            path.push(start);
+            return path.reverse();
+        }
+        for (let neighbor of graph[current]) {
+            if (!visited.includes(neighbor)) {
+                queue.push(neighbor);
+                visited.push(neighbor);
+                parent[neighbor] = current;
+            }
+        }
+    }
+}
+
+//DFS Algorithm
+function dfs(graph, start, end) {
+    let stack = [];
+    let visited = [];
+    let parent = {};
+    let path = [];
+
+    stack.push(start);
+    visited.push(start);
+
+    while (stack.length > 0) {
+        let current = stack.pop();
+        if (current === end) {
+            while (current !== start) {
+                path.push(current);
+                current = parent[current];
+            }
+            path.push(start);
+            return path.reverse();
+        }
+        for (let neighbor of graph[current]) {
+            if (!visited.includes(neighbor)) {
+                stack.push(neighbor);
+                visited.push(neighbor);
+                parent[neighbor] = current;
+            }
+        }
+    }
+}
