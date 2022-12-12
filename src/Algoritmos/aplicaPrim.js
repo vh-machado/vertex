@@ -1,4 +1,5 @@
 import geraListaAdjacencia from "./geraListaAdjacencia";
+import formataVertices from "./formataVertices";
 
 class Vertice {
   constructor(idVertice, peso) {
@@ -149,5 +150,15 @@ export default function aplicaPrim(grafo, origem, orientado) {
     },
   };
 
-  return { grafoPrim, solucao, pesos };
+  let somaArvore = 0;
+  nodes.forEach(vertice => {
+    somaArvore += pesos[vertice.id];
+  });
+
+  let solucaoFormatada = `S = { ${formataVertices(nodes, solucao).join(
+    ', '
+  )} }\n`;
+  let somaArvoreFormatada = `Total = ${somaArvore}`
+
+  return { grafoPrim, solucao: [solucaoFormatada, somaArvoreFormatada], pesos };
 }

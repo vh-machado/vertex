@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  Box,
-  Flex,
-  Select,
-} from '@chakra-ui/react';
+import { Box, Flex, Select } from '@chakra-ui/react';
 import { Cores } from '../assets/Cores';
 import { Fontes } from '../assets/Fontes';
 
@@ -314,16 +310,13 @@ export function viewCardSelectionAdj(title, info, grafo, setSelectAdj) {
 
 export function ViewCardSelectionProfundidadeOrigem(
   title,
-  info,
+  infoList,
   grafo,
   setSelectProfundidadeOrigem
 ) {
-
   const handleChangeOrigem = event => {
-    console.log(event.target.value)
-    setSelectProfundidadeOrigem(
-      event.target.value
-    );
+    console.log(event.target.value);
+    setSelectProfundidadeOrigem(event.target.value);
   };
 
   return (
@@ -379,29 +372,33 @@ export function ViewCardSelectionProfundidadeOrigem(
               );
             })}
           </Select>
-          
         </Box>
       </Box>
-      <Box display={'flex'} fontSize={14} fontWeight="regular">
-        {info}
+      <Box
+        display={'flex'}
+        fontSize={14}
+        fontWeight="regular"
+        flexDirection={'column'}
+      >
+        {infoList.map((info, index) => (
+          <Box key={index} mb="0.5">
+            {info}
+          </Box>
+        ))}
       </Box>
-      
     </Flex>
   );
 }
 
 export function ViewCardSelectionAGMOrigem(
   title,
-  info,
+  infoList,
   grafo,
   setSelectAGMOrigem
 ) {
-
   const handleChangeOrigem = event => {
-    console.log(event.target.value)
-    setSelectAGMOrigem(
-      event.target.value
-    );
+    console.log(event.target.value);
+    setSelectAGMOrigem(event.target.value);
   };
 
   return (
@@ -457,29 +454,33 @@ export function ViewCardSelectionAGMOrigem(
               );
             })}
           </Select>
-          
         </Box>
       </Box>
-      <Box display={'flex'} fontSize={14} fontWeight="regular">
-        {info}
+      <Box
+        display={'flex'}
+        fontSize={14}
+        fontWeight="regular"
+        flexDirection={'column'}
+      >
+        {infoList.map((info, index) => (
+          <Box key={index} mb="0.5">
+            {info}
+          </Box>
+        ))}
       </Box>
-      
     </Flex>
   );
 }
 
 export function ViewCardSelectionDijkstraOrigem(
   title,
-  info,
+  infoList,
   grafo,
   setSelectDijkstraOrigem
 ) {
-
   const handleChangeOrigem = event => {
-    console.log(event.target.value)
-    setSelectDijkstraOrigem(
-      event.target.value
-    );
+    console.log(event.target.value);
+    setSelectDijkstraOrigem(event.target.value);
   };
 
   return (
@@ -535,13 +536,20 @@ export function ViewCardSelectionDijkstraOrigem(
               );
             })}
           </Select>
-          
         </Box>
       </Box>
-      <Box display={'flex'} fontSize={14} fontWeight="regular">
-        {info}
+      <Box
+        display={'flex'}
+        fontSize={14}
+        fontWeight="regular"
+        flexDirection={'column'}
+      >
+        {infoList.map((info, index) => (
+          <Box key={index} mb="0.5">
+            {info}
+          </Box>
+        ))}
       </Box>
-      
     </Flex>
   );
 }
@@ -697,8 +705,10 @@ export function viewCardList(title, infoList, visible) {
         fontWeight="regular"
         flexDirection={'column'}
       >
-        {infoList.map((info,index) => (
-          <Box key={index} mb="0.5">{info}</Box>
+        {infoList.map((info, index) => (
+          <Box key={index} mb="0.5">
+            {info}
+          </Box>
         ))}
       </Box>
     </Flex>

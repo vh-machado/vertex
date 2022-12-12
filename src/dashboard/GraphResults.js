@@ -68,40 +68,11 @@ function GraphResults() {
   }, [selectDijkstraOrigem]);
 
   useEffect(() => {
-    var origemNaoESumidouro = !orientado
-      ? true
-      : grafo.edges.find(
-          aresta => aresta.from === Number(selectProfundidadeOrigem)
-        );
-
-    if (origemNaoESumidouro) {
+    if (
+      selectProfundidadeOrigem !== undefined &&
+      selectProfundidadeOrigem !== ''
+    ) {
       let resultadoProfundidade = aplicaBuscaProfundidade(
-        graphData.principal,
-        selectProfundidadeOrigem,
-        orientado
-      );
-
-      let grafoClassificacaoArestas = {};
-      if (graphData.classificacao.counter === 0) {
-        grafoClassificacaoArestas = {
-          ...resultadoProfundidade.grafoClassificacaoArestas,
-        };
-
-        setTimeout(
-          () => dispatch(setGrafoClassificacao(grafoClassificacaoArestas)),
-          0
-        );
-      }
-    }
-  }, [selectProfundidadeOrigem]);
-
-  useEffect(() => {
-    var origemNaoESumidouro = !orientado
-      ? true
-      : grafo.edges.find(aresta => aresta.from === Number(selectAGMOrigem));
-
-    if (origemNaoESumidouro) {
-      resultadoProfundidade = aplicaBuscaProfundidade(
         graphData.principal,
         selectProfundidadeOrigem,
         orientado
@@ -116,6 +87,31 @@ function GraphResults() {
         () => dispatch(setGrafoClassificacao(grafoClassificacaoArestas)),
         0
       );
+    }
+  }, [selectProfundidadeOrigem]);
+
+  useEffect(() => {
+    var origemNaoESumidouro = !orientado
+      ? true
+      : grafo.edges.find(aresta => aresta.from === Number(selectAGMOrigem));
+
+    if (
+      origemNaoESumidouro &&
+      selectAGMOrigem !== undefined &&
+      selectAGMOrigem !== ''
+    ) {
+      let resultadoAGM = aplicaPrim(
+        graphData.principal,
+        selectAGMOrigem,
+        orientado
+      );
+
+      // O menor caminho só será calculado se o destino não for uma fonte
+      console.log('AGM=', aplicaPrim(graphData.principal, 1));
+      grafoAGM = {
+        ...resultadoAGM.grafoPrim,
+      };
+      setTimeout(() => dispatch(setGrafoAGM(grafoAGM)), 0);
     }
   }, [selectAGMOrigem]);
 
@@ -171,45 +167,36 @@ function GraphResults() {
   let cfc = 'Realize a busca em profundidade';
   let ordenacaoTopologica = 'Realize a busca em profundidade';
   let ciclo = 'Realize a busca em profundidade';
-  var solucaoProfundidade = '';
+  var solucaoProfundidade = [''];
 
   if (
     selectProfundidadeOrigem !== undefined &&
     selectProfundidadeOrigem !== ''
   ) {
-    var origemNaoESumidouro = !orientado
-      ? true
-      : grafo.edges.find(
-          aresta => aresta.from === Number(selectProfundidadeOrigem)
-        );
+    resultadoProfundidade = aplicaBuscaProfundidade(
+      graphData.principal,
+      selectProfundidadeOrigem,
+      orientado
+    );
 
-    if (origemNaoESumidouro) {
-      resultadoProfundidade = aplicaBuscaProfundidade(
-        graphData.principal,
-        selectProfundidadeOrigem,
-        orientado
+    let grafoClassificacaoArestas = {};
+    if (graphData.classificacao.counter === 0) {
+      grafoClassificacaoArestas = {
+        ...resultadoProfundidade.grafoClassificacaoArestas,
+      };
+
+      setTimeout(
+        () => dispatch(setGrafoClassificacao(grafoClassificacaoArestas)),
+        0
       );
-
-      let grafoClassificacaoArestas = {};
-      if (graphData.classificacao.counter === 0) {
-        grafoClassificacaoArestas = {
-          ...resultadoProfundidade.grafoClassificacaoArestas,
-        };
-
-        setTimeout(
-          () => dispatch(setGrafoClassificacao(grafoClassificacaoArestas)),
-          0
-        );
-      }
-
-      ciclo = resultadoProfundidade.ciclo ? 'Sim' : 'Não';
-      cfc = resultadoProfundidade.cfc;
-      ordenacaoTopologica = resultadoProfundidade.ordenacaoTopologicaFormatado;
-    } else {
-      solucaoProfundidade = 'Sumidouro não pode ser vértice de origem';
     }
+
+    solucaoProfundidade = resultadoProfundidade.descobertasTerminos;
+    ciclo = resultadoProfundidade.ciclo ? 'Sim' : 'Não';
+    cfc = resultadoProfundidade.cfc;
+    ordenacaoTopologica = resultadoProfundidade.ordenacaoTopologicaFormatado;
   } else {
-    solucaoProfundidade = 'Escolha um vértice de origem';
+    solucaoProfundidade = ['Escolha um vértice de origem'];
   }
 
   console.log('Caminho mais curto (busca em largura):');
@@ -240,7 +227,7 @@ function GraphResults() {
 
   // Obtém a Árvore Geradora Mínima do grafo
   var grafoAGM = {};
-  var solucaoAGM = '';
+  var solucaoAGM = [''];
 
   if (selectAGMOrigem !== undefined && selectAGMOrigem !== '') {
     var origemNaoESumidouro = !orientado
@@ -254,6 +241,8 @@ function GraphResults() {
         orientado
       );
 
+      solucaoAGM = resultadoAGM.solucao;
+
       // O menor caminho só será calculado se o destino não for uma fonte
       if (graphData.agm.counter === 0) {
         console.log('AGM=', aplicaPrim(graphData.principal, 1));
@@ -263,15 +252,15 @@ function GraphResults() {
         setTimeout(() => dispatch(setGrafoAGM(grafoAGM)), 0);
       }
     } else {
-      solucaoAGM = 'Sumidouro não pode ser vértice de origem';
+      solucaoAGM = ['Sumidouro não pode ser vértice de origem'];
     }
   } else {
-    solucaoAGM = 'Informe um vértice de origem';
+    solucaoAGM = ['Informe um vértice de origem'];
   }
 
   // Dijkstra
   var grafoDijkstra = {};
-  var solucaoDijkstra = '';
+  var solucaoDijkstra = [''];
 
   if (selectDijkstraOrigem !== undefined && selectDijkstraOrigem !== '') {
     var origemNaoESumidouro = !orientado
@@ -302,10 +291,10 @@ function GraphResults() {
         setTimeout(() => dispatch(setGrafoDijkstra(grafoDijkstra)), 0);
       }
     } else {
-      solucaoDijkstra = 'Sumidouro não pode ser vértice de origem';
+      solucaoDijkstra = ['Sumidouro não pode ser vértice de origem'];
     }
   } else {
-    solucaoDijkstra = 'Informe um vértice de origem';
+    solucaoDijkstra = ['Informe um vértice de origem'];
   }
 
   const visibility = false;

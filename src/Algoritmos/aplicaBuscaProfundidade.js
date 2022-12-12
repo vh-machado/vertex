@@ -156,7 +156,6 @@ class BuscaEmProfundidade {
   }
 
   realizaBuscaEmProfundidade() {
-    console.log("origem profundidade: ", this.origem);
     let tempo = 1;
     let cor = {};
     for (let i = 0; i < this.n; i++) {
@@ -293,6 +292,11 @@ export default function aplicaBuscaProfundidade(
     },
   };
 
+  let descobertasTerminos = [];
+  nodes.forEach(vertice => {
+    descobertasTerminos.push(`${vertice.label} ( ${descoberta[vertice.id]} / ${termino[vertice.id]} )`)
+  })
+
   let ordenacaoTopologicaFormatado = ordenacaoTopologica;
   if (!ciclo && orientado) {
     ordenacaoTopologicaFormatado = formataVertices(
@@ -304,9 +308,8 @@ export default function aplicaBuscaProfundidade(
   return {
     antecessor,
     ciclo,
-    descoberta,
+    descobertasTerminos,
     ordenacaoTopologicaFormatado,
-    termino,
     grafoClassificacaoArestas,
     cfc: cfc.resultado,
   };

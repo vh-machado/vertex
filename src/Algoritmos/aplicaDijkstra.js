@@ -154,9 +154,18 @@ export function aplicaDijkstra(grafo, origem, orientado) {
     },
   };
 
+  let pesosFormatados = [];
+  nodes.forEach(vertice => {
+    pesosFormatados.push(`${vertice.label} ( ${pesos[vertice.id]} )`);
+  });
+
   let solucaoFormatada = `S = { ${formataVertices(nodes, solucao).join(
     ', '
   )} }`;
 
-  return { grafoDijkstra, solucao: solucaoFormatada, pesos };
+  return {
+    grafoDijkstra,
+    solucao: [solucaoFormatada, ...pesosFormatados],
+    pesos,
+  };
 }
