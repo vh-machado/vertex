@@ -2,7 +2,7 @@
 export default function formataVertices(nodes, listaVertices) {
   let verticesFormatados = [];
 
-  listaVertices.forEach(vertice => {
+  listaVertices?.forEach(vertice => {
     var verticeBuscado = nodes.find(v => v.id === vertice);
     verticesFormatados.push(verticeBuscado.label);
   });

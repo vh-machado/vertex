@@ -312,27 +312,17 @@ export function viewCardSelectionAdj(title, info, grafo, setSelectAdj) {
   );
 }
 
-export function ViewCardSelectionMenorCaminhoOrient(
+export function ViewCardSelectionDijkstraOrigem(
   title,
   info,
   grafo,
-  selectMenorCaminhoOrient,
-  setSelectMenorCaminhoOrient
+  setSelectDijkstraOrigem
 ) {
 
   const handleChangeOrigem = event => {
-    //setValue(event.target.value)
-    setSelectMenorCaminhoOrient([
-      event.target.value,
-      selectMenorCaminhoOrient[1],
-    ]);
-  };
-  const handleChangeDestino = event => {
-    //setValue(event.target.value)
-    setSelectMenorCaminhoOrient([
-      selectMenorCaminhoOrient[0],
-      event.target.value,
-    ]);
+    setSelectDijkstraOrigem(
+      event.target.value
+    );
   };
 
   return (
@@ -388,33 +378,7 @@ export function ViewCardSelectionMenorCaminhoOrient(
               );
             })}
           </Select>
-          <Box
-            alignSelf={'center'}
-            h="0.5"
-            w="15%"
-            bgColor={Cores.lavender_floral}
-            borderRadius="10"
-          />
-
-          {'>'}
-          <Select
-            id="destino"
-            placeholder="Destino"
-            w="auto"
-            h="auto"
-            onChange={handleChangeDestino}
-            borderColor={Cores.amethyst}
-          >
-            {grafo.nodes.map(value => {
-              const idVertice = value.id;
-              const nomeVertice = value.label;
-              return (
-                <option key={idVertice.toString()} value={nomeVertice}>
-                  {nomeVertice}
-                </option>
-              );
-            })}
-          </Select>
+          
         </Box>
       </Box>
       <Box display={'flex'} fontSize={14} fontWeight="regular">
@@ -425,26 +389,25 @@ export function ViewCardSelectionMenorCaminhoOrient(
   );
 }
 
-export function viewCardSelectionMenorCaminhoNaoOrient(
+export function ViewCardSelectionMenorCaminho(
   title,
   info,
   grafo,
-  selectMenorCaminhoNaoOrient,
-  setSelectMenorCaminhoNaoOrient
+  selectMenorCaminho,
+  setSelectMenorCaminho
 ) {
   const handleChangeOrigem = event => {
     //setValue(event.target.value)
-    setSelectMenorCaminhoNaoOrient([
-      event.target.value,
-      selectMenorCaminhoNaoOrient[1],
-    ]);
+    setSelectMenorCaminho({
+      ...selectMenorCaminho,
+      origem: event.target.value,
+    });
   };
   const handleChangeDestino = event => {
-    //setValue(event.target.value)
-    setSelectMenorCaminhoNaoOrient([
-      selectMenorCaminhoNaoOrient[0],
-      event.target.value,
-    ]);
+    setSelectMenorCaminho({
+      ...selectMenorCaminho,
+      destino: event.target.value,
+    });
   };
 
   return (

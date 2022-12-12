@@ -7,6 +7,7 @@ export const grafoSlice = createSlice({
       orientado: false,
       graphData: {
         principal: { counter: 0, graph: {nodes: [], edges: []} },
+        classificacao: { counter: 0, graph: {nodes: [], edges: []} },
         dijkstra: { counter: 0, graph: {nodes: [], edges: []} },
         agm: { counter: 0, graph: {nodes: [], edges: []} },
       },
@@ -53,6 +54,13 @@ export const grafoSlice = createSlice({
         graphData: { ...state.value.graphData, principal: action.payload },
       };
     },
+    setGrafoClassificacao: (state, action) => {
+      console.log('setando grafo: ', action.payload);
+      state.value = {
+        orientado: state.value.orientado,
+        graphData: { ...state.value.graphData, classificacao: action.payload },
+      };
+    },
     setGrafoDijkstra: (state, action) => {
       state.value = {
         orientado: state.value.orientado,
@@ -76,6 +84,7 @@ export const {
   removerAresta,
   mudarTipo,
   setGrafoPrincipal,
+  setGrafoClassificacao,
   setGrafoDijkstra,
   setGrafoAGM,
 } = grafoSlice.actions;

@@ -16,7 +16,7 @@ import { useEffect } from 'react';
 export default function GraphTabs() {
   var { graphData, orientado } = useSelector(selectGrafo);
 
-  var { principal, dijkstra, agm } = graphData;
+  var { principal, classificacao, dijkstra, agm } = graphData;
 
   useEffect(() => {});
 
@@ -35,6 +35,16 @@ export default function GraphTabs() {
           {principal.counter > 0 && (
             <GraphView
               graph={principal.graph}
+              orientado={orientado}
+              hierarquico={false}
+              curva={false}
+            />
+          )}
+        </TabPanel>
+        <TabPanel h="100%" w="100%">
+          {classificacao.counter > 0 && (
+            <GraphView
+              graph={classificacao.graph}
               orientado={orientado}
               hierarquico={false}
               curva={false}
@@ -64,6 +74,7 @@ export default function GraphTabs() {
       </TabPanels>
       <TabList h="8%">
         <Tab>Grafo</Tab>
+        <Tab>Classificação</Tab>
         <Tab>Dijkstra</Tab>
         <Tab>AGM</Tab>
       </TabList>

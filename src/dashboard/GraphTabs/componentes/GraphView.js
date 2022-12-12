@@ -113,19 +113,12 @@ function GraphView(props) {
   useEffect(() => {
     const network =
       container.current && new Network(container.current, graph, options);
-    network.on('dragEnd', function (params) {
-      params.event = '[original event]';
-      const position = network.getPosition(params.nodes[0]);
-      const index = graph.nodes.findIndex(node => node.id === params.nodes[0]);
-      graph.nodes[index].x = position.x;
-      graph.nodes[index].y = position.y;
-    });
-
+    
     //grafo = network;
   }, [container, graph.nodes, graph.edges, props.orientado]);
 
   return (
-    <Box h="100%" p="8">
+    <Box h="100%">
       <div ref={container} style={{ height: '100%', width: '100%' }} />
     </Box>
   );
