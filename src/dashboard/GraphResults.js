@@ -12,7 +12,7 @@ import {
   ViewCardSelectionMenorCaminho,
   ViewCardSelectionProfundidadeOrigem,
 } from '../dashboard/CardInfo';
-import { algoritmosGrafos } from '../Algoritmos/funcoesBasicas';
+import { funcoesBasicas } from '../Algoritmos/funcoesBasicas';
 import { aplicaDijkstra } from '../Algoritmos/aplicaDijkstra';
 import {
   selectGrafo,
@@ -23,6 +23,7 @@ import {
 import aplicaPrim from '../Algoritmos/aplicaPrim';
 import aplicaBuscaLargura from '../Algoritmos/aplicaBuscaLargura';
 import aplicaBuscaProfundidade from '../Algoritmos/aplicaBuscaProfundidade';
+import geraListaAdjacencia from '../Algoritmos/geraListaAdjacencia';
 
 //Retorna os cards com os resultados
 function GraphResults() {
@@ -115,9 +116,11 @@ function GraphResults() {
     }
   }, [selectAGMOrigem]);
 
-  const teste = new algoritmosGrafos(); //Cria objeto da classe algoritmosGrafos para realizar os testes e gerar os resultados
-
   const { graph: grafo } = graphData.principal; //variável com o grafo para se pegar mais facilmente os nodes e as edges
+
+  const funcoes = new funcoesBasicas();
+  funcoes.listaAdjacencia = geraListaAdjacencia(grafo, orientado)
+  funcoes.orientado = orientado;
 
   //Implementados
   const copia5 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
@@ -129,7 +132,7 @@ function GraphResults() {
   // Procura a existência da aresta
   var resultadoAresta = 'Informe dois vértices';
   if (existeAresta[0] !== '' && existeAresta[1] !== '') {
-    resultadoAresta = teste.procuraAresta(
+    resultadoAresta = funcoes.procuraAresta(
       existeAresta[0],
       existeAresta[1],
       copia5,
@@ -145,7 +148,7 @@ function GraphResults() {
   if (selectGrauVertice !== '' && selectGrauVertice !== undefined) {
     grauVertice =
       'Grau ' +
-      teste.calcularGrau(
+      funcoes.calcularGrau(
         copia6,
         selectGrauVertice,
         orientado ? 'orientado' : 'nao_orientado'
@@ -157,7 +160,7 @@ function GraphResults() {
   // Verifica as adjacências do vértice
   var adjacenciasVertice = 'Escolha um vértice';
   if (selectVerticeAdj !== '' && selectVerticeAdj !== undefined) {
-    adjacenciasVertice = teste.recuperarAdjacencias(copia7, selectVerticeAdj);
+    adjacenciasVertice = funcoes.recuperarAdjacencias(copia7, selectVerticeAdj);
   } else {
     adjacenciasVertice = 'Escolha um vértice';
   }
@@ -201,6 +204,7 @@ function GraphResults() {
 
   console.log('Caminho mais curto (busca em largura):');
   var respostaCaminhoMaisCurto = '';
+  var descobertasLargura = ['']
 
   // Cálculo do menor caminho entre dois vértices para grafos não orientados
 
@@ -221,8 +225,10 @@ function GraphResults() {
     );
 
     respostaCaminhoMaisCurto = resultadoBuscaLargura.caminho;
+    descobertasLargura = resultadoBuscaLargura.descobertas;
   } else {
     respostaCaminhoMaisCurto = 'Informe dois vértices distintos';
+    descobertasLargura = ['Informe dois vértices distintos']
   }
 
   // Obtém a Árvore Geradora Mínima do grafo
@@ -301,6 +307,18 @@ function GraphResults() {
 
   return (
     <>
+      {viewCard(
+        'numVertices',
+        'Número de vértices',
+        funcoes.quantidadeVertices(),
+        visibility
+      )}
+      {viewCard(
+        'quantArestas',
+        'Número de arestas',
+        funcoes.quantidadeArestas(),
+        visibility
+      )}
       {viewCardSelectionAresta(
         'Existe a Aresta?',
         resultadoAresta,
@@ -341,6 +359,11 @@ function GraphResults() {
         grafo,
         selectMenorCaminho,
         setSelectMenorCaminho
+      )}
+      {viewCardList(
+        'Busca em Largura',
+        descobertasLargura,
+        visibility
       )}
       {ViewCardSelectionAGMOrigem(
         'Algoritmo de Prim',

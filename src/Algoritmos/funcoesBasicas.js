@@ -1,4 +1,26 @@
-export class algoritmosGrafos {
+export class funcoesBasicas {
+
+  constructor() {
+    this.listaAdjacencia = {}
+    this.orientado = false;
+  }
+
+  quantidadeVertices() {  
+    return Object.keys(this.listaAdjacencia).length;
+  }
+
+  quantidadeArestas(){
+    let quantidade = 0;
+    Object.keys(this.listaAdjacencia).forEach(vertice => {
+      quantidade += this.listaAdjacencia[vertice].length
+    })
+    
+    if(!this.orientado){
+      quantidade /= 2
+    }
+
+    return quantidade;
+  }
 
   procuraAresta(origem, destino, grafo, orientado) {
     var resposta = 'Não existe a aresta';
