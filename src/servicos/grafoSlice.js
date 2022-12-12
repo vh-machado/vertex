@@ -44,7 +44,6 @@ export const grafoSlice = createSlice({
       );
     },
     mudarTipo: (state, action) => {
-      console.log("MUDA STATE ORIENTADO")
       state.value = {...state.value, orientado: action.payload };
     },
     setGrafoPrincipal: (state, action) => {

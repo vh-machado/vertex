@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -9,9 +9,9 @@ import {
   ViewCardSelectionDijkstraOrigem,
   viewCardSelectionGrau,
   ViewCardSelectionMenorCaminho,
+  ViewCardSelectionProfundidadeOrigem,
 } from '../dashboard/CardInfo';
 import { algoritmosGrafos } from '../Algoritmos/funcoesBasicas';
-import { ordenacaoTopologica } from '../Algoritmos/ordenacaoTopologica';
 import { aplicaDijkstra } from '../Algoritmos/aplicaDijkstra';
 import {
   selectGrafo,
@@ -31,11 +31,62 @@ function GraphResults() {
   const [existeAresta, setExisteAresta] = useState(['', '']);
   const [selectGrauVertice, setSelectGrauVertice] = useState('');
   const [selectVerticeAdj, setSelectVerticeAdj] = useState('');
+  const [selectProfundidadeOrigem, setSelectProfundidadeOrigem] = useState('');
   const [selectMenorCaminho, setSelectMenorCaminho] = useState({
     origem: '',
     destino: '',
   });
   const [selectDijkstraOrigem, setSelectDijkstraOrigem] = useState('');
+
+  useEffect(() => {
+    let origemNaoESumidouro = grafo.edges.find(
+      aresta => aresta.from === Number(selectDijkstraOrigem)
+    );
+
+    if (
+      origemNaoESumidouro &&
+      selectDijkstraOrigem !== undefined &&
+      selectDijkstraOrigem !== ''
+    ) {
+      let resultadoDijkstra = aplicaDijkstra(
+        graphData.principal,
+        selectDijkstraOrigem,
+        orientado
+      );
+      solucaoDijkstra = resultadoDijkstra.solucao;
+
+      grafoDijkstra = {
+        ...resultadoDijkstra.grafoDijkstra,
+      };
+
+      setTimeout(() => dispatch(setGrafoDijkstra(grafoDijkstra)), 0);
+    }
+  }, [selectDijkstraOrigem]);
+
+  useEffect(() => {
+    let origemNaoESumidouro = grafo.edges.find(
+      aresta => aresta.from === Number(selectDijkstraOrigem)
+    );
+    if (origemNaoESumidouro) {
+      let resultadoProfundidade = aplicaBuscaProfundidade(
+        graphData.principal,
+        selectProfundidadeOrigem,
+        orientado
+      );
+
+      let grafoClassificacaoArestas = {};
+      if (graphData.classificacao.counter === 0) {
+        grafoClassificacaoArestas = {
+          ...resultadoProfundidade.grafoClassificacaoArestas,
+        };
+
+        setTimeout(
+          () => dispatch(setGrafoClassificacao(grafoClassificacaoArestas)),
+          0
+        );
+      }
+    }
+  }, [selectProfundidadeOrigem]);
 
   const teste = new algoritmosGrafos(); //Cria objeto da classe algoritmosGrafos para realizar os testes e gerar os resultados
 
@@ -45,7 +96,6 @@ function GraphResults() {
   const copia5 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
   const copia6 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
   const copia7 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
-  const copia8 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
 
   // Algoritmos Implementados
 
@@ -86,19 +136,39 @@ function GraphResults() {
   }
 
   // Busca em profundidade
-  let resultadoProfundidade = aplicaBuscaProfundidade(
-    graphData.principal,
-    1,
-    orientado
-  );
+  let resultadoProfundidade;
+  let cfc;
+  let ordenacaoTopologica;
+  var solucaoProfundidade = '';
 
-  let grafoClassificacaoArestas = {};
-  if (graphData.classificacao.counter === 0) {
-    grafoClassificacaoArestas = {
-      ...resultadoProfundidade.grafoClassificacaoArestas,
-    };
+  if (selectProfundidadeOrigem !== undefined && selectProfundidadeOrigem !== '') {
+    var origemNaoESumidouro = grafo.edges.find(
+      aresta => aresta.from === Number(selectProfundidadeOrigem)
+    );
 
-    setTimeout(() => dispatch(setGrafoClassificacao(grafoClassificacaoArestas)), 0);
+    if (origemNaoESumidouro) {
+      resultadoProfundidade = aplicaBuscaProfundidade(
+        graphData.principal,
+        selectProfundidadeOrigem,
+        orientado
+      );
+
+      let grafoClassificacaoArestas = {};
+      if (graphData.classificacao.counter === 0) {
+        grafoClassificacaoArestas = {
+          ...resultadoProfundidade.grafoClassificacaoArestas,
+        };
+
+        setTimeout(
+          () => dispatch(setGrafoClassificacao(grafoClassificacaoArestas)),
+          0
+        );
+      }
+    } else {
+      solucaoProfundidade = 'Sumidouro não pode ser vértice de origem';
+    }
+  } else {
+    solucaoProfundidade = 'Escolha um vértice de origem';
   }
 
   console.log('Caminho mais curto (busca em largura):');
@@ -138,38 +208,41 @@ function GraphResults() {
     setTimeout(() => dispatch(setGrafoAGM(grafoAGM)), 0);
   }
 
-
   // Dijkstra
   var grafoDijkstra = {};
   var solucaoDijkstra = '';
 
   if (selectDijkstraOrigem !== undefined && selectDijkstraOrigem !== '') {
-    // Verifica se o vértice de destino é uma fonte (não pode)
-    var verticeDestino = grafo.nodes.find(
-      vertice => vertice.label === selectDijkstraOrigem
-    );
-    var testaDestino = grafo.edges.find(
-      aresta => aresta.to === verticeDestino.id
+    var origemNaoESumidouro = grafo.edges.find(
+      aresta => aresta.from === Number(selectDijkstraOrigem)
     );
 
-    let resultadoDijkstra = aplicaDijkstra(graphData.principal, 1, orientado);
-    solucaoDijkstra = resultadoDijkstra.solucao;
-
-    // O menor caminho só será calculado se o destino não for uma fonte
-    if (testaDestino !== undefined && graphData.dijkstra.counter === 0) {
-      console.log(
-        'dijkstra=',
-        aplicaDijkstra(graphData.principal, selectDijkstraOrigem, orientado)
+    if (origemNaoESumidouro) {
+      let resultadoDijkstra = aplicaDijkstra(
+        graphData.principal,
+        selectDijkstraOrigem,
+        orientado
       );
+      solucaoDijkstra = resultadoDijkstra.solucao;
 
-      grafoDijkstra = {
-        ...resultadoDijkstra.grafoDijkstra,
-      };
+      // O menor caminho só será calculado se o destino não for uma fonte
+      if (graphData.dijkstra.counter === 0) {
+        console.log(
+          'dijkstra=',
+          aplicaDijkstra(graphData.principal, selectDijkstraOrigem, orientado)
+        );
 
-      setTimeout(() => dispatch(setGrafoDijkstra(grafoDijkstra)), 0);
+        grafoDijkstra = {
+          ...resultadoDijkstra.grafoDijkstra,
+        };
+
+        setTimeout(() => dispatch(setGrafoDijkstra(grafoDijkstra)), 0);
+      }
+    } else {
+      solucaoDijkstra = 'Sumidouro não pode ser vértice de origem';
     }
   } else {
-    solucaoDijkstra = 'Informe dois vértices distintos';
+    solucaoDijkstra = 'Informe um vértice de origem';
   }
 
   const visibility = false;
@@ -195,6 +268,12 @@ function GraphResults() {
         adjacenciasVertice,
         grafo,
         setSelectVerticeAdj
+      )}
+      {ViewCardSelectionProfundidadeOrigem(
+        'Busca em Profundidade',
+        solucaoProfundidade,
+        grafo,
+        setSelectProfundidadeOrigem
       )}
       {viewCard(
         'componentesFortes',

@@ -144,17 +144,19 @@ class BuscaEmProfundidade {
     }
   }
 
-  BuscaEmProfundidade(listaAdjacencia, orientado) {
+  BuscaEmProfundidade(listaAdjacencia, origem, orientado) {
     this.listaAdjacencia = listaAdjacencia;
     this.d = {};
     this.c = {};
     this.antecessor = {};
     this.t = {};
     this.orientado = orientado;
+    this.origem = origem;
     this.n = Object.keys(this.listaAdjacencia).length;
   }
 
   realizaBuscaEmProfundidade() {
+    console.log("origem profundidade: ", this.origem);
     let tempo = 1;
     let cor = {};
     for (let i = 0; i < this.n; i++) {
@@ -164,6 +166,9 @@ class BuscaEmProfundidade {
     }
     for (let i = 0; i < this.n; i++) {
       let u = Object.keys(this.listaAdjacencia)[i];
+      if (cor[this.origem] == this.branco) {
+        tempo = this.visitaDfs(Number(this.origem), tempo, cor)
+      }
       if (cor[u] == this.branco) {
         tempo = this.visitaDfs(Number(u), tempo, cor);
       }
@@ -251,7 +256,7 @@ export default function aplicaBuscaProfundidade(
   let dfs = new BuscaEmProfundidade();
   let cfc = new Cfc(nodes);
 
-  dfs.BuscaEmProfundidade(listaAdjacencia, orientado);
+  dfs.BuscaEmProfundidade(listaAdjacencia, origem, orientado);
   dfs.realizaBuscaEmProfundidade();
   cfc.obterCfc(listaAdjacencia);
 
