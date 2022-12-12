@@ -1,21 +1,12 @@
 import React from 'react';
-import {
-  ChakraProvider,
-  Box,
-  theme,
-  Center,
-  HStack,
-  Flex,
-  Select,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Flex, Select } from '@chakra-ui/react';
 import { Cores } from '../assets/Cores';
 import { Fontes } from '../assets/Fontes';
-import { algoritmosGrafos } from '../Algoritmos/funcoesBasicas';
 
-export function viewCard(title, info, visible) {
+export function viewCard(key, title, info, visible) {
   return (
     <Flex
+      key={key}
       h="auto"
       w="auto"
       direction={'column'}
@@ -62,7 +53,7 @@ export function viewCardSelectionAresta(
   grafo,
   existeAresta,
   setExisteAresta,
-  orientacao
+  orientado
 ) {
   const handleChangeOrigem = event => {
     if (event.target.value !== '') {
@@ -140,7 +131,7 @@ export function viewCardSelectionAresta(
             borderRadius="10"
           />
 
-          {orientacao ? '>' : ''}
+          {orientado ? '>' : ''}
 
           <Select
             id="destino"
@@ -317,26 +308,15 @@ export function viewCardSelectionAdj(title, info, grafo, setSelectAdj) {
   );
 }
 
-export function viewCardSelectionMenorCaminhoOrient(
+export function ViewCardSelectionProfundidadeOrigem(
   title,
-  info,
+  infoList,
   grafo,
-  selectMenorCaminhoOrient,
-  setSelectMenorCaminhoOrient
+  setSelectProfundidadeOrigem
 ) {
   const handleChangeOrigem = event => {
-    //setValue(event.target.value)
-    setSelectMenorCaminhoOrient([
-      event.target.value,
-      selectMenorCaminhoOrient[1],
-    ]);
-  };
-  const handleChangeDestino = event => {
-    //setValue(event.target.value)
-    setSelectMenorCaminhoOrient([
-      selectMenorCaminhoOrient[0],
-      event.target.value,
-    ]);
+    console.log(event.target.value);
+    setSelectProfundidadeOrigem(event.target.value);
   };
 
   return (
@@ -386,34 +366,7 @@ export function viewCardSelectionMenorCaminhoOrient(
               const nomeVertice = value.label;
 
               return (
-                <option key={idVertice.toString()} value={nomeVertice}>
-                  {nomeVertice}
-                </option>
-              );
-            })}
-          </Select>
-          <Box
-            alignSelf={'center'}
-            h="0.5"
-            w="15%"
-            bgColor={Cores.lavender_floral}
-            borderRadius="10"
-          />
-
-          {'>'}
-          <Select
-            id="destino"
-            placeholder="Destino"
-            w="auto"
-            h="auto"
-            onChange={handleChangeDestino}
-            borderColor={Cores.amethyst}
-          >
-            {grafo.nodes.map(value => {
-              const idVertice = value.id;
-              const nomeVertice = value.label;
-              return (
-                <option key={idVertice.toString()} value={nomeVertice}>
+                <option key={idVertice.toString()} value={idVertice}>
                   {nomeVertice}
                 </option>
               );
@@ -421,33 +374,205 @@ export function viewCardSelectionMenorCaminhoOrient(
           </Select>
         </Box>
       </Box>
-      <Box display={'flex'} fontSize={14} fontWeight="regular">
-        {info}
+      <Box
+        display={'flex'}
+        fontSize={14}
+        fontWeight="regular"
+        flexDirection={'column'}
+      >
+        {infoList.map((info, index) => (
+          <Box key={index} mb="0.5">
+            {info}
+          </Box>
+        ))}
       </Box>
     </Flex>
   );
 }
 
-export function viewCardSelectionMenorCaminhoNaoOrient(
+export function ViewCardSelectionAGMOrigem(
+  title,
+  infoList,
+  grafo,
+  setSelectAGMOrigem
+) {
+  const handleChangeOrigem = event => {
+    console.log(event.target.value);
+    setSelectAGMOrigem(event.target.value);
+  };
+
+  return (
+    <Flex
+      h="auto"
+      w="auto"
+      direction={'column'}
+      flex={[1, 0, 'auto']}
+      justify={'stretch'}
+      margin={2}
+      borderRadius={10}
+      borderWidth="0px"
+      borderColor={Cores.amethyst_2}
+      textColor={'white'}
+      background={Cores.russian_violet}
+      boxShadow="lg"
+      p="6"
+      rounded="md"
+      textAlign="start"
+      paddingLeft={3}
+      paddingRight={3}
+      paddingTop={3}
+      paddingBottom={3}
+      fontFamily={Fontes.principal}
+    >
+      <Box
+        display={'flex'}
+        width="100%"
+        fontSize={15}
+        fontWeight="bold"
+        textColor={Cores.lavender_floral}
+        fontFamily={Fontes.principal}
+        flexDirection={'column'}
+      >
+        {title}
+        <Box mt="2" mb="3" display={'flex'} flexDirection={'row'}>
+          <Select
+            id="origem"
+            placeholder="Origem"
+            w="auto"
+            h="auto"
+            onChange={handleChangeOrigem}
+            borderColor={Cores.amethyst}
+          >
+            {grafo.nodes.map(value => {
+              const idVertice = value.id;
+              const nomeVertice = value.label;
+
+              return (
+                <option key={idVertice.toString()} value={idVertice}>
+                  {nomeVertice}
+                </option>
+              );
+            })}
+          </Select>
+        </Box>
+      </Box>
+      <Box
+        display={'flex'}
+        fontSize={14}
+        fontWeight="regular"
+        flexDirection={'column'}
+      >
+        {infoList.map((info, index) => (
+          <Box key={index} mb="0.5">
+            {info}
+          </Box>
+        ))}
+      </Box>
+    </Flex>
+  );
+}
+
+export function ViewCardSelectionDijkstraOrigem(
+  title,
+  infoList,
+  grafo,
+  setSelectDijkstraOrigem
+) {
+  const handleChangeOrigem = event => {
+    console.log(event.target.value);
+    setSelectDijkstraOrigem(event.target.value);
+  };
+
+  return (
+    <Flex
+      h="auto"
+      w="auto"
+      direction={'column'}
+      flex={[1, 0, 'auto']}
+      justify={'stretch'}
+      margin={2}
+      borderRadius={10}
+      borderWidth="0px"
+      borderColor={Cores.amethyst_2}
+      textColor={'white'}
+      background={Cores.russian_violet}
+      boxShadow="lg"
+      p="6"
+      rounded="md"
+      textAlign="start"
+      paddingLeft={3}
+      paddingRight={3}
+      paddingTop={3}
+      paddingBottom={3}
+      fontFamily={Fontes.principal}
+    >
+      <Box
+        display={'flex'}
+        width="100%"
+        fontSize={15}
+        fontWeight="bold"
+        textColor={Cores.lavender_floral}
+        fontFamily={Fontes.principal}
+        flexDirection={'column'}
+      >
+        {title}
+        <Box mt="2" mb="3" display={'flex'} flexDirection={'row'}>
+          <Select
+            id="origem"
+            placeholder="Origem"
+            w="auto"
+            h="auto"
+            onChange={handleChangeOrigem}
+            borderColor={Cores.amethyst}
+          >
+            {grafo.nodes.map(value => {
+              const idVertice = value.id;
+              const nomeVertice = value.label;
+
+              return (
+                <option key={idVertice.toString()} value={idVertice}>
+                  {nomeVertice}
+                </option>
+              );
+            })}
+          </Select>
+        </Box>
+      </Box>
+      <Box
+        display={'flex'}
+        fontSize={14}
+        fontWeight="regular"
+        flexDirection={'column'}
+      >
+        {infoList.map((info, index) => (
+          <Box key={index} mb="0.5">
+            {info}
+          </Box>
+        ))}
+      </Box>
+    </Flex>
+  );
+}
+
+export function ViewCardSelectionMenorCaminho(
   title,
   info,
   grafo,
-  selectMenorCaminhoNaoOrient,
-  setSelectMenorCaminhoNaoOrient
+  selectMenorCaminho,
+  setSelectMenorCaminho
 ) {
   const handleChangeOrigem = event => {
     //setValue(event.target.value)
-    setSelectMenorCaminhoNaoOrient([
-      event.target.value,
-      selectMenorCaminhoNaoOrient[1],
-    ]);
+    setSelectMenorCaminho({
+      ...selectMenorCaminho,
+      origem: event.target.value,
+    });
   };
   const handleChangeDestino = event => {
-    //setValue(event.target.value)
-    setSelectMenorCaminhoNaoOrient([
-      selectMenorCaminhoNaoOrient[0],
-      event.target.value,
-    ]);
+    setSelectMenorCaminho({
+      ...selectMenorCaminho,
+      destino: event.target.value,
+    });
   };
 
   return (
@@ -497,7 +622,7 @@ export function viewCardSelectionMenorCaminhoNaoOrient(
               const nomeVertice = value.label;
 
               return (
-                <option key={idVertice.toString()} value={nomeVertice}>
+                <option key={idVertice.toString()} value={idVertice}>
                   {nomeVertice}
                 </option>
               );
@@ -522,7 +647,7 @@ export function viewCardSelectionMenorCaminhoNaoOrient(
               const idVertice = value.id;
               const nomeVertice = value.label;
               return (
-                <option key={idVertice.toString()} value={nomeVertice}>
+                <option key={idVertice.toString()} value={idVertice}>
                   {nomeVertice}
                 </option>
               );
@@ -580,8 +705,10 @@ export function viewCardList(title, infoList, visible) {
         fontWeight="regular"
         flexDirection={'column'}
       >
-        {infoList.map(info => (
-          <Box mb="0.5">{info}</Box>
+        {infoList.map((info, index) => (
+          <Box key={index} mb="0.5">
+            {info}
+          </Box>
         ))}
       </Box>
     </Flex>
