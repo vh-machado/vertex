@@ -5,6 +5,7 @@ import {
   viewCard,
   viewCardList,
   viewCardSelectionAdj,
+  ViewCardSelectionAGMOrigem,
   viewCardSelectionAresta,
   ViewCardSelectionDijkstraOrigem,
   viewCardSelectionGrau,
@@ -36,12 +37,15 @@ function GraphResults() {
     origem: '',
     destino: '',
   });
+  const [selectAGMOrigem, setSelectAGMOrigem] = useState('');
   const [selectDijkstraOrigem, setSelectDijkstraOrigem] = useState('');
 
   useEffect(() => {
-    let origemNaoESumidouro = grafo.edges.find(
-      aresta => aresta.from === Number(selectDijkstraOrigem)
-    );
+    var origemNaoESumidouro = !orientado
+      ? true
+      : grafo.edges.find(
+          aresta => aresta.from === Number(selectDijkstraOrigem)
+        );
 
     if (
       origemNaoESumidouro &&
@@ -64,9 +68,12 @@ function GraphResults() {
   }, [selectDijkstraOrigem]);
 
   useEffect(() => {
-    let origemNaoESumidouro = grafo.edges.find(
-      aresta => aresta.from === Number(selectDijkstraOrigem)
-    );
+    var origemNaoESumidouro = !orientado
+      ? true
+      : grafo.edges.find(
+          aresta => aresta.from === Number(selectProfundidadeOrigem)
+        );
+
     if (origemNaoESumidouro) {
       let resultadoProfundidade = aplicaBuscaProfundidade(
         graphData.principal,
@@ -87,6 +94,30 @@ function GraphResults() {
       }
     }
   }, [selectProfundidadeOrigem]);
+
+  useEffect(() => {
+    var origemNaoESumidouro = !orientado
+      ? true
+      : grafo.edges.find(aresta => aresta.from === Number(selectAGMOrigem));
+
+    if (origemNaoESumidouro) {
+      resultadoProfundidade = aplicaBuscaProfundidade(
+        graphData.principal,
+        selectProfundidadeOrigem,
+        orientado
+      );
+
+      let grafoClassificacaoArestas = {};
+      grafoClassificacaoArestas = {
+        ...resultadoProfundidade.grafoClassificacaoArestas,
+      };
+
+      setTimeout(
+        () => dispatch(setGrafoClassificacao(grafoClassificacaoArestas)),
+        0
+      );
+    }
+  }, [selectAGMOrigem]);
 
   const teste = new algoritmosGrafos(); //Cria objeto da classe algoritmosGrafos para realizar os testes e gerar os resultados
 
@@ -137,14 +168,20 @@ function GraphResults() {
 
   // Busca em profundidade
   let resultadoProfundidade;
-  let cfc;
-  let ordenacaoTopologica;
+  let cfc = 'Realize a busca em profundidade';
+  let ordenacaoTopologica = 'Realize a busca em profundidade';
+  let ciclo = 'Realize a busca em profundidade';
   var solucaoProfundidade = '';
 
-  if (selectProfundidadeOrigem !== undefined && selectProfundidadeOrigem !== '') {
-    var origemNaoESumidouro = grafo.edges.find(
-      aresta => aresta.from === Number(selectProfundidadeOrigem)
-    );
+  if (
+    selectProfundidadeOrigem !== undefined &&
+    selectProfundidadeOrigem !== ''
+  ) {
+    var origemNaoESumidouro = !orientado
+      ? true
+      : grafo.edges.find(
+          aresta => aresta.from === Number(selectProfundidadeOrigem)
+        );
 
     if (origemNaoESumidouro) {
       resultadoProfundidade = aplicaBuscaProfundidade(
@@ -164,6 +201,10 @@ function GraphResults() {
           0
         );
       }
+
+      ciclo = resultadoProfundidade.ciclo ? 'Sim' : 'Não';
+      cfc = resultadoProfundidade.cfc;
+      ordenacaoTopologica = resultadoProfundidade.ordenacaoTopologicaFormatado;
     } else {
       solucaoProfundidade = 'Sumidouro não pode ser vértice de origem';
     }
@@ -199,13 +240,33 @@ function GraphResults() {
 
   // Obtém a Árvore Geradora Mínima do grafo
   var grafoAGM = {};
+  var solucaoAGM = '';
 
-  if (graphData.agm.counter === 0) {
-    console.log('AGM=', aplicaPrim(graphData.principal, 1));
-    grafoAGM = {
-      ...aplicaPrim(graphData.principal, 1, orientado).grafoPrim,
-    };
-    setTimeout(() => dispatch(setGrafoAGM(grafoAGM)), 0);
+  if (selectAGMOrigem !== undefined && selectAGMOrigem !== '') {
+    var origemNaoESumidouro = !orientado
+      ? true
+      : grafo.edges.find(aresta => aresta.from === Number(selectAGMOrigem));
+
+    if (origemNaoESumidouro) {
+      let resultadoAGM = aplicaPrim(
+        graphData.principal,
+        selectAGMOrigem,
+        orientado
+      );
+
+      // O menor caminho só será calculado se o destino não for uma fonte
+      if (graphData.agm.counter === 0) {
+        console.log('AGM=', aplicaPrim(graphData.principal, 1));
+        grafoAGM = {
+          ...resultadoAGM.grafoPrim,
+        };
+        setTimeout(() => dispatch(setGrafoAGM(grafoAGM)), 0);
+      }
+    } else {
+      solucaoAGM = 'Sumidouro não pode ser vértice de origem';
+    }
+  } else {
+    solucaoAGM = 'Informe um vértice de origem';
   }
 
   // Dijkstra
@@ -213,9 +274,11 @@ function GraphResults() {
   var solucaoDijkstra = '';
 
   if (selectDijkstraOrigem !== undefined && selectDijkstraOrigem !== '') {
-    var origemNaoESumidouro = grafo.edges.find(
-      aresta => aresta.from === Number(selectDijkstraOrigem)
-    );
+    var origemNaoESumidouro = !orientado
+      ? true
+      : grafo.edges.find(
+          aresta => aresta.from === Number(selectDijkstraOrigem)
+        );
 
     if (origemNaoESumidouro) {
       let resultadoDijkstra = aplicaDijkstra(
@@ -275,22 +338,12 @@ function GraphResults() {
         grafo,
         setSelectProfundidadeOrigem
       )}
-      {viewCard(
-        'componentesFortes',
-        'Componentes Fortes',
-        resultadoProfundidade?.cfc,
-        visibility
-      )}
-      {viewCard(
-        'ciclo',
-        'Grafo Ciclico?',
-        resultadoProfundidade?.ciclo ? 'Sim' : 'Não',
-        visibility
-      )}
+      {viewCard('componentesFortes', 'Componentes Fortes', cfc, visibility)}
+      {viewCard('ciclo', 'Grafo Ciclico?', ciclo, visibility)}
       {viewCard(
         'ordenacaoTopologica',
         'Ordenação Topológica',
-        resultadoProfundidade?.ordenacaoTopologicaFormatado,
+        ordenacaoTopologica,
         visibility
       )}
       {ViewCardSelectionMenorCaminho(
@@ -300,8 +353,14 @@ function GraphResults() {
         selectMenorCaminho,
         setSelectMenorCaminho
       )}
+      {ViewCardSelectionAGMOrigem(
+        'Algoritmo de Prim',
+        solucaoAGM,
+        grafo,
+        setSelectAGMOrigem
+      )}
       {ViewCardSelectionDijkstraOrigem(
-        'Solução Dijkstra',
+        'Algoritmo de Dijkstra',
         solucaoDijkstra,
         grafo,
         setSelectDijkstraOrigem
