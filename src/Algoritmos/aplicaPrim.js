@@ -137,8 +137,6 @@ export default function aplicaPrim(grafo, origem, orientado) {
     }
   });
 
-  console.log(novaListaAdjacencia);
-
   let { nodes, edges } = graph;
   let arestasPrim = [];
 
