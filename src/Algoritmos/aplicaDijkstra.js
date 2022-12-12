@@ -165,9 +165,14 @@ export function aplicaDijkstra(grafo, origem, orientado) {
     },
   };
 
+  let hasInfinity = false;
   let pesosFormatados = [];
   nodes.forEach(vertice => {
     pesosFormatados.push(`${vertice.label} ( ${pesos[vertice.id]} )`);
+
+    if (pesos[vertice.id] === Infinity) {
+      hasInfinity = true;
+    }
   });
 
   let solucaoFormatada = `S = { ${formataVertices(nodes, solucao).join(
@@ -176,7 +181,7 @@ export function aplicaDijkstra(grafo, origem, orientado) {
 
   return {
     grafoDijkstra,
-    solucao: [solucaoFormatada, ...pesosFormatados],
+    solucao: hasInfinity ? ['Não há caminho para todos os vértices'] : [solucaoFormatada, ...pesosFormatados],
     pesos,
   };
 }

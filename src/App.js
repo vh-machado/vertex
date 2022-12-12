@@ -30,12 +30,12 @@ function App() {
           <HStack
             spacing={0}
             bgColor={Cores.dark_purple}
-            borderRadius={40}
+            borderRadius={16}
             h="90vh"
             w="90vw"
             shadow={'2xl'}
           >
-            <Box h="100%" w="10vw" borderRadius={40} p={2}>
+            <Box h="100%" w="10vw" borderRadius={16} p={2}>
               {/* Componente da esquerda */}
               <Menu
                 cardsVisiveis={cardsVisiveis}
@@ -53,8 +53,8 @@ function App() {
               flexDirection={'row'}
               flexWrap="wrap"
               bgColor={Cores.dark_purple_2}
-              borderTopEndRadius={40}
-              borderBottomEndRadius={40}
+              borderTopEndRadius={16}
+              borderBottomEndRadius={16}
               padding={2}
               alignItems="stretch"
               alignContent={'flex-start'}

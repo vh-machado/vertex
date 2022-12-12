@@ -11,16 +11,6 @@ export const grafoSlice = createSlice({
         dijkstra: { counter: 0, graph: {nodes: [], edges: []} },
         agm: { counter: 0, graph: {nodes: [], edges: []} },
       },
-      /*
-      orientado: false,
-      graphData: {
-        counter: 0,
-        graph: {
-          nodes: [],
-          edges: [],
-        },
-      },
-    */
     },
   },
   reducers: {

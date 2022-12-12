@@ -119,13 +119,13 @@ function GraphResults() {
   const { graph: grafo } = graphData.principal; //variável com o grafo para se pegar mais facilmente os nodes e as edges
 
   const funcoes = new funcoesBasicas();
-  funcoes.listaAdjacencia = geraListaAdjacencia(grafo, orientado)
+  funcoes.listaAdjacencia = geraListaAdjacencia(grafo, orientado);
   funcoes.orientado = orientado;
 
   //Implementados
-  const copia5 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
-  const copia6 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
-  const copia7 = JSON.parse(JSON.stringify(grafo)); //copia o objeto grafo para não ser referenciado no algoritmo de dijkstra
+  const copia5 = JSON.parse(JSON.stringify(grafo));
+  const copia6 = JSON.parse(JSON.stringify(grafo));
+  const copia7 = JSON.parse(JSON.stringify(grafo));
 
   // Algoritmos Implementados
 
@@ -204,7 +204,7 @@ function GraphResults() {
 
   console.log('Caminho mais curto (busca em largura):');
   var respostaCaminhoMaisCurto = '';
-  var descobertasLargura = ['']
+  var descobertasLargura = [''];
 
   // Cálculo do menor caminho entre dois vértices para grafos não orientados
 
@@ -228,7 +228,7 @@ function GraphResults() {
     descobertasLargura = resultadoBuscaLargura.descobertas;
   } else {
     respostaCaminhoMaisCurto = 'Informe dois vértices distintos';
-    descobertasLargura = ['Informe dois vértices distintos']
+    descobertasLargura = ['Informe dois vértices distintos'];
   }
 
   // Obtém a Árvore Geradora Mínima do grafo
@@ -360,11 +360,7 @@ function GraphResults() {
         selectMenorCaminho,
         setSelectMenorCaminho
       )}
-      {viewCardList(
-        'Busca em Largura',
-        descobertasLargura,
-        visibility
-      )}
+      {viewCardList('Busca em Largura', descobertasLargura, visibility)}
       {ViewCardSelectionAGMOrigem(
         'Algoritmo de Prim',
         solucaoAGM,

@@ -13,6 +13,7 @@ import {
 } from '../../servicos/grafoSlice';
 import EscolhaTipoGrafo from './componentes/EscolhaTipoGrafo';
 import EntradaGrafo from './componentes/EntradaGrafo';
+import Grafo from '../../Grafo/Grafo';
 
 function Menu(props) {
   const dispatch = useDispatch();
@@ -28,91 +29,107 @@ function Menu(props) {
 
   var texto;
 
-  let onSave = () => {
-    texto = textValue.replace(/\n\r?/g, '/');
-    texto = texto.replace(/\s/g, '_');
+  function onSave() {
+    let novoGrafo = new Grafo(isOrientado);
 
-    var arestas = texto.split('/');
-    var vertices = new Set();
+    let invalidInput = false;
 
-    var listaVertices = [];
-    var listaArestas = [];
+    if (textValue !== '') {
+      texto = textValue.replace(/\n\r?/g, '/');
+      texto = texto.replace(/\s/g, '_');
 
-    //console.log(arestas)
+      var arestas = texto.split('/');
+      var vertices = new Set();
 
-    arestas.forEach(a => {
-      var verticesDivididos = a.split('_');
-      vertices.add(verticesDivididos[0]);
-      if (verticesDivididos[1] !== undefined) {
-        vertices.add(verticesDivididos[1]);
-      }
-    });
+      var listaVertices = [];
+      var listaArestas = [];
 
-    vertices.forEach(v => {
-      var novoId =
-        listaVertices.length === 0
-          ? 1
-          : listaVertices[listaVertices.length - 1].id + 1;
-      listaVertices = [
-        ...listaVertices,
-        {
-          id: novoId,
-          label: v,
-          x: 0,
-          y: 0,
-        },
-      ];
+      arestas.forEach(a => {
+        var verticesDivididos = a.split('_');
+        vertices.add(verticesDivididos[0]);
+        if (verticesDivididos[1] !== undefined) {
+          vertices.add(verticesDivididos[1]);
+        }
+      });
 
-      //dispatch(adicionarVertice(contador));
-    });
-
-    arestas.forEach(a => {
-      if (a.length > 1) {
+      vertices.forEach(v => {
         var novoId =
-          listaArestas.length === 0
+          listaVertices.length === 0
             ? 1
-            : listaArestas[listaArestas.length - 1].id + 1;
-        var conexao = a.split('_');
-        listaArestas = [
-          ...listaArestas,
+            : listaVertices[listaVertices.length - 1].id + 1;
+
+        novoGrafo.adicionaVertice(novoId, v);
+
+        listaVertices = [
+          ...listaVertices,
           {
             id: novoId,
-            from: listaVertices.find(v => v.label === conexao[0]).id,
-            to: listaVertices.find(v => v.label === conexao[1]).id,
-            label: conexao.length === 3 ? conexao[2] : '',
+            label: v,
+            x: 0,
+            y: 0,
           },
         ];
+      });
 
-        /*
+      arestas.forEach(a => {
+        if (a.length > 1) {
+          var novoId =
+            listaArestas.length === 0
+              ? 1
+              : listaArestas[listaArestas.length - 1].id + 1;
+          var conexao = a.split('_');
+
+          if (conexao[0] === conexao[1]) {
+            invalidInput = true;
+            setIsInvalid(invalidInput);
+          } else {
+            invalidInput = false;
+            setIsInvalid(invalidInput);
+          }
+
+          var buscaFrom = listaVertices.find(v => v.label === conexao[0]).id;
+          var buscaTo = listaVertices.find(v => v.label === conexao[1]).id;
+          var novoLabel = conexao.length === 3 ? conexao[2] : '';
+          novoGrafo.adicionaAresta(novoId, buscaFrom, buscaTo, novoLabel);
+
+          listaArestas = [
+            ...listaArestas,
+            {
+              id: novoId,
+              from: buscaFrom,
+              to: buscaTo,
+              label: novoLabel,
+            },
+          ];
+        }
+      });
+
+      if (!invalidInput) {
+        console.log(novoGrafo);
+        var newState = {
+          counter: listaVertices.length,
+          graph: {
+            nodes: listaVertices,
+            edges: listaArestas,
+          },
+        };
+        console.log('novo grafo');
+        console.log(newState);
+        console.log('orientacao:', isOrientado);
+
+        dispatch(mudarTipo(isOrientado));
+        dispatch(setGrafoPrincipal({ ...newState }));
         dispatch(
-          adicionarAresta({
-            origem: listaVertices.find(v => v.label === conexao[0]).id,
-            destino: listaVertices.find(v => v.label === conexao[1]).id,
-            peso: conexao.length === 3 ? conexao[2] : '',
-          })
-        );*/
+          setGrafoDijkstra({ counter: 0, graph: { nodes: [], edges: [] } })
+        );
+        dispatch(setGrafoAGM({ counter: 0, graph: { nodes: [], edges: [] } }));
+
+        props.setCardsVisiveis(true);
       }
-    });
-
-    var newState = {
-      counter: listaVertices.length,
-      graph: {
-        nodes: listaVertices,
-        edges: listaArestas,
-      },
-    };
-    console.log('novo grafo');
-    console.log(newState);
-    console.log('orientacao:', isOrientado);
-
-    dispatch(mudarTipo(isOrientado));
-    dispatch(setGrafoPrincipal({ ...newState }));
-    dispatch(setGrafoDijkstra({ counter: 0, graph: { nodes: [], edges: [] } }));
-    dispatch(setGrafoAGM({ counter: 0, graph: { nodes: [], edges: [] } }));
-
-
-    //props.setGraphData(newState);
-  };
+    } else {
+      setIsInvalid(true);
+    }
+  }
 
   return (
     <VStack
@@ -125,7 +142,7 @@ function Menu(props) {
       pb={10}
       pt={10}
       bgColor={Cores.amethyst_2}
-      borderRadius={35}
+      borderRadius={10}
     >
       <EntradaGrafo {...{ textValue, setTextValue, isInvalid, setIsInvalid }} />
       <EscolhaTipoGrafo {...{ ...props, isOrientado, setIsOrientado }} />
@@ -133,7 +150,6 @@ function Menu(props) {
       <Button
         onClick={() => {
           onSave();
-          props.setCardsVisiveis(true);
         }}
         textColor="white"
         size="xs"

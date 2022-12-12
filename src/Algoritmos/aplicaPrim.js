@@ -169,5 +169,12 @@ export default function aplicaPrim(grafo, origem, orientado) {
   )} }\n`;
   let somaArvoreFormatada = `Total = ${somaArvore}`;
 
-  return { grafoPrim, solucao: [solucaoFormatada, somaArvoreFormatada], pesos };
+  return {
+    grafoPrim,
+    solucao:
+      somaArvore === Infinity
+        ? ['Não há caminho para todos os vértices']
+        : [solucaoFormatada, somaArvoreFormatada],
+    pesos,
+  };
 }
