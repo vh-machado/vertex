@@ -1,5 +1,5 @@
-import geraListaAdjacencia from "./geraListaAdjacencia";
-import formataVertices from "./formataVertices";
+import geraListaAdjacencia from './geraListaAdjacencia';
+import formataVertices from './formataVertices';
 
 class Vertice {
   constructor(idVertice, peso) {
@@ -124,9 +124,17 @@ export default function aplicaPrim(grafo, origem, orientado) {
   let novaListaAdjacencia = {};
   let vertices = Object.keys(listaAdjacencia);
   vertices.forEach(vertice => {
-    novaListaAdjacencia[vertice] = listaAdjacencia[vertice].filter(
-      adjacente => antecessores[adjacente.idVertice] == vertice
-    );
+    if (orientado) {
+      novaListaAdjacencia[vertice] = listaAdjacencia[vertice].filter(
+        adjacente => antecessores[adjacente.idVertice] == vertice
+      );
+    } else {
+      novaListaAdjacencia[vertice] = listaAdjacencia[vertice].filter(
+        adjacente =>
+          antecessores[adjacente.idVertice] == vertice ||
+          antecessores[vertice] == adjacente.idVertice
+      );
+    }
   });
 
   console.log(novaListaAdjacencia);
@@ -136,9 +144,12 @@ export default function aplicaPrim(grafo, origem, orientado) {
 
   vertices.forEach(vertice => {
     novaListaAdjacencia[vertice].forEach(v => {
-      arestasPrim.push(
-        edges.find(aresta => aresta.from == vertice && aresta.to == v.idVertice)
+      let busca = edges.find(
+        aresta => aresta.from == vertice && aresta.to == v.idVertice
       );
+      if (busca) {
+        arestasPrim.push(busca);
+      }
     });
   });
 
@@ -158,7 +169,7 @@ export default function aplicaPrim(grafo, origem, orientado) {
   let solucaoFormatada = `S = { ${formataVertices(nodes, solucao).join(
     ', '
   )} }\n`;
-  let somaArvoreFormatada = `Total = ${somaArvore}`
+  let somaArvoreFormatada = `Total = ${somaArvore}`;
 
   return { grafoPrim, solucao: [solucaoFormatada, somaArvoreFormatada], pesos };
 }

@@ -39,9 +39,6 @@ function GraphView(props) {
     layout: {
       hierarchical: {
         enabled: false,
-        direction: 'LR',
-        sortMethod: 'directed',
-        shakeTowards: 'leaves',
       },
     },
     edges: {
@@ -67,7 +64,7 @@ function GraphView(props) {
       width: 2,
       smooth: {
         enabled: props.curva,
-        type: 'curvedCW',
+        type: 'straightCross',
       },
     },
     nodes: {
@@ -101,6 +98,7 @@ function GraphView(props) {
       dragView: false,
       zoomView: false,
     },
+    
     physics: {
       enabled: true,
       stabilization: true,
@@ -113,9 +111,11 @@ function GraphView(props) {
   useEffect(() => {
     const network =
       container.current && new Network(container.current, graph, options);
+    network.stabilize();
     
     //grafo = network;
   }, [container, graph.nodes, graph.edges, props.orientado]);
+
 
   return (
     <Box h="100%">

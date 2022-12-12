@@ -37,7 +37,7 @@ export default function GraphTabs() {
               graph={principal.graph}
               orientado={orientado}
               hierarquico={false}
-              curva={false}
+              curva={true}
             />
           )}
         </TabPanel>
@@ -47,7 +47,7 @@ export default function GraphTabs() {
               graph={classificacao.graph}
               orientado={orientado}
               hierarquico={false}
-              curva={false}
+              curva={true}
             />
           )}
         </TabPanel>
@@ -57,7 +57,7 @@ export default function GraphTabs() {
               graph={dijkstra.graph}
               orientado={orientado}
               hierarquico={false}
-              curva={false}
+              curva={true}
             />
           )}
         </TabPanel>
@@ -67,7 +67,7 @@ export default function GraphTabs() {
               graph={agm.graph}
               orientado={orientado}
               hierarquico={false}
-              curva={false}
+              curva={true}
             />
           )}
         </TabPanel>

@@ -1,6 +1,12 @@
 import formataVertices from './formataVertices';
 import geraListaAdjacencia from './geraListaAdjacencia';
 
+function encontraLabel(nodes, verticeId) {
+  let verticeBuscado = nodes.find(v => v.id === Number(verticeId));
+
+  return verticeBuscado?.label;
+}
+
 class Fila {
   constructor() {
     this.elements = new Array();
@@ -37,7 +43,9 @@ class BuscaEmLargura {
 
     if (u === Number(origem)) {
       caminhoReverso.push(Number(origem));
-      let caminho = formataVertices(nodes, caminhoReverso.reverse()).join(' - ');
+      let caminho = formataVertices(nodes, caminhoReverso.reverse()).join(
+        ' - '
+      );
 
       return caminho;
     }
@@ -67,9 +75,9 @@ class BuscaEmLargura {
       }
     });
 
-    console.log('antecessor', this.antecessor);
-    console.log('d', this.d);
-    console.log('solucao', this.solucao);
+    //console.log('antecessor', this.antecessor);
+    //console.log('d', this.d);
+    //console.log('solucao', this.solucao);
   }
 
   visitaBfs(u, cor) {
@@ -112,6 +120,15 @@ export default function aplicaBuscaLargura(grafo, origem, destino, orientado) {
   let { nodes } = graph;
   let caminho = bfs.construirCaminho(nodes, origem, destino);
 
+  let { d } = bfs;
+  let descobertas = [];
+  Object.keys(d).forEach(vertice => {
+    descobertas.push(`${encontraLabel(nodes, vertice)} ( ${d[vertice]} )`);
+  });
+  
+  console.log('Busca em largura: ')
+  console.log('antecessor', bfs.antecessor);
+  console.log('Descobertas largura:', descobertas)
   console.log('Caminho mais curto: ', caminho);
-  return { caminho };
+  return { caminho, descobertas };
 }
